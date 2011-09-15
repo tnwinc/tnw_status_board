@@ -33,3 +33,6 @@ define ["env/localstorage", "env/window", "env/document"], (storage, win, doc) -
     console.log("setting: ", "panes."+$(this).attr('id') )
     storage.setItem("panes."+data.pane, data.url)
     $("#"+data.pane).attr('src',data.url)
+
+  channel.bind 'set_callout', (data) ->
+    $("#topRight").attr('src',data)
