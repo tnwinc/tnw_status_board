@@ -34,10 +34,13 @@
         return framesets[0].rows = oldSize;
       }, millisecondsUntilStandupEnds);
     });
-    return channel.bind('set_url', function(data) {
+    channel.bind('set_url', function(data) {
       console.log("setting: ", "panes." + $(this).attr('id'));
       storage.setItem("panes." + data.pane, data.url);
       return $("#" + data.pane).attr('src', data.url);
+    });
+    return channel.bind('set_callout', function(data) {
+      return $("#topRight").attr('src', data);
     });
   });
 }).call(this);
