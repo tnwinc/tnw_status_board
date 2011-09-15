@@ -2,63 +2,15 @@
 <head>
 	<title>Policy Project Status</title>
   <meta http-equiv="refresh" content="3600" />
-  <script type="text/javascript">
-    var standup = {
-      startsAt: "11:14",
-      runsFor: "17" //minutes
-    },framesets;
-    
-    function startStandup(){
-      console.log("Starting Standup");
-      framesets[0].rows = "0,*";
-
-      var millisecondsUntilStandupEnds = 1000*60*standup.runsFor;
-      console.log("Scheduling standup to end in ", millisecondsUntilStandupEnds / (1000*60), " minutes");
-      setTimeout(endStandup, millisecondsUntilStandupEnds);
-
-      var millisecondsUntilNextStandup = 1000*60*60*24;
-      console.log("Scheduling next standup for: ", new Date(+(new Date()) + millisecondsUntilNextStandup));
-      setTimeout(startStandup, millisecondsUntilNextStandup);
-    }
-    function endStandup(){
-      console.log("Ending Standup");
-      framesets[0].rows = "325px,*";
-    }
-
-    function bootstrapPage(){
-      framesets = document.getElementsByTagName("frameset");
-      
-      var now = new Date();
-      console.log("Right now it is: ", now);
-      var todaysStandup = getTodaysStandupTime();
-      console.log("Today's standup time is: ", todaysStandup);
-
-      var timeToStartStandup = (now < todaysStandup) ? todaysStandup : new Date(+(todaysStandup) + 1000 * 60 * 60 * 24);
-      var millisecondsUntilStandup = timeToStartStandup - now;
-      console.log("Scheduling standup to start at: ", timeToStartStandup, " which is ", millisecondsUntilStandup, " seconds from now.");
-
-      setTimeout(startStandup, millisecondsUntilStandup);
-      
-    }
-
-    function getTodaysStandupTime(){
-      var time = new Date();
-      var standupStartTime = standup.startsAt.split(":");
-      time.setHours(standupStartTime[0]);
-      time.setMinutes(standupStartTime[1]);
-      time.setSeconds(0);
-      time.setMilliseconds(0);
-      return time;
-    }
-
-    setTimeout(bootstrapPage, 1000)
-  </script>
+  <script src="http://js.pusherapp.com/1.9/pusher.min.js" type="text/javascript"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js" type="text/javascript"></script>
+  <script src="app/require.js" data-main="app/main.js" type="text/javascript"></script>
 </head>
 <frameset rows="325px,*" frameborder="0">
   <frameset cols="50%,50%" frameborder="0">
-    <frame src="javascript:void(0)" scrolling="no" frameborder="0" />
-    <frame src="javascript:void(0)" scrolling="no" frameborder="0" />
+    <frame id="topLeft" src="javascript:void(0)" scrolling="no" frameborder="0" />
+    <frame id="topRight" src="javascript:void(0)" scrolling="no" frameborder="0" />
   </frameset>
-  <frame src="javascript:void(0)" scrolling="no" frameborder="0" />
+  <frame id="bottom" src="javascript:void(0)" scrolling="no" frameborder="0" />
 </frameset>
 </html>
