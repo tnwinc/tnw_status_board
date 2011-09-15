@@ -1,73 +1,64 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
 <head>
-  <meta charset='utf-8'>
-
-  <title>tnwinc/tnw_status_board @ GitHub</title>
-
-  <style type="text/css">
-    body {
-      margin-top: 1.0em;
-      background-color: #057723;
-      font-family: Helvetica, Arial, FreeSans, san-serif;
-      color: #ffffff;
-    }
-    #container {
-      margin: 0 auto;
-      width: 700px;
-    }
-    h1 { font-size: 3.8em; color: #fa88dc; margin-bottom: 3px; }
-    h1 .small { font-size: 0.4em; }
-    h1 a { text-decoration: none }
-    h2 { font-size: 1.5em; color: #fa88dc; }
-    h3 { text-align: center; color: #fa88dc; }
-    a { color: #fa88dc; }
-    .description { font-size: 1.2em; margin-bottom: 30px; margin-top: 30px; font-style: italic;}
-    .download { float: right; }
-    pre { background: #000; color: #fff; padding: 15px;}
-    hr { border: 0; width: 80%; border-bottom: 1px solid #aaa}
-    .footer { text-align:center; padding-top:30px; font-style: italic; }
-  </style>
-</head>
-
-<body>
-  <a href="http://github.com/tnwinc/tnw_status_board"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
-
-  <div id="container">
-
-    <div class="download">
-      <a href="http://github.com/tnwinc/tnw_status_board/zipball/master">
-        <img border="0" width="90" src="http://github.com/images/modules/download/zip.png"></a>
-      <a href="http://github.com/tnwinc/tnw_status_board/tarball/master">
-        <img border="0" width="90" src="http://github.com/images/modules/download/tar.png"></a>
-    </div>
-
-    <h1><a href="http://github.com/tnwinc/tnw_status_board">tnw_status_board</a>
-      <span class="small">by <a href="http://github.com/tnwinc">tnwinc</a></span></h1>
-
-    <div class="description">
-      
-    </div>
-
+	<title>Policy Project Status</title>
+  <meta http-equiv="refresh" content="3600" />
+  <script type="text/javascript">
+    var standup = {
+      startsAt: "11:14",
+      runsFor: "17" //minutes
+    },framesets;
     
+    function startStandup(){
+      console.log("Starting Standup");
+      framesets[0].rows = "0,*";
 
-    <h2>Download</h2>
-    <p>
-      You can download this project in either
-      <a href="http://github.com/tnwinc/tnw_status_board/zipball/master">zip</a> or
-      <a href="http://github.com/tnwinc/tnw_status_board/tarball/master">tar</a> formats.
-    </p>
-    <p>You can also clone the project with <a href="http://git-scm.com">Git</a>
-      by running:
-      <pre>$ git clone git://github.com/tnwinc/tnw_status_board</pre>
-    </p>
+      var millisecondsUntilStandupEnds = 1000*60*standup.runsFor;
+      console.log("Scheduling standup to end in ", millisecondsUntilStandupEnds / (1000*60), " minutes");
+      setTimeout(endStandup, millisecondsUntilStandupEnds);
 
-    <div class="footer">
-      get the source code on GitHub : <a href="http://github.com/tnwinc/tnw_status_board">tnwinc/tnw_status_board</a>
-    </div>
+      var millisecondsUntilNextStandup = 1000*60*60*24;
+      console.log("Scheduling next standup for: ", new Date(+(new Date()) + millisecondsUntilNextStandup));
+      setTimeout(startStandup, millisecondsUntilNextStandup);
+    }
+    function endStandup(){
+      console.log("Ending Standup");
+      framesets[0].rows = "325px,*";
+    }
 
-  </div>
+    function bootstrapPage(){
+      framesets = document.getElementsByTagName("frameset");
+      
+      var now = new Date();
+      console.log("Right now it is: ", now);
+      var todaysStandup = getTodaysStandupTime();
+      console.log("Today's standup time is: ", todaysStandup);
 
-  
-</body>
+      var timeToStartStandup = (now < todaysStandup) ? todaysStandup : new Date(+(todaysStandup) + 1000 * 60 * 60 * 24);
+      var millisecondsUntilStandup = timeToStartStandup - now;
+      console.log("Scheduling standup to start at: ", timeToStartStandup, " which is ", millisecondsUntilStandup, " seconds from now.");
+
+      setTimeout(startStandup, millisecondsUntilStandup);
+      
+    }
+
+    function getTodaysStandupTime(){
+      var time = new Date();
+      var standupStartTime = standup.startsAt.split(":");
+      time.setHours(standupStartTime[0]);
+      time.setMinutes(standupStartTime[1]);
+      time.setSeconds(0);
+      time.setMilliseconds(0);
+      return time;
+    }
+
+    setTimeout(bootstrapPage, 1000)
+  </script>
+</head>
+<frameset rows="325px,*" frameborder="0">
+  <frameset cols="50%,50%" frameborder="0">
+    <frame src="javascript:void(0)" scrolling="no" frameborder="0" />
+    <frame src="javascript:void(0)" scrolling="no" frameborder="0" />
+  </frameset>
+  <frame src="javascript:void(0)" scrolling="no" frameborder="0" />
+</frameset>
 </html>
