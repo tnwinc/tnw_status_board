@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<html>
+<style type="text/css" media="screen">
+    html,body {
+        height:100%;
+        margin:0;
+        padding:0;
+        text-align: center;
+    }
+    #image_container {
+        height:100%;
+        display: inline-block;
+    }
+    #image_container img {
+        height:100%;
+    }
+</style>
+<body>
+
+    <div id="image_container"><img id="the_image" height="100%"></div>
+
+    <script type="text/javascript" charset="utf-8">
+        var link = window.location.hash.substr(1);
+        document.getElementById('the_image').src = link;
+    </script>
+</body>
+</html>
