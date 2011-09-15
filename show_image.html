@@ -25,7 +25,7 @@
             document.getElementById('the_image').src = link;
         }
         loadImage();
-        window.onHashChange(loadImage);
+        window.onhashchange = loadImage;
     </script>
 </body>
 </html>
