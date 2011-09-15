@@ -11,7 +11,7 @@ define ["env/localstorage", "env/window", "env/document"], (storage, win, doc) -
     storage.setItem("pusher.api-key", key)
 
   Pusher.log = (message) ->
-    win.console.log(message) if (win.console && win.console.log)
+    win.console.log(message) if (win.console && win.console.log) 
 
   pusher = new Pusher(key)
   channel = pusher.subscribe 'test_channel'
