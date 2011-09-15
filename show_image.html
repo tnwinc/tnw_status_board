@@ -20,8 +20,12 @@
     <div id="image_container"><img id="the_image" height="100%"></div>
 
     <script type="text/javascript" charset="utf-8">
-        var link = window.location.hash.substr(1);
-        document.getElementById('the_image').src = link;
+        function loadImage() {
+            var link = window.location.hash.substr(1);
+            document.getElementById('the_image').src = link;
+        }
+        loadImage();
+        window.onHashChange(loadImage);
     </script>
 </body>
 </html>
