@@ -1,11 +1,13 @@
 <!DOCTYPE HTML>
 <html>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
 <style type="text/css" media="screen">
     html,body {
         height:100%;
         margin:0;
-        padding:0;
+        padding:5px;
         text-align: center;
+        background-color: black;
     }
     #image_container {
         height:100%;
@@ -20,12 +22,20 @@
     <div id="image_container"><img id="the_image" height="100%"></div>
 
     <script type="text/javascript" charset="utf-8">
-        function loadImage() {
+        var loadImage = function() {
             var link = window.location.hash.substr(1);
-            document.getElementById('the_image').src = link;
+            var img = $('#the_image');
+
+            img.fadeTo('slow', 0, function(){
+                    img.attr('src', link);
+                    img.fadeTo('slow', 100);
+            });
         }
-        loadImage();
-        window.onhashchange = loadImage;
+
+        $(document).ready(function(){
+            loadImage();
+            window.addEventListener('hashchange', loadImage, false);
+        });
     </script>
 </body>
 </html>
