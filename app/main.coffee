@@ -23,11 +23,11 @@ define ["env/localstorage", "env/window", "env/document"], (storage, win, doc) -
     framesets = doc.getElementsByTagName("frameset")
     oldSize = framesets[0].rows
     framesets[0].rows = "0,*"
-
-    millisecondsUntilStandupEnds = 1000*60* (data || 16)
-    setTimeout ->
-      framesets[0].rows = oldSize
-    , millisecondsUntilStandupEnds
+    if( data )
+      millisecondsUntilStandupEnds = 1000*60*data
+      setTimeout ->
+        framesets[0].rows = oldSize
+      , millisecondsUntilStandupEnds
 
   channel.bind 'set_url', (data) ->
     console.log("setting: ", "panes."+$(this).attr('id') )
