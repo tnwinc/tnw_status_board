@@ -1,7 +1,7 @@
 define ["env/localstorage", "env/window", "env/document"], (storage, win, doc) ->
 
   $ ->
-    $("frame").each ->
+    $("iframe").each ->
       console.log("looking for: ", "panes."+$(this).attr('id') )
       if( url = storage.getItem("panes."+$(this).attr('id')))
         $(this).attr('src', url)
@@ -16,23 +16,31 @@ define ["env/localstorage", "env/window", "env/document"], (storage, win, doc) -
   pusher = new Pusher(key)
   channel = pusher.subscribe 'test_channel'
 
-  channel.bind 'reload_board', (data) ->
-    win.location.reload()
+  EventHandlers =
+    reload_board: (data) ->
+      $(body).fadeOut ->
+        win.location.reload()
 
-  channel.bind 'start_standup', (data) ->
-    framesets = doc.getElementsByTagName("frameset")
-    oldSize = framesets[0].rows
-    framesets[0].rows = "0,*"
-    if( data )
-      millisecondsUntilStandupEnds = 1000*60*data
-      setTimeout ->
-        framesets[0].rows = oldSize
-      , millisecondsUntilStandupEnds
+    start_standup:(data) ->
+      container = $('#bottomContainer')
+      oldTop = container.css('top')
+      container.animate({top: 0})
+      if( data )
+        millisecondsUntilStandupEnds = 1000*60*data
+        setTimeout ->
+          container.animate({top: oldTop})
+        , millisecondsUntilStandupEnds
 
-  channel.bind 'set_url', (data) ->
-    console.log("setting: ", "panes."+$(this).attr('id') )
-    storage.setItem("panes."+data.pane, data.url)
-    $("#"+data.pane).attr('src',data.url)
+    set_url:(data) ->
+      storage.setItem("panes."+data.pane, data.url)
+      $("#"+data.pane).attr('src',data.url)
 
-  channel.bind 'set_callout', (data) ->
-    $("#topRight").attr('src',data)
+    set_callout:(data) ->
+      $("#topRight").attr('src',data)
+
+    end_standup: ->
+      $('#bottomContainer').animate({top:270})
+
+  for own event, handler of EventHandlers
+    channel.bind event, handler
+    window[event] = handler
