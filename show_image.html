@@ -28,11 +28,11 @@
 
             img.fadeTo('slow', 0, function(){
                     img.attr('src', link);
-                    img.fadeTo('slow', 100);
             });
         }
 
-        $(document).ready(function(){
+            $(document).ready(function(){
+            img.load(function(){img.fadeTo('slow', 100);});
             loadImage();
             window.addEventListener('hashchange', loadImage, false);
         });
