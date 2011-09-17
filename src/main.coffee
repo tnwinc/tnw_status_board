@@ -1,4 +1,4 @@
-define ["env/localstorage", "env/window", "env/document"], (storage, win, doc) ->
+define ["env/localstorage", "env/window", "env/document", "callout"], (storage, win, doc, callout) ->
 
   $ ->
     $("iframe").each ->
@@ -11,7 +11,7 @@ define ["env/localstorage", "env/window", "env/document"], (storage, win, doc) -
     storage.setItem("pusher.api-key", key)
 
   Pusher.log = (message) ->
-    win.console.log(message) if (win.console && win.console.log) 
+    win.console.log(message) if (win.console && win.console.log)
 
   pusher = new Pusher(key)
   channel = pusher.subscribe 'test_channel'
@@ -36,8 +36,8 @@ define ["env/localstorage", "env/window", "env/document"], (storage, win, doc) -
       $("#"+data.pane).attr('src',data.url)
 
     set_callout:(data) ->
-      $("#topRight").attr('src',data)
-
+      callout(data)
+      
     end_standup: ->
       $('#bottomContainer').animate({top:270})
 

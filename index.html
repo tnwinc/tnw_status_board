@@ -1,17 +1,24 @@
 <!doctype html>
 <head>
-	<title>Policy Project Status</title>
+  <title>Policy Project Status</title>
   <meta http-equiv="refresh" content="3600" />
   <script src="http://js.pusherapp.com/1.9/pusher.min.js" type="text/javascript"></script>
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js" type="text/javascript"></script>
-  <script src="app/require.js" data-main="app/main.js" type="text/javascript"></script>
+  <script src="build/require.js" data-main="build/main.js" type="text/javascript"></script>
   <style type="text/css">
     html, body { height: 100%; position: relative; margin: 0; padding: 0; }
-    iframe,div { position: absolute; margin: 0; }
+    iframe,#bottomContainer { position: absolute; margin: 0; }
     #topLeft { top: 0; left: 0; height:270px; width: 14%; }
     #topRight { top: 0; right: 0; height: 270px; width: 86%; }
     #bottomContainer { bottom: 0; left: 0; top:270px; right: 0; }
     #bottom { height: 100%; width: 100%; }
+    #callout { position: absolute; top: 20px; right: 20px; bottom: 20px; left: 20px;
+               background: #fff; padding: 10px; text-align: center; font-size: 40px; font-family: Arial;
+               -webkit-border-radius: 10px; -webkit-box-shadow: 0 0 50px #000;
+               -webkit-transform: scale(0);
+               -webkit-transition: -webkit-transform 1s linear; }
+    .valign { vertical-align: middle; display: inline-block; }
+    .vshim { vertical-align: middle; height: 100%; display: inline-block; }
   </style>
 </head>
 <body>
@@ -20,4 +27,5 @@
   <div id="bottomContainer">
     <iframe id="bottom" src="javascript:void(0)" frameborder="0" marginheight="0" marginwidth="0" scrolling="no"></iframe>
   </div>
+  <div id="callout"></div>
 </body>
