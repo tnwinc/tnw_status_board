@@ -5,7 +5,14 @@ define([], function() {
   timeout = void 0;
   ContentGenerators = {
     '^(.*\.(?:png|jpg|jpeg|bmp|gif))$': function(imgSrc) {
-      return this('<img src="' + imgSrc + '" style="height: 100%; width: 100%" />');
+      var img;
+      img = $('<img src="' + imgSrc + '" style="max-height:100%; max-width:100%" />');
+      img.bind('load', function() {
+        var largerDimension;
+        largerDimension = ($(this)).height() > ($(this)).width() ? "height" : "width";
+        return ($(this)).css(largerDimension, "100%");
+      });
+      return this(img);
     },
     '^(.*)$': function(content) {
       return this('<div class="valign">' + content + '</div><div class="vshim" />');

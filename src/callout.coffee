@@ -5,10 +5,14 @@ define [], () ->
 
     ContentGenerators =
         '^(.*\.(?:png|jpg|jpeg|bmp|gif))$': (imgSrc) ->
-            this('<img src="'+imgSrc+'" style="height: 100%; width: 100%" />')
+            img = ($ '<img src="'+imgSrc+'" style="max-height:100%; max-width:100%" />')
+            img.bind 'load', ->
+                largerDimension = if ($ this).height() > ($ this).width() then "height" else "width"
+                ($ this).css largerDimension, "100%"
+            this img
 
         '^(.*)$': (content) ->
-            this('<div class="valign">'+content+'</div><div class="vshim" />')
+            this '<div class="valign">'+content+'</div><div class="vshim" />'
 
     showCallout = (data) ->
         clearTimeout timeout
