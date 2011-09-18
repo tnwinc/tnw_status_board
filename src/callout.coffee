@@ -1,4 +1,4 @@
-define [], () ->
+define ["env/window"], (win) ->
 
     calloutActive = false
     timeout = undefined
@@ -13,12 +13,26 @@ define [], () ->
                     ($ this).css largerDimension, "100%"
                 this img
 
+        youtube:
+            pattern: [ /youtu\.?be.*?[\/=]([\w\-]{11})/, /^([\w\-]{11})$/]
+            generator: (url, videoId) ->
+                win.playVideo = () ->
+                    new YT.Player 'youtube-player',
+                        height: '100%'
+                        width: '100%'
+                        videoId: videoId
+                        events:
+                            onReady: (ev) ->
+                                ev.target.playVideo()
+                            onStateChange: (ev) ->
+                                hideCallout() if ev.data == 0
+                this '<div id="youtube-player" /><script type="text/javascript"> window.playVideo(); delete window["playVideo"]; </script>'
+
         url:
             pattern: /^(((http|ftp|https):\/\/)?[\w\-]+(\.[\w\-]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?)$/i
             generator: (url) ->
                 url = 'http://'+url if (url.indexOf 'http://') == -1
-                iframe = ($ '<iframe src="'+url+'" style="height:100%; width:100%" scrolling="no" />')
-                this iframe
+                this '<iframe src="'+url+'" style="height:100%; width:100%" scrolling="no" frameborder="0" />'
 
         text:
             pattern: /^(.*)$/
@@ -33,12 +47,22 @@ define [], () ->
         timeout = setTimeout hideCallout, data.timeout * 1000 if data.timeout
         contentHandler = undefined
         if data.type
-           contentHandler = ContentGenerators[data.type]
+            throw Error("Cannot apply the '"+data.type+"' content handler. The regex doesn't match") unless ContentGenerators[data.type].pattern.test data.content
+            contentHandler = ContentGenerators[data.type]
         else
             for own type, def of ContentGenerators
-                if match = def.pattern.test(data.content)
-                    contentHandler = def
-                    break
+                if def.pattern instanceof Array
+                    for pattern in def.pattern
+                        if match = pattern.test(data.content)
+                            contentHandler =
+                                pattern: pattern
+                                generator: def.generator
+                            break
+                    break if contentHandler
+                else
+                    if match = def.pattern.test(data.content)
+                        contentHandler = def
+                        break
         throw Error("No content handler was found to match requested content") unless contentHandler
         contentHandler.generator.apply (content) ->
             callout.html(content)
@@ -55,7 +79,11 @@ define [], () ->
                 calloutActive = false
                 onComplete() if onComplete
 
-    (data) ->
+    callout = (data) ->
         return (hideCallout -> showCallout data) if calloutActive
         showCallout data
 
+    callout.close = ->
+        hideCallout()
+
+    return callout

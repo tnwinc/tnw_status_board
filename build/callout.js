@@ -1,6 +1,6 @@
 var __hasProp = Object.prototype.hasOwnProperty;
-define([], function() {
-  var ContentGenerators, calloutActive, hideCallout, showCallout, timeout;
+define(["env/window"], function(win) {
+  var ContentGenerators, callout, calloutActive, hideCallout, showCallout, timeout;
   calloutActive = false;
   timeout = void 0;
   ContentGenerators = {
@@ -17,15 +17,36 @@ define([], function() {
         return this(img);
       }
     },
+    youtube: {
+      pattern: [/youtu\.?be.*?[\/=]([\w\-]{11})/, /^([\w\-]{11})$/],
+      generator: function(url, videoId) {
+        win.playVideo = function() {
+          return new YT.Player('youtube-player', {
+            height: '100%',
+            width: '100%',
+            videoId: videoId,
+            events: {
+              onReady: function(ev) {
+                return ev.target.playVideo();
+              },
+              onStateChange: function(ev) {
+                if (ev.data === 0) {
+                  return hideCallout();
+                }
+              }
+            }
+          });
+        };
+        return this('<div id="youtube-player" /><script type="text/javascript"> window.playVideo(); delete window["playVideo"]; </script>');
+      }
+    },
     url: {
       pattern: /^(((http|ftp|https):\/\/)?[\w\-]+(\.[\w\-]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?)$/i,
       generator: function(url) {
-        var iframe;
         if ((url.indexOf('http://')) === -1) {
           url = 'http://' + url;
         }
-        iframe = $('<iframe src="' + url + '" style="height:100%; width:100%" scrolling="no" />');
-        return this(iframe);
+        return this('<iframe src="' + url + '" style="height:100%; width:100%" scrolling="no" frameborder="0" />');
       }
     },
     text: {
@@ -36,7 +57,7 @@ define([], function() {
     }
   };
   showCallout = function(data) {
-    var callout, contentHandler, def, match, type;
+    var callout, contentHandler, def, match, pattern, type, _i, _len, _ref;
     clearTimeout(timeout);
     calloutActive = true;
     callout = ($('#callout')).unbind('webkitTransitionEnd');
@@ -45,14 +66,34 @@ define([], function() {
     }
     contentHandler = void 0;
     if (data.type) {
+      if (!ContentGenerators[data.type].pattern.test(data.content)) {
+        throw Error("Cannot apply the '" + data.type + "' content handler. The regex doesn't match");
+      }
       contentHandler = ContentGenerators[data.type];
     } else {
       for (type in ContentGenerators) {
         if (!__hasProp.call(ContentGenerators, type)) continue;
         def = ContentGenerators[type];
-        if (match = def.pattern.test(data.content)) {
-          contentHandler = def;
-          break;
+        if (def.pattern instanceof Array) {
+          _ref = def.pattern;
+          for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+            pattern = _ref[_i];
+            if (match = pattern.test(data.content)) {
+              contentHandler = {
+                pattern: pattern,
+                generator: def.generator
+              };
+              break;
+            }
+          }
+          if (contentHandler) {
+            break;
+          }
+        } else {
+          if (match = def.pattern.test(data.content)) {
+            contentHandler = def;
+            break;
+          }
         }
       }
     }
@@ -78,7 +119,7 @@ define([], function() {
       }
     });
   };
-  return function(data) {
+  callout = function(data) {
     if (calloutActive) {
       return hideCallout(function() {
         return showCallout(data);
@@ -86,4 +127,8 @@ define([], function() {
     }
     return showCallout(data);
   };
+  callout.close = function() {
+    return hideCallout();
+  };
+  return callout;
 });

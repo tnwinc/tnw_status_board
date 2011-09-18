@@ -2,7 +2,6 @@ define ["env/localstorage", "env/window", "env/document", "callout"], (storage, 
 
   $ ->
     $("iframe").each ->
-      console.log("looking for: ", "panes."+$(this).attr('id') )
       if( url = storage.getItem("panes."+$(this).attr('id')))
         $(this).attr('src', url)
 
@@ -37,6 +36,9 @@ define ["env/localstorage", "env/window", "env/document", "callout"], (storage, 
 
     set_callout:(data) ->
       callout(data)
+
+    close_callout: ->
+      callout.close()
       
     end_standup: ->
       $('#bottomContainer').animate({top:270})
