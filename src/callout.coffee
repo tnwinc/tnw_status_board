@@ -47,7 +47,18 @@ define ["env/window"], (win) ->
         timeout = setTimeout hideCallout, data.timeout * 1000 if data.timeout
         contentHandler = undefined
         if data.type
-            contentHandler = ContentGenerators[data.type]
+            def = ContentGenerators[data.type]
+            if def.pattern instanceof Array
+                for pattern in def.pattern
+                    if match = pattern.test(data.content)
+                        contentHandler =
+                            pattern: pattern
+                            generator: def.generator
+                        break
+            else
+                if match = def.pattern.test(data.content)
+                    contentHandler = def
+            throw Error("Could not find a suitable regex match for the specified content type '" + data.type + "'") unless contentHandler 
         else
             for own type, def of ContentGenerators
                 if def.pattern instanceof Array
@@ -62,7 +73,7 @@ define ["env/window"], (win) ->
                     if match = def.pattern.test(data.content)
                         contentHandler = def
                         break
-        throw Error("No content handler was found to match requested content") unless contentHandler
+            throw Error("No content handler was found to match requested content") unless contentHandler
         contentHandler.generator.apply (content) ->
             callout.html(content)
                    .css {'-webkit-transform': 'scale(1)'}

@@ -58,7 +58,7 @@
       }
     };
     showCallout = function(data) {
-      var callout, contentHandler, def, match, pattern, type, _i, _len, _ref;
+      var callout, contentHandler, def, match, pattern, type, _i, _j, _len, _len2, _ref, _ref2;
       clearTimeout(timeout);
       calloutActive = true;
       callout = ($('#callout')).unbind('webkitTransitionEnd');
@@ -67,15 +67,35 @@
       }
       contentHandler = void 0;
       if (data.type) {
-        contentHandler = ContentGenerators[data.type];
+        def = ContentGenerators[data.type];
+        if (def.pattern instanceof Array) {
+          _ref = def.pattern;
+          for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+            pattern = _ref[_i];
+            if (match = pattern.test(data.content)) {
+              contentHandler = {
+                pattern: pattern,
+                generator: def.generator
+              };
+              break;
+            }
+          }
+        } else {
+          if (match = def.pattern.test(data.content)) {
+            contentHandler = def;
+          }
+        }
+        if (!contentHandler) {
+          throw Error("Could not find a suitable regex match for the specified content type '" + data.type + "'");
+        }
       } else {
         for (type in ContentGenerators) {
           if (!__hasProp.call(ContentGenerators, type)) continue;
           def = ContentGenerators[type];
           if (def.pattern instanceof Array) {
-            _ref = def.pattern;
-            for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-              pattern = _ref[_i];
+            _ref2 = def.pattern;
+            for (_j = 0, _len2 = _ref2.length; _j < _len2; _j++) {
+              pattern = _ref2[_j];
               if (match = pattern.test(data.content)) {
                 contentHandler = {
                   pattern: pattern,
@@ -94,9 +114,9 @@
             }
           }
         }
-      }
-      if (!contentHandler) {
-        throw Error("No content handler was found to match requested content");
+        if (!contentHandler) {
+          throw Error("No content handler was found to match requested content");
+        }
       }
       return contentHandler.generator.apply(function(content) {
         return callout.html(content).css({
