@@ -47,7 +47,6 @@ define ["env/window"], (win) ->
         timeout = setTimeout hideCallout, data.timeout * 1000 if data.timeout
         contentHandler = undefined
         if data.type
-            throw Error("Cannot apply the '"+data.type+"' content handler. The regex doesn't match") unless ContentGenerators[data.type].pattern.test data.content
             contentHandler = ContentGenerators[data.type]
         else
             for own type, def of ContentGenerators

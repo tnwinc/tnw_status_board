@@ -1,134 +1,133 @@
-var __hasProp = Object.prototype.hasOwnProperty;
-define(["env/window"], function(win) {
-  var ContentGenerators, callout, calloutActive, hideCallout, showCallout, timeout;
-  calloutActive = false;
-  timeout = void 0;
-  ContentGenerators = {
-    image: {
-      pattern: /^(.*\.(?:png|jpg|jpeg|bmp|gif))$/i,
-      generator: function(imgSrc) {
-        var img;
-        img = $('<img src="' + imgSrc + '" style="max-height:100%; max-width:100%" />');
-        img.bind('load', function() {
-          var largerDimension;
-          largerDimension = ($(this)).height() > ($(this)).width() ? "height" : "width";
-          return ($(this)).css(largerDimension, "100%");
-        });
-        return this(img);
-      }
-    },
-    youtube: {
-      pattern: [/youtu\.?be.*?[\/=]([\w\-]{11})/, /^([\w\-]{11})$/],
-      generator: function(url, videoId) {
-        win.playVideo = function() {
-          return new YT.Player('youtube-player', {
-            height: '100%',
-            width: '100%',
-            videoId: videoId,
-            events: {
-              onReady: function(ev) {
-                return ev.target.playVideo();
-              },
-              onStateChange: function(ev) {
-                if (ev.data === 0) {
-                  return hideCallout();
+(function() {
+  var __hasProp = Object.prototype.hasOwnProperty;
+  define(["env/window"], function(win) {
+    var ContentGenerators, callout, calloutActive, hideCallout, showCallout, timeout;
+    calloutActive = false;
+    timeout = void 0;
+    ContentGenerators = {
+      image: {
+        pattern: /^(.*\.(?:png|jpg|jpeg|bmp|gif))$/i,
+        generator: function(imgSrc) {
+          var img;
+          img = $('<img src="' + imgSrc + '" style="max-height:100%; max-width:100%" />');
+          img.bind('load', function() {
+            var largerDimension;
+            largerDimension = ($(this)).height() > ($(this)).width() ? "height" : "width";
+            return ($(this)).css(largerDimension, "100%");
+          });
+          return this(img);
+        }
+      },
+      youtube: {
+        pattern: [/youtu\.?be.*?[\/=]([\w\-]{11})/, /^([\w\-]{11})$/],
+        generator: function(url, videoId) {
+          win.playVideo = function() {
+            return new YT.Player('youtube-player', {
+              height: '100%',
+              width: '100%',
+              videoId: videoId,
+              events: {
+                onReady: function(ev) {
+                  return ev.target.playVideo();
+                },
+                onStateChange: function(ev) {
+                  if (ev.data === 0) {
+                    return hideCallout();
+                  }
                 }
               }
-            }
-          });
-        };
-        return this('<div id="youtube-player" /><script type="text/javascript"> window.playVideo(); delete window["playVideo"]; </script>');
-      }
-    },
-    url: {
-      pattern: /^(((http|ftp|https):\/\/)?[\w\-]+(\.[\w\-]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?)$/i,
-      generator: function(url) {
-        if ((url.indexOf('http://')) === -1) {
-          url = 'http://' + url;
+            });
+          };
+          return this('<div id="youtube-player" /><script type="text/javascript"> window.playVideo(); delete window["playVideo"]; </script>');
         }
-        return this('<iframe src="' + url + '" style="height:100%; width:100%" scrolling="no" frameborder="0" />');
+      },
+      url: {
+        pattern: /^(((http|ftp|https):\/\/)?[\w\-]+(\.[\w\-]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?)$/i,
+        generator: function(url) {
+          if ((url.indexOf('http://')) === -1) {
+            url = 'http://' + url;
+          }
+          return this('<iframe src="' + url + '" style="height:100%; width:100%" scrolling="no" frameborder="0" />');
+        }
+      },
+      text: {
+        pattern: /^(.*)$/,
+        generator: function(content) {
+          return this('<div class="valign">' + content + '</div><div class="vshim" />');
+        }
       }
-    },
-    text: {
-      pattern: /^(.*)$/,
-      generator: function(content) {
-        return this('<div class="valign">' + content + '</div><div class="vshim" />');
+    };
+    showCallout = function(data) {
+      var callout, contentHandler, def, match, pattern, type, _i, _len, _ref;
+      clearTimeout(timeout);
+      calloutActive = true;
+      callout = ($('#callout')).unbind('webkitTransitionEnd');
+      if (data.timeout) {
+        timeout = setTimeout(hideCallout, data.timeout * 1000);
       }
-    }
-  };
-  showCallout = function(data) {
-    var callout, contentHandler, def, match, pattern, type, _i, _len, _ref;
-    clearTimeout(timeout);
-    calloutActive = true;
-    callout = ($('#callout')).unbind('webkitTransitionEnd');
-    if (data.timeout) {
-      timeout = setTimeout(hideCallout, data.timeout * 1000);
-    }
-    contentHandler = void 0;
-    if (data.type) {
-      if (!ContentGenerators[data.type].pattern.test(data.content)) {
-        throw Error("Cannot apply the '" + data.type + "' content handler. The regex doesn't match");
-      }
-      contentHandler = ContentGenerators[data.type];
-    } else {
-      for (type in ContentGenerators) {
-        if (!__hasProp.call(ContentGenerators, type)) continue;
-        def = ContentGenerators[type];
-        if (def.pattern instanceof Array) {
-          _ref = def.pattern;
-          for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-            pattern = _ref[_i];
-            if (match = pattern.test(data.content)) {
-              contentHandler = {
-                pattern: pattern,
-                generator: def.generator
-              };
+      contentHandler = void 0;
+      if (data.type) {
+        contentHandler = ContentGenerators[data.type];
+      } else {
+        for (type in ContentGenerators) {
+          if (!__hasProp.call(ContentGenerators, type)) continue;
+          def = ContentGenerators[type];
+          if (def.pattern instanceof Array) {
+            _ref = def.pattern;
+            for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+              pattern = _ref[_i];
+              if (match = pattern.test(data.content)) {
+                contentHandler = {
+                  pattern: pattern,
+                  generator: def.generator
+                };
+                break;
+              }
+            }
+            if (contentHandler) {
+              break;
+            }
+          } else {
+            if (match = def.pattern.test(data.content)) {
+              contentHandler = def;
               break;
             }
           }
-          if (contentHandler) {
-            break;
-          }
-        } else {
-          if (match = def.pattern.test(data.content)) {
-            contentHandler = def;
-            break;
-          }
         }
       }
-    }
-    if (!contentHandler) {
-      throw Error("No content handler was found to match requested content");
-    }
-    return contentHandler.generator.apply(function(content) {
-      return callout.html(content).css({
-        '-webkit-transform': 'scale(1)'
-      });
-    }, contentHandler.pattern.exec(data.content));
-  };
-  hideCallout = function(onComplete) {
-    var callout;
-    clearTimeout(timeout);
-    return callout = ($('#callout')).unbind('webkitTransitionEnd').css({
-      '-webkit-transform': 'scale(0)'
-    }).bind('webkitTransitionEnd', function() {
-      callout.unbind('webkitTransitionEnd').empty();
-      calloutActive = false;
-      if (onComplete) {
-        return onComplete();
+      if (!contentHandler) {
+        throw Error("No content handler was found to match requested content");
       }
-    });
-  };
-  callout = function(data) {
-    if (calloutActive) {
-      return hideCallout(function() {
-        return showCallout(data);
+      return contentHandler.generator.apply(function(content) {
+        return callout.html(content).css({
+          '-webkit-transform': 'scale(1)'
+        });
+      }, contentHandler.pattern.exec(data.content));
+    };
+    hideCallout = function(onComplete) {
+      var callout;
+      clearTimeout(timeout);
+      return callout = ($('#callout')).unbind('webkitTransitionEnd').css({
+        '-webkit-transform': 'scale(0)'
+      }).bind('webkitTransitionEnd', function() {
+        callout.unbind('webkitTransitionEnd').empty();
+        calloutActive = false;
+        if (onComplete) {
+          return onComplete();
+        }
       });
-    }
-    return showCallout(data);
-  };
-  callout.close = function() {
-    return hideCallout();
-  };
-  return callout;
-});
+    };
+    callout = function(data) {
+      if (calloutActive) {
+        return hideCallout(function() {
+          return showCallout(data);
+        });
+      }
+      return showCallout(data);
+    };
+    callout.close = function() {
+      return hideCallout();
+    };
+    return callout;
+  });
+}).call(this);
