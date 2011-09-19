@@ -32,7 +32,7 @@ define ["env/localstorage", "env/window", "env/document", "callout"], (storage, 
 
     set_url:(data) ->
       storage.setItem("panes."+data.pane, data.url)
-      $("#"+data.pane).attr('src',data.url)
+      $("#"+data.pane).attr 'src', data.url
 
     set_callout:(data) ->
       callout(data)
@@ -41,7 +41,13 @@ define ["env/localstorage", "env/window", "env/document", "callout"], (storage, 
       callout.close()
       
     end_standup: ->
-      $('#bottomContainer').animate({top:270})
+      ($ '#bottomContainer').animate {top:270}
+
+    play_sound: (data) ->
+      ($ '#radio').attr({src: data})[0].play()
+
+  win['pavlov'] = ->
+    play_sound('http://rpg.hamsterrepublic.com/wiki-images/1/12/Ping-da-ding-ding-ding.ogg')
 
   for own event, handler of EventHandlers
     channel.bind event, handler

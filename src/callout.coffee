@@ -11,6 +11,7 @@ define ["env/window"], (win) ->
                 img.bind 'load', ->
                     largerDimension = if ($ this).height() > ($ this).width() then "height" else "width"
                     ($ this).css largerDimension, "100%"
+                pavlov()
                 this img
 
         youtube:
@@ -37,6 +38,7 @@ define ["env/window"], (win) ->
         text:
             pattern: /^(.*)$/
             generator: (content) ->
+                pavlov()
                 this '<div class="valign">'+content+'</div><div class="vshim" />'
 
     showCallout = (data) ->

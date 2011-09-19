@@ -15,6 +15,7 @@
             largerDimension = ($(this)).height() > ($(this)).width() ? "height" : "width";
             return ($(this)).css(largerDimension, "100%");
           });
+          pavlov();
           return this(img);
         }
       },
@@ -53,6 +54,7 @@
       text: {
         pattern: /^(.*)$/,
         generator: function(content) {
+          pavlov();
           return this('<div class="valign">' + content + '</div><div class="vshim" />');
         }
       }
