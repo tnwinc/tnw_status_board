@@ -17,7 +17,7 @@ define ["env/localstorage", "env/window", "env/document", "callout"], (storage, 
 
   EventHandlers =
     reload_board: (data) ->
-      $(body).fadeOut ->
+      $('body').fadeOut ->
         win.location.reload()
 
     start_standup:(data) ->
