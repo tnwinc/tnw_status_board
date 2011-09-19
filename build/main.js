@@ -23,7 +23,7 @@ define(["env/localstorage", "env/window", "env/document", "callout"], function(s
   channel = pusher.subscribe('test_channel');
   EventHandlers = {
     reload_board: function(data) {
-      return $(body).fadeOut(function() {
+      return $('body').fadeOut(function() {
         return win.location.reload();
       });
     },
