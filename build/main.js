@@ -27,19 +27,32 @@
           return win.location.reload();
         });
       },
-      start_standup: function(data) {
-        var container, millisecondsUntilStandupEnds, oldTop;
+      start_standup: function(minutes) {
+        var container, millisecondsUntilStandupEnds, oldTop, reminderInterval, _fn, _i, _len, _ref;
+        console.log("Starting standup for " + minutes + " minutes");
+        play_sound("http://soundfxnow.com/soundfx/MilitaryTrumpetTune1.mp3");
         container = $('#bottomContainer');
         oldTop = container.css('top');
         container.animate({
           top: 0
         });
-        if (data) {
-          millisecondsUntilStandupEnds = 1000 * 60 * data;
+        if (minutes) {
+          _ref = [0.75, 0.9, 0.95];
+          _fn = function(reminderInterval) {
+            var milliseconds;
+            milliseconds = 1000 * 60 * reminderInterval * minutes;
+            return setTimeout(function() {
+              return play_sound("http://soundfxnow.com/soundfx/GameshowBellDing2.mp3");
+            }, milliseconds);
+          };
+          for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+            reminderInterval = _ref[_i];
+            console.log("Setting remdinder interval for " + (reminderInterval * minutes) + " minutes (" + (reminderInterval * minutes * 60) + " seconds)");
+            _fn(reminderInterval);
+          }
+          millisecondsUntilStandupEnds = 1000 * 60 * minutes;
           return setTimeout(function() {
-            return container.animate({
-              top: oldTop
-            });
+            return end_standup();
           }, millisecondsUntilStandupEnds);
         }
       },
@@ -54,6 +67,7 @@
         return callout.close();
       },
       end_standup: function() {
+        play_sound("http://soundfxnow.com/soundfx/FamilyFeud-Buzzer3.mp3");
         return ($('#bottomContainer')).animate({
           top: 270
         });

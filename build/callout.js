@@ -45,7 +45,7 @@
       url: {
         pattern: /^(((http|ftp|https):\/\/)?[\w\-]+(\.[\w\-]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?)$/i,
         generator: function(url) {
-          if ((url.indexOf('http://')) === -1) {
+          if ((url.indexOf('://')) === -1) {
             url = 'http://' + url;
           }
           return this('<iframe src="' + url + '" style="height:100%; width:100%" scrolling="no" frameborder="0" />');

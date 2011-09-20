@@ -32,7 +32,7 @@ define ["env/window"], (win) ->
         url:
             pattern: /^(((http|ftp|https):\/\/)?[\w\-]+(\.[\w\-]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?)$/i
             generator: (url) ->
-                url = 'http://'+url if (url.indexOf 'http://') == -1
+                url = 'http://'+url if (url.indexOf '://') == -1
                 this '<iframe src="'+url+'" style="height:100%; width:100%" scrolling="no" frameborder="0" />'
 
         text:

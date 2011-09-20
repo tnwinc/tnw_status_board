@@ -20,14 +20,24 @@ define ["env/localstorage", "env/window", "env/document", "callout"], (storage, 
       $('body').fadeOut ->
         win.location.reload()
 
-    start_standup:(data) ->
+    start_standup:(minutes) ->
+      console.log "Starting standup for #{minutes} minutes"
+      play_sound "http://soundfxnow.com/soundfx/MilitaryTrumpetTune1.mp3"
       container = $('#bottomContainer')
       oldTop = container.css('top')
       container.animate({top: 0})
-      if( data )
-        millisecondsUntilStandupEnds = 1000*60*data
+      if( minutes )
+        for reminderInterval in [ 0.75, 0.9, 0.95 ]
+          console.log "Setting remdinder interval for #{reminderInterval * minutes} minutes (#{reminderInterval * minutes * 60} seconds)"
+          do (reminderInterval) ->
+            milliseconds = 1000*60*reminderInterval*minutes
+            setTimeout ->
+              play_sound "http://soundfxnow.com/soundfx/GameshowBellDing2.mp3"
+            , milliseconds
+            
+        millisecondsUntilStandupEnds = 1000*60*minutes
         setTimeout ->
-          container.animate({top: oldTop})
+          end_standup()
         , millisecondsUntilStandupEnds
 
     set_url:(data) ->
@@ -41,6 +51,7 @@ define ["env/localstorage", "env/window", "env/document", "callout"], (storage, 
       callout.close()
       
     end_standup: ->
+      play_sound "http://soundfxnow.com/soundfx/FamilyFeud-Buzzer3.mp3"
       ($ '#bottomContainer').animate {top:270}
 
     play_sound: (data) ->
