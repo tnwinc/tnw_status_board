@@ -27,6 +27,7 @@
               height: '100%',
               width: '100%',
               videoId: videoId,
+              playbackQuality: 'medium',
               events: {
                 onReady: function(ev) {
                   return ev.target.playVideo();

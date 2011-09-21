@@ -22,6 +22,7 @@ define ["env/window"], (win) ->
                         height: '100%'
                         width: '100%'
                         videoId: videoId
+                        playbackQuality: 'medium'
                         events:
                             onReady: (ev) ->
                                 ev.target.playVideo()
@@ -60,7 +61,7 @@ define ["env/window"], (win) ->
             else
                 if match = def.pattern.test(data.content)
                     contentHandler = def
-            throw Error("Could not find a suitable regex match for the specified content type '" + data.type + "'") unless contentHandler 
+            throw Error("Could not find a suitable regex match for the specified content type '" + data.type + "'") unless contentHandler
         else
             for own type, def of ContentGenerators
                 if def.pattern instanceof Array
