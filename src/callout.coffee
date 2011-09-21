@@ -18,16 +18,17 @@ define ["env/window"], (win) ->
             pattern: [ /youtu\.?be.*?[\/=]([\w\-]{11})/, /^([\w\-]{11})$/]
             generator: (url, videoId) ->
                 win.playVideo = () ->
-                    new YT.Player 'youtube-player',
+                    player = new YT.Player 'youtube-player',
                         height: '100%'
                         width: '100%'
                         videoId: videoId
-                        playbackQuality: 'medium'
                         events:
                             onReady: (ev) ->
                                 ev.target.playVideo()
                             onStateChange: (ev) ->
                                 hideCallout() if ev.data == 0
+                    player.setPlaybackQuality 'medium'
+                    return player
                 this '<div id="youtube-player" /><script type="text/javascript"> window.playVideo(); delete window["playVideo"]; </script>'
 
         url:
