@@ -26,8 +26,9 @@ define ["env/window"], (win) ->
                             onReady: (ev) ->
                                 ev.target.playVideo()
                             onStateChange: (ev) ->
-                                hideCallout() if ev.data == 0
-                    player.setPlaybackQuality 'medium'
+                              player.setPlaybackQuality 'medium'
+                              hideCallout() if ev.data == 0
+
                     return player
                 this '<div id="youtube-player" /><script type="text/javascript"> window.playVideo(); delete window["playVideo"]; </script>'
 

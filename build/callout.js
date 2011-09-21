@@ -33,13 +33,13 @@
                   return ev.target.playVideo();
                 },
                 onStateChange: function(ev) {
+                  player.setPlaybackQuality('medium');
                   if (ev.data === 0) {
                     return hideCallout();
                   }
                 }
               }
             });
-            player.setPlaybackQuality('medium');
             return player;
           };
           return this('<div id="youtube-player" /><script type="text/javascript"> window.playVideo(); delete window["playVideo"]; </script>');
