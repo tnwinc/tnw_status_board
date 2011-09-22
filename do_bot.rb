@@ -45,7 +45,7 @@ bot = Cinch::Bot.new do
     on :message, /^!do_list/ do |m|
         m.reply "AVAILABLE DO COMMANDS:"
         @commands.keys.sort.each do |key|
-            m.reply "  #{key} => \"#{@commands[value]}\""
+            m.reply "  #{key} => \"#{@commands[key]}\""
         end
     end
 end
