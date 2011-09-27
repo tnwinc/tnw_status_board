@@ -1,9 +1,13 @@
+#!/usr/bin/ruby
+
+require "yaml"
 require "cinch"
 require "pusher"
 
-Pusher.app_id = ''
-Pusher.key = ''
-Pusher.secret = ''
+settings = YAML.load_file( 'pusher_settings.yml' )
+Pusher.app_id = settings[:app_id]
+Pusher.key = settings[:key]
+Pusher.secret = settings[:secret]
 
 def send(m, message, opts=nil)
     begin
