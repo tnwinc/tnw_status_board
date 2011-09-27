@@ -73,8 +73,9 @@ class StatusBoard
     end
 
     def standup(m)
-        send m, 'start_standup', 16 do
-            m.reply "ALL RISE!"
+        length = 10
+        send m, 'start_standup', length do
+            m.reply "ALL RISE! For #{length} minutes."
         end
     end
 
