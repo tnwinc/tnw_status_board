@@ -27,7 +27,7 @@ bot = Cinch::Bot.new do
 
     on :message, /^!do (\w+)$/ do |m, word|
         puts @commands[word]
-        m.reply @commands[word]
+        @commands[word].split("|").each { |command| m.reply command }
     end
 
     on :message, /^!do_set (\w+) (.*)$/ do |m, word, cmd|
