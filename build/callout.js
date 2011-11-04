@@ -23,7 +23,8 @@
         pattern: [/youtu\.?be.*?[\/=]([\w\-]{11})/, /^([\w\-]{11})$/],
         generator: function(url, videoId) {
           win.playVideo = function() {
-            return new YT.Player('youtube-player', {
+            var player;
+            player = new YT.Player('youtube-player', {
               height: '100%',
               width: '100%',
               videoId: videoId,
@@ -32,12 +33,14 @@
                   return ev.target.playVideo();
                 },
                 onStateChange: function(ev) {
+                  player.setPlaybackQuality('medium');
                   if (ev.data === 0) {
                     return hideCallout();
                   }
                 }
               }
             });
+            return player;
           };
           return this('<div id="youtube-player" /><script type="text/javascript"> window.playVideo(); delete window["playVideo"]; </script>');
         }

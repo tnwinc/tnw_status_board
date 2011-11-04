@@ -18,7 +18,7 @@ define ["env/window"], (win) ->
             pattern: [ /youtu\.?be.*?[\/=]([\w\-]{11})/, /^([\w\-]{11})$/]
             generator: (url, videoId) ->
                 win.playVideo = () ->
-                    new YT.Player 'youtube-player',
+                    player = new YT.Player 'youtube-player',
                         height: '100%'
                         width: '100%'
                         videoId: videoId
@@ -26,7 +26,10 @@ define ["env/window"], (win) ->
                             onReady: (ev) ->
                                 ev.target.playVideo()
                             onStateChange: (ev) ->
-                                hideCallout() if ev.data == 0
+                              player.setPlaybackQuality 'medium'
+                              hideCallout() if ev.data == 0
+
+                    return player
                 this '<div id="youtube-player" /><script type="text/javascript"> window.playVideo(); delete window["playVideo"]; </script>'
 
         url:
@@ -60,7 +63,7 @@ define ["env/window"], (win) ->
             else
                 if match = def.pattern.test(data.content)
                     contentHandler = def
-            throw Error("Could not find a suitable regex match for the specified content type '" + data.type + "'") unless contentHandler 
+            throw Error("Could not find a suitable regex match for the specified content type '" + data.type + "'") unless contentHandler
         else
             for own type, def of ContentGenerators
                 if def.pattern instanceof Array
