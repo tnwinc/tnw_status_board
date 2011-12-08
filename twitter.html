@@ -1,0 +1,33 @@
+<!doctype html>
+<body>
+<script src="http://widgets.twimg.com/j/2/widget.js"></script>
+<script>
+new TWTR.Widget({
+  version: 2,
+  type: 'list',
+  rpp: 30,
+  interval: 30000,
+  title: '',
+  subject: '',
+  width: 'auto',
+  height: 300,
+  theme: {
+    shell: {
+      background: '#bdaaaa',
+      color: '#000000'
+    },
+    tweets: {
+      background: '#ffffff',
+      color: '#444444',
+      links: '#3b6e2a'
+    }
+  },
+  features: {
+    scrollbar: false,
+    loop: false,
+    live: true,
+    behavior: 'default'
+  }
+}).render().setList('cubanx', 'board-list').start();
+</script>
+</body>
