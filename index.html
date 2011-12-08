@@ -26,7 +26,36 @@
 </head>
 <body>
   <iframe id="topLeft" src="javascript:void(0)" frameborder="0" marginheight="0" marginwidth="0" scrolling="no"></iframe>
-  <iframe id="topMiddle" src="javascript:void(0)" frameborder="0" marginheight="0" marginwidth="0" scrolling="no"></iframe>
+  <div id="topMiddle"><script src="http://widgets.twimg.com/j/2/widget.js"></script>
+<script>
+new TWTR.Widget({
+  version: 2,
+  type: 'list',
+  rpp: 30,
+  interval: 30000,
+  title: '',
+  subject: '',
+  width: 'auto',
+  height: 300,
+  theme: {
+    shell: {
+      background: '#bdaaaa',
+      color: '#000000'
+    },
+    tweets: {
+      background: '#ffffff',
+      color: '#444444',
+      links: '#3b6e2a'
+    }
+  },
+  features: {
+    scrollbar: false,
+    loop: false,
+    live: true,
+    behavior: 'default'
+  }
+}).render().setList('cubanx', 'board-list').start();
+</script></div>
   <iframe id="topRight" src="javascript:void(0)" frameborder="0" marginheight="0" marginwidth="0" scrolling="no"></iframe>
   <div id="bottomContainer">
     <iframe id="bottom" src="javascript:void(0)" frameborder="0" marginheight="0" marginwidth="0" scrolling="no"></iframe>
