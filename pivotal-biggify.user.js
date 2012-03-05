@@ -49,12 +49,12 @@ setInterval(function() {
 		el.style.height = '40px';
 	})
         alterStuff('date', function(el) {
-        	el.style.font-size = '24px';
+        	el.style.fontSize = '24px';
         })
         alterStuff('iteration_length', function(el) {
-        	el.style.font-size = '24px';
+        	el.style.fontSize = '24px';
         })
         alterStuff('points', function(el) {
-        	el.style.font-size = '24px';
+        	el.style.fontSize = '24px';
         })
 }, 500)
