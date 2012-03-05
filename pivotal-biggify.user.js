@@ -31,22 +31,30 @@ setInterval(function() {
 	hideStuff('flyoverIcon');
 	hideStuff('accepted');
 	alterStuff('storyPreviewText', function(el) { 
-			el.style.fontSize = '24px';
-			el.style.marginTop = '5px';
-			el.style.marginBottom = '5px';
-		})
+		el.style.fontSize = '24px';
+		el.style.marginTop = '5px';
+		el.style.marginBottom = '5px';
+	})
 	alterStuff('estimate', function(el) { 
-			el.style.fontSize = '24px';
-		})
+		el.style.fontSize = '24px';
+	})
 	alterStuff('inner', function(el) { 
-			el.style.overflow = 'hidden';
-		})
+		el.style.overflow = 'hidden';
+	})
 	alterStuff('layout', function(el) { 
-			el.style.marginTop = '5px';
-			el.style.borderSpacing = '0';
-		})
+		el.style.marginTop = '5px';
+		el.style.borderSpacing = '0';
+	})
 	alterStuff('iterationHeader', function(el) { 
-			el.style.height = '40px';
-			el.style.fontSize = '24px';
-		})
+		el.style.height = '40px';
+	})
+        alterStuff('date', function(el) {
+        	el.style.font-size = '24px';
+        })
+        alterStuff('iteration_length', function(el) {
+        	el.style.font-size = '24px';
+        })
+        alterStuff('points', function(el) {
+        	el.style.font-size = '24px';
+        })
 }, 500)
