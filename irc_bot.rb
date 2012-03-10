@@ -11,7 +11,7 @@ Pusher.secret = settings[:secret]
 
 def send(m, message, opts=nil)
     begin
-        Pusher['test_channel'].trigger(message, opts)
+        Pusher[m.channel.name.gsub(/#/, '')].trigger(message, opts)
         yield
     rescue Pusher::Error => err
         m.reply "ERROR: #{err}"
