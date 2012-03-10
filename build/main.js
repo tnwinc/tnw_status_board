@@ -10,17 +10,25 @@
         }
       });
     });
-    if (!(key = storage.getItem("pusher.api-key"))) {
-      key = win.prompt("What is the pusher api key?");
-      storage.setItem("pusher.api-key", key);
+    var get_local_storage_value = function(key) {
+        var value = storage.getItem(key);
+        if (!value) {
+          value = win.prompt("What is the " + key + "?");
+          if (value) storage.setItem(key, value);
+        }
+        return value;
     }
+
+    key = get_local_storage_value("pusher.api-key");
+    pusher_channel = get_local_storage_value("pusher.channel");
+
     Pusher.log = function(message) {
       if (win.console && win.console.log) {
         return win.console.log(message);
       }
     };
     pusher = new Pusher(key);
-    channel = pusher.subscribe('test_channel');
+    channel = pusher.subscribe(pusher_channel);
     EventHandlers = {
       reload_board: function(data) {
         return $('body').fadeOut(function() {
