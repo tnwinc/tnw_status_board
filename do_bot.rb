@@ -1,5 +1,5 @@
 require "cinch"
-require "YAML"
+require "yaml"
 
     def load_commands
         commands = YAML.load_file( 'do_commands.yml' )
@@ -17,9 +17,9 @@ require "YAML"
 bot = Cinch::Bot.new do
 
     configure do |c|
-        c.nick = "tnw_do_bot"
+        c.nick = "tnw_beaker_do"
         c.server = 'irc.freenode.net'
-        c.channels = ["#tnw_red_team"]
+        c.channels = ["#tnw_dev_carbon", "#tnw_dev_cobalt"]
 
         @commands = load_commands
         throw"Failed to load commands file" if @commands == nil or false
