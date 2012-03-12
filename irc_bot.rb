@@ -50,6 +50,56 @@ class Autovoice
   end
 end
 
+class DoBot
+    include Cinch::Plugin
+
+    match /do (\w+)$/, :method => :do
+    match /do_set (\w+) (.*)$/, :method => :do_set
+    match /do_clear (\w+) (.*)$/, :method => :do_clear
+    match /do_list/, :method => :do_list
+
+    def load_commands
+        return @commands unless @commands.nil?
+        commands = YAML.load_file( 'do_commands.yml' )
+        commands = {} if commands == false
+        return commands
+    end
+
+    def save_commands(commands)
+        File.open( 'do_commands.yml', 'w' ) do |out|
+            YAML.dump( commands, out )
+        end
+    end
+
+    def do(m, word)
+        @commands = load_commands
+        puts @commands[word]
+        @commands[word].split("|").each { |command| m.reply command }
+    end
+
+    def do_set(m, word, cmd)
+        @commands = load_commands
+        @commands[word] = cmd
+        save_commands @commands
+        m.reply "You stored: #{word} to do: #{cmd}"
+    end
+
+    def do_clear(m, word)
+        @commands = load_commands
+        @commands.delete(word)
+        save_commands @commands
+        m.reply "You cleared: #{word}"
+    end
+
+    def do_list(m)
+        @commands = load_commands
+        m.reply "AVAILABLE DO COMMANDS:"
+        @commands.keys.sort.each do |key|
+            m.reply "  #{key} => \"#{@commands[key]}\""
+        end
+    end
+end
+
 class StatusBoard
     include Cinch::Plugin
 
@@ -143,7 +193,7 @@ bot = Cinch::Bot.new do
     c.nick = "tnw_beaker"
     c.server = 'irc.freenode.net'
     c.channels = ["#tnw_dev_cobalt", "#tnw_dev_carbon"]
-    c.plugins.plugins = [Sentry, Autovoice, StatusBoard]
+    c.plugins.plugins = [Sentry, Autovoice, StatusBoard, DoBot]
   end
 end
 
