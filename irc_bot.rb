@@ -190,7 +190,7 @@ bot = Cinch::Bot.new do
   configure do |c|
     c.nick = "tnw_beaker"
     c.server = 'irc.freenode.net'
-    c.channels = ["#tnw_dev_cobalt", "#tnw_dev_carbon"]
+    c.channels = ["#tnw_dev_cobalt", "#tnw_dev_carbon", "#tnw_dev_iron"]
     c.plugins.plugins = [Sentry, Autovoice, StatusBoard]
   end
 end
