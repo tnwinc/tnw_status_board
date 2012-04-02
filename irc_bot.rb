@@ -4,10 +4,19 @@ require "yaml"
 require "cinch"
 require "pusher"
 
-settings = YAML.load_file( 'pusher_settings.yml' )
-Pusher.app_id = settings[:app_id]
-Pusher.key = settings[:key]
-Pusher.secret = settings[:secret]
+YAML::ENGINE.yamler = 'psych'
+
+bot_settings = nil
+File.open('pusher_settings.yml') do |settings_file|
+    all_settings = YAML.load_documents(settings_file)
+
+    bot_settings = all_settings[0]
+
+    pusher_settings = all_settings[1]
+    Pusher.app_id = pusher_settings[:app_id]
+    Pusher.key = pusher_settings[:key]
+    Pusher.secret = pusher_settings[:secret]
+end
 
 def send(m, message, opts=nil)
     begin
@@ -141,9 +150,10 @@ end
 
 bot = Cinch::Bot.new do
   configure do |c|
-    c.nick = "tnw_beaker"
-    c.server = 'irc.freenode.net'
-    c.channels = ["#tnw_dev_cobalt", "#tnw_dev_carbon", "#tnw_dev_iron"]
+    c.nick = bot_settings[:nick] || "tnw_beaker"
+    c.server = bot_settings[:server] || 'irc.freenode.net'
+    c.channels = bot_settings[:channels]
+
     c.plugins.plugins = [Sentry, Autovoice, StatusBoard]
   end
 end
