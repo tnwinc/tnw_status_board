@@ -7,7 +7,7 @@ require "pusher"
 YAML::ENGINE.yamler = 'psych'
 
 bot_settings = nil
-File.open('pusher_settings.yml') do |settings_file|
+File.open('settings.yml') do |settings_file|
     all_settings = YAML.load_documents(settings_file)
 
     bot_settings = all_settings[0]
