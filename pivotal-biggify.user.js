@@ -34,6 +34,7 @@ setInterval(function() {
 		el.style.fontSize = '28px';
 		el.style.marginTop = '5px';
 		el.style.marginBottom = '5px';
+		el.style.lineHeight = '.9em';
 	})
 	alterStuff('estimate', function(el) { 
 		el.style.fontSize = '28px';
