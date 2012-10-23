@@ -1,2 +1,39 @@
-<a class="twitter-timeline" href="https://twitter.com/tnw_devlabs/board-list" data-widget-id="260721782246477824">Tweets from @tnw_devlabs/board-list</a>
-<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+<!doctype html>
+<body>
+<script src="http://widgets.twimg.com/j/2/widget.js"></script>
+<script>
+new TWTR.Widget({
+  version: 2,
+  type: 'list',
+  rpp: 7,
+  interval: 30000,
+  title: '',
+  subject: '',
+  width: 'auto',
+  height: 400,
+  theme: {
+    shell: {
+      background: '#bdaaaa',
+      color: '#000000'
+    },
+    tweets: {
+      background: '#ffffff',
+      color: '#444444',
+      links: '#3b6e2a'
+    }
+  },
+  features: {
+    scrollbar: false,
+    loop: false,
+    live: true,
+    behavior: 'all'
+  }
+}).render().setList('tnw_devlabs', 'board-list').start();
+</script>
+<style>
+  .twtr-tweet-text {
+    font-size: 28px;
+  }
+</style>
+</body>
+</html>
