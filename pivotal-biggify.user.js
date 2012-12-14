@@ -58,6 +58,6 @@ setInterval(function() {
         alterStuff('points', function(el) {
         	el.style.fontSize = '28px';
         })
-	var backlogList = document.getElementById("myHeader");
+	var backlogList = document.getElementById("backlog_itemList");
 	backlogList.style.height = 'auto';
 }, 500)
