@@ -77,7 +77,7 @@
       var callout, contentHandler, def, match, pattern, timeout_val, type, _i, _j, _len, _len1, _ref, _ref1, _ref2;
       clearTimeout(timeout);
       calloutActive = true;
-      callout = $('#callout');
+      callout = ($('#callout')).show();
       contentHandler = void 0;
       if (data.type) {
         def = ContentGenerators[data.type];
@@ -146,7 +146,7 @@
       var callout;
       clearTimeout(timeout);
       callout = $('#callout');
-      callout.empty();
+      callout.empty().hide();
       calloutActive = false;
       if (onComplete) {
         return onComplete();

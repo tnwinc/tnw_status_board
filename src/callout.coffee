@@ -54,7 +54,7 @@ define ["env/window"], (win) ->
     showCallout = (data) ->
         clearTimeout timeout
         calloutActive = true
-        callout = ($ '#callout')
+        callout = ($ '#callout').show()
         contentHandler = undefined
         if data.type
             def = ContentGenerators[data.type]
@@ -98,7 +98,7 @@ define ["env/window"], (win) ->
     hideCallout = (onComplete) ->
         clearTimeout timeout
         callout = ($ '#callout')
-        callout.empty()
+        callout.empty().hide()
         calloutActive = false
         onComplete() if onComplete
 
