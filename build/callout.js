@@ -1,5 +1,6 @@
 (function() {
-  var __hasProp = Object.prototype.hasOwnProperty;
+  var __hasProp = {}.hasOwnProperty;
+
   define(["env/window"], function(win) {
     var ContentGenerators, callout, calloutActive, hideCallout, showCallout, timeout;
     calloutActive = false;
@@ -45,6 +46,16 @@
           return this('<div id="youtube-player" /><script type="text/javascript"> window.playVideo(); delete window["playVideo"]; </script>');
         }
       },
+      joinme: {
+        pattern: [/^(.*join\.me.*)$/, /\d{3}-\d{3}\d{3}/],
+        timeout: 0,
+        generator: function(url) {
+          if ((url.indexOf('://')) === -1) {
+            url = 'https://join.me/' + url;
+          }
+          return this('<iframe src="' + url + '" style="height:100%; width:100%" scrolling="no" frameborder="0" />');
+        }
+      },
       url: {
         pattern: /^(((http|ftp|https):\/\/)?[\w\-]+(\.[\w\-]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?)$/i,
         generator: function(url) {
@@ -63,13 +74,10 @@
       }
     };
     showCallout = function(data) {
-      var callout, contentHandler, def, match, pattern, type, _i, _j, _len, _len2, _ref, _ref2;
+      var callout, contentHandler, def, match, pattern, timeout_val, type, _i, _j, _len, _len1, _ref, _ref1, _ref2;
       clearTimeout(timeout);
       calloutActive = true;
-      callout = ($('#callout')).unbind('webkitTransitionEnd');
-      if (data.timeout) {
-        timeout = setTimeout(hideCallout, data.timeout * 1000);
-      }
+      callout = $('#callout');
       contentHandler = void 0;
       if (data.type) {
         def = ContentGenerators[data.type];
@@ -80,7 +88,8 @@
             if (match = pattern.test(data.content)) {
               contentHandler = {
                 pattern: pattern,
-                generator: def.generator
+                generator: def.generator,
+                timeout: def.timeout
               };
               break;
             }
@@ -98,13 +107,14 @@
           if (!__hasProp.call(ContentGenerators, type)) continue;
           def = ContentGenerators[type];
           if (def.pattern instanceof Array) {
-            _ref2 = def.pattern;
-            for (_j = 0, _len2 = _ref2.length; _j < _len2; _j++) {
-              pattern = _ref2[_j];
+            _ref1 = def.pattern;
+            for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
+              pattern = _ref1[_j];
               if (match = pattern.test(data.content)) {
                 contentHandler = {
                   pattern: pattern,
-                  generator: def.generator
+                  generator: def.generator,
+                  timeout: def.timeout
                 };
                 break;
               }
@@ -123,24 +133,24 @@
           throw Error("No content handler was found to match requested content");
         }
       }
-      return contentHandler.generator.apply(function(content) {
-        return callout.html(content).css({
-          '-webkit-transform': 'scale(1)'
-        });
+      contentHandler.generator.apply(function(content) {
+        return callout.html(content);
       }, contentHandler.pattern.exec(data.content));
+      timeout_val = ((_ref2 = contentHandler.timeout) != null ? _ref2 : data.timeout) || 0;
+      console.log("keeping callout open for " + timeout_val + " seconds");
+      if (timeout_val) {
+        return timeout = setTimeout(hideCallout, timeout_val * 1000);
+      }
     };
     hideCallout = function(onComplete) {
       var callout;
       clearTimeout(timeout);
-      return callout = ($('#callout')).unbind('webkitTransitionEnd').css({
-        '-webkit-transform': 'scale(0)'
-      }).bind('webkitTransitionEnd', function() {
-        callout.unbind('webkitTransitionEnd').empty();
-        calloutActive = false;
-        if (onComplete) {
-          return onComplete();
-        }
-      });
+      callout = $('#callout');
+      callout.empty();
+      calloutActive = false;
+      if (onComplete) {
+        return onComplete();
+      }
     };
     callout = function(data) {
       if (calloutActive) {
@@ -155,4 +165,5 @@
     };
     return callout;
   });
+
 }).call(this);

@@ -32,6 +32,13 @@ define ["env/window"], (win) ->
                     return player
                 this '<div id="youtube-player" /><script type="text/javascript"> window.playVideo(); delete window["playVideo"]; </script>'
 
+        joinme:
+          pattern: [/^(.*join\.me.*)$/, /\d{3}-\d{3}\d{3}/]
+          timeout: 0
+          generator: (url)->
+            url = 'https://join.me/'+url if (url.indexOf '://') == -1
+            this '<iframe src="'+url+'" style="height:100%; width:100%" scrolling="no" frameborder="0" />'
+
         url:
             pattern: /^(((http|ftp|https):\/\/)?[\w\-]+(\.[\w\-]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?)$/i
             generator: (url) ->
@@ -48,8 +55,6 @@ define ["env/window"], (win) ->
         clearTimeout timeout
         calloutActive = true
         callout = ($ '#callout')
-            .unbind('webkitTransitionEnd')
-        timeout = setTimeout hideCallout, data.timeout * 1000 if data.timeout
         contentHandler = undefined
         if data.type
             def = ContentGenerators[data.type]
@@ -59,6 +64,7 @@ define ["env/window"], (win) ->
                         contentHandler =
                             pattern: pattern
                             generator: def.generator
+                            timeout: def.timeout
                         break
             else
                 if match = def.pattern.test(data.content)
@@ -72,6 +78,7 @@ define ["env/window"], (win) ->
                             contentHandler =
                                 pattern: pattern
                                 generator: def.generator
+                                timeout: def.timeout
                             break
                     break if contentHandler
                 else
@@ -81,18 +88,19 @@ define ["env/window"], (win) ->
             throw Error("No content handler was found to match requested content") unless contentHandler
         contentHandler.generator.apply (content) ->
             callout.html(content)
-                   .css {'-webkit-transform': 'scale(1)'}
         , contentHandler.pattern.exec(data.content)
+
+        timeout_val = (contentHandler.timeout ? data.timeout) or 0
+        console.log "keeping callout open for #{timeout_val} seconds"
+        if timeout_val
+          timeout = setTimeout hideCallout, timeout_val * 1000
 
     hideCallout = (onComplete) ->
         clearTimeout timeout
         callout = ($ '#callout')
-            .unbind('webkitTransitionEnd')
-            .css({'-webkit-transform': 'scale(0)'})
-            .bind 'webkitTransitionEnd', ->
-                callout.unbind('webkitTransitionEnd').empty()
-                calloutActive = false
-                onComplete() if onComplete
+        callout.empty()
+        calloutActive = false
+        onComplete() if onComplete
 
     callout = (data) ->
         return (hideCallout -> showCallout data) if calloutActive
