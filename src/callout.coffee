@@ -51,6 +51,8 @@ define ["env/window"], (win) ->
                 pavlov()
                 this '<div class="valign">'+content+'</div><div class="vshim" />'
 
+    gen.type = type for own type, gen of ContentGenerators
+
     showCallout = (data) ->
         clearTimeout timeout
         calloutActive = true
@@ -64,6 +66,7 @@ define ["env/window"], (win) ->
                         contentHandler =
                             pattern: pattern
                             generator: def.generator
+                            type: def.type
                             timeout: def.timeout
                         break
             else
@@ -78,6 +81,7 @@ define ["env/window"], (win) ->
                             contentHandler =
                                 pattern: pattern
                                 generator: def.generator
+                                type: def.type
                                 timeout: def.timeout
                             break
                     break if contentHandler
@@ -91,7 +95,7 @@ define ["env/window"], (win) ->
         , contentHandler.pattern.exec(data.content)
 
         timeout_val = (contentHandler.timeout ? data.timeout) or 0
-        console.log "keeping callout open for #{timeout_val} seconds"
+        console.log "keeping [#{contentHandler.type}] callout open for #{timeout_val} seconds"
         if timeout_val
           timeout = setTimeout hideCallout, timeout_val * 1000
 
