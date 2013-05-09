@@ -43,6 +43,10 @@
     frame.style.height = (window.innerHeight - 5) + "px";
     var set_url = function() {
         var url = localStorage.getItem("rotate_URL_" + current);
+        if(!url) {
+          current = 0;
+          url = localStorage.getItem("rotate_URL_" + current);
+        }
         if(url) {
             frame.className = "hidden";
             window.setTimeout(function(){
@@ -54,8 +58,6 @@
                 }, 300);
             }, 300);
             current ++;
-        }else{
-         current = 0;
         }
     };
 
