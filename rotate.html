@@ -40,7 +40,7 @@
     var current = 0;
     var countdown = document.getElementById("countdown")
     var frame = document.getElementById("frame");
-    frame.style.height = window.innerHeight + "px";
+    frame.style.height = (window.innerHeight - 5) + "px";
     var set_url = function() {
         var url = localStorage.getItem("rotate_URL_" + current);
         if(url) {
