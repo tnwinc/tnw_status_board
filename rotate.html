@@ -40,15 +40,18 @@
     var current = 0;
     var countdown = document.getElementById("countdown")
     var frame = document.getElementById("frame");
+    frame.innerHeight = window.innerHeight;
     var set_url = function() {
         var url = localStorage.getItem("rotate_URL_" + current);
         if(url) {
             frame.className = "hidden";
             window.setTimeout(function(){
                 countdown.className = "reset";
-                countdown.className = "burndown";
                 frame.src = url;
-                window.setTimeout(function(){frame.className = "shown";}, 300);
+                window.setTimeout(function(){
+                  frame.className = "shown";
+                  countdown.className = "burndown";
+                }, 300);
             }, 300);
             current ++;
         }else{
