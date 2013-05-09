@@ -1,0 +1,47 @@
+<!doctype html>
+<body>
+<style>
+  body {
+   background-color: #333;
+  }
+  #frame {
+      width: 100%;
+      height: 401px;
+      border: 0;
+  }
+
+  #frame.hidden{
+      opacity: 0;
+      transition: opacity 250ms;
+  }
+
+  #frame.shown {
+    opacity: 1;
+    transition:opacity 250ms;
+  }
+</style>
+<iframe id="frame"></iframe>
+<script>
+    var current = 0;
+    var set_url = function() {
+        var urls = JSON.parse(localStorage.getItem("rotate_urls"));
+        if(urls && urls.length > 0) {
+            var frame = document.getElementById("frame");
+            frame.className = "hidden";
+            window.setTimeout(function(){
+                frame.src = urls[current];
+                window.setTimeout(function(){frame.className = "shown";}, 250);
+            }, 250);
+            frame.src = urls[current];
+            current ++;
+            if (current == urls.length) current = 0;
+        }else{
+         console.log("no urls to display");
+        }
+    };
+
+    window.setInterval(set_url, 3000);
+    set_url();
+</script>
+</body>
+</html>
