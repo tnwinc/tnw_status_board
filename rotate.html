@@ -1,68 +1,69 @@
 <!doctype html>
 <body>
 <style>
-  body {
-   background-color: #333;
-   margin: 0;
-   padding: 0;
-  }
-  #countdown {
-    background: #628894;
+body {
+    background-color: #333;
+    margin: 0;
+    padding: 0;
+}
+#countdown {
     height: 5px;
-  }
-  .reset {
+}
+#countdown.reset {
+    background: #628894;
     width: 100%;
-  }
-  .burndown {
-    -webkit-transition: all 60s linear;
-    transition: all 60s linear;
+}
+#countdown.burndown {
+    -webkit-transition: width 60s linear background 60s ease-in;
+    transition: width 60s linear background 60s ease-in;
+    background: #333;
     width: 1px;
-  }
-  #frame {
+}
+#frame {
     border: 0;
     width: 100%;
     height: 100%;
-  }
+}
 
-  #frame.hidden{
+#frame.hidden{
     opacity: 0;
     transition: opacity 250ms;
-  }
+}
 
-  #frame.shown {
+#frame.shown {
     opacity: 1;
     transition: opacity 250ms;
-  }
+}
 </style>
 <div id="countdown" class="reset"></div>
 <iframe id="frame"></iframe>
 <script>
-    var current = 0;
-    var countdown = document.getElementById("countdown")
-    var frame = document.getElementById("frame");
-    frame.style.height = (window.innerHeight - 5) + "px";
-    var set_url = function() {
-        var url = localStorage.getItem("rotate_URL_" + current);
-        if(!url) {
-          current = 0;
-          url = localStorage.getItem("rotate_URL_" + current);
-        }
-        if(url) {
-            frame.className = "hidden";
+var current = 0;
+var countdown = document.getElementById("countdown")
+var frame = document.getElementById("frame");
+frame.style.height = (window.innerHeight - 5) + "px";
+var set_url = function() {
+    var url = localStorage.getItem("rotate_URL_" + current);
+    if(!url) {
+        current = 0;
+        url = localStorage.getItem("rotate_URL_" + current);
+    }
+    if(url) {
+        frame.className = "hidden";
+        window.setTimeout(function(){
+            countdown.className = "reset";
+            frame.src = url;
             window.setTimeout(function(){
-                countdown.className = "reset";
-                frame.src = url;
-                window.setTimeout(function(){
-                  frame.className = "shown";
-                  countdown.className = "burndown";
-                }, 300);
+                frame.className = "shown";
+                countdown.className = "burndown";
             }, 300);
-            current ++;
-        }
-    };
+        }, 300);
+        current ++;
+    }
+};
 
-    window.setInterval(set_url, 60000);
-    set_url();
+window.setInterval(set_url, 60000);
+set_url();
 </script>
 </body>
 </html>
