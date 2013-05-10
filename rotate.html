@@ -7,7 +7,7 @@ body {
     padding: 0;
 }
 #countdown {
-    height: 5px;
+    height: 8px;
 }
 #countdown.reset {
     background: #333;
@@ -41,7 +41,7 @@ body {
 var current = 0;
 var countdown = document.getElementById("countdown")
 var frame = document.getElementById("frame");
-frame.style.height = (window.innerHeight - 5) + "px";
+frame.style.height = (window.innerHeight - 8) + "px";
 var set_url = function() {
     var url = localStorage.getItem("rotate_URL_" + current);
     if(!url) {
