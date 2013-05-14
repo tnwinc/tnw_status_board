@@ -21,6 +21,9 @@ body {
     background: #710000;
     width: 1px;
 }
+#content {
+    padding: 10px;
+}
 #content.hidden{
     opacity: 0;
     transition: opacity 250ms;
@@ -31,6 +34,26 @@ body {
 }
 #content span {
     display: block;
+    height: 35px;
+    padding: 5px;
+    padding-top: 10px;
+    text-align: center;
+    vertical-align: middle;
+    font-family: Helvetica;
+    font-size: 20px;
+    color: white;
+    border-top:1px solid #FFF;
+    border-bottom: 1px solid #D0D0D0;
+}
+#content span:first-child {
+    border-top: none;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+}
+#content span:last-child {
+    border-bottom: none;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
 }
 .pending {
     -webkit-transition: all 0.5s linear;
