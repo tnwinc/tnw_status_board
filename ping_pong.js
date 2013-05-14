@@ -59,7 +59,7 @@
       ping.className = "pending";
       ping.appendChild(document.createTextNode(diag.name));
       content.appendChild(ping);
-      window.setTimeout(check, 1000, url, ping);
+      window.setTimeout(check, 1000, diag.url, ping);
     }
     if(diags) {
       burnDown();
