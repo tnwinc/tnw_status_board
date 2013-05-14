@@ -71,13 +71,10 @@ var get_urls = function() {
 }
 
 var burn_down = function(){
-    content.className = "hidden";
+    countdown.className = "reset";
     window.setTimeout(function(){
-        countdown.className = "reset";
-        window.setTimeout(function(){
-            content.className = "shown";
-            countdown.className = "burndown";
-        }, 300);
+        content.className = "shown";
+        countdown.className = "burndown";
     }, 300);
 }
 
