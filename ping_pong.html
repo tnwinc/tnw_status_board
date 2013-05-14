@@ -1,149 +1,21 @@
 <!doctype html>
+<head>
+  <meta charset="UTF-8" />
+  <link rel="stylesheet" href="ping_pong.css">
+</head>
 <body>
-<style>
-body {
-    background-color: #333;
-    margin: 0;
-    padding: 0;
-    padding-right: 10px;
-}
-#countdown {
-    height: 7px;
-    margin-bottom: 3px;
-}
-#countdown.reset {
-    background: #333;
-    width: 100%;
-}
-#countdown.burndown {
-    -webkit-transition: all 299s linear;
-    transition: all 299s linear;
-    background: #710000;
-    width: 1px;
-}
-#content {
-    padding: 10px;
-}
-#content.hidden{
-    opacity: 0;
-    transition: opacity 250ms;
-}
-#content.shown {
-    opacity: 1;
-    transition: opacity 250ms;
-}
-#content span {
-    display: block;
-    height: 35px;
-    padding: 5px;
-    padding-top: 10px;
-    text-align: center;
-    vertical-align: middle;
-    font-family: Helvetica;
-    font-size: 20px;
-    color: white;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    border-top:1px solid #FFF;
-    border-bottom: 1px solid #D0D0D0;
-}
-#content span:first-child {
-    border-top: none;
-    border-top-left-radius: 3px;
-    border-top-right-radius: 3px;
-}
-#content span:last-child {
-    border-bottom: none;
-    border-bottom-left-radius: 3px;
-    border-bottom-right-radius: 3px;
-}
-.pending {
-    -webkit-transition: all 0.5s linear;
-    transition: all 0.5s linear;
-    background: yellow;
-}
 
-.success {
-    -webkit-transition: all 0.5s linear;
-    transition: all 0.5s linear;
-    background: green;
-}
+  <div id="countdown" class="countdown reset"></div>
 
-.error {
-    -webkit-transition: all 0.5s linear;
-    transition: all 0.5s linear;
-    background: red;
-}
-</style>
-<div id="countdown" class="reset"></div>
-<div id="content"></div>
-<script>
-var current = 0;
-var countdown = document.getElementById("countdown")
-var content = document.getElementById("content");
-content.style.height = (window.innerHeight - 15) + "px";
+  <ul id="content" class="content"></ul>
 
-var get_urls = function() {
-    var url;
-    var counter = 0;
-    var urls = [];
-    url = localStorage.getItem("ping_pong_" + counter);
-    while(url) {
-        urls.push(url);
-        counter ++;
-        url = localStorage.getItem("ping_pong_" + counter);
-    }
-    console.log("Got URLS to ping: ", urls);
-    return urls;
-}
+  <ul id="fixtures" class="content hidden">
+    <li class="success">All Good</li>
+    <li class="success">Also All Good</li>
+    <li class="error">Not So Good</li>
+    <li class="pending">Pending...</li>
+  </ul>
 
-var burn_down = function(){
-    countdown.className = "reset";
-    window.setTimeout(function(){
-        content.className = "shown";
-        countdown.className = "burndown";
-    }, 300);
-}
-
-var check = function(url, element) {
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', url, true);
-    xhr.responseType = 'document';
-
-    xhr.onloadend = function(e) {
-        console.log("Got response for ", url, this);
-        if (this.status >= 200 && this.status < 300) {
-            element.className = "success";
-        } else {
-            element.className = "error";
-        }
-    };
-
-    xhr.send();
-}
-
-var check_urls = function() {
-    var urls = get_urls();
-    while (content.firstChild) {
-        content.removeChild(content.firstChild);
-    }
-    for(var i in urls) {
-        var url = urls[i];
-        console.log("pinging ", url);
-        var ping = document.createElement("span");
-        ping.className = "pending";
-        ping.appendChild(document.createTextNode(url));
-        content.appendChild(ping);
-        window.setTimeout(check, 1000, url, ping);
-    }
-    if(urls) {
-        burn_down();
-    }
-};
-
-window.setInterval(check_urls, 60000 * 5);
-check_urls();
-
-</script>
+  <script src="ping_pong.js"></script>
 </body>
 </html>

@@ -1,0 +1,156 @@
+/* line 3, ping_pong.scss */
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, button, textarea, p, blockquote, th, td {
+  margin: 0;
+  padding: 0;
+}
+
+/* line 3, ping_pong.scss */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* line 3, ping_pong.scss */
+fieldset, img, a img {
+  border: none;
+}
+
+/* line 3, ping_pong.scss */
+address, caption, cite, code, dfn, em, strong, th, var, optgroup {
+  font-style: inherit;
+  font-weight: inherit;
+}
+
+/* line 3, ping_pong.scss */
+del, ins {
+  text-decoration: none;
+}
+
+/* line 3, ping_pong.scss */
+li {
+  list-style: none;
+}
+
+/* line 3, ping_pong.scss */
+caption, th {
+  text-align: left;
+}
+
+/* line 3, ping_pong.scss */
+h1, h2, h3, h4, h5, h6 {
+  font-size: 100%;
+  font-weight: normal;
+}
+
+/* line 3, ping_pong.scss */
+q:before, q:after {
+  content: '';
+}
+
+/* line 3, ping_pong.scss */
+abbr, acronym {
+  border: 0;
+  font-variant: normal;
+}
+
+/* line 3, ping_pong.scss */
+sup {
+  vertical-align: baseline;
+}
+
+/* line 3, ping_pong.scss */
+sub {
+  vertical-align: baseline;
+}
+
+/* line 3, ping_pong.scss */
+legend {
+  color: #000;
+}
+
+/* line 5, ping_pong.scss */
+body {
+  background: #333;
+  color: #e3e3e3;
+  font-family: "Helvetica Neue", Arial, sans-serif;
+}
+
+/* line 11, ping_pong.scss */
+.countdown {
+  height: 7px;
+  margin-bottom: 3px;
+}
+/* line 15, ping_pong.scss */
+.countdown.reset {
+  background: #333;
+  width: 100%;
+}
+/* line 20, ping_pong.scss */
+.countdown.burndown {
+  -webkit-transition: all 299s linear;
+  transition: all 299s linear;
+  background: #710000;
+  width: 1px;
+}
+
+/* line 28, ping_pong.scss */
+.content {
+  font-size: 24px;
+  padding: 0 10px;
+}
+/* line 32, ping_pong.scss */
+.content.hidden {
+  opacity: 0;
+  transition: opacity 250ms;
+}
+/* line 37, ping_pong.scss */
+.content.shown {
+  opacity: 1;
+  transition: opacity 250ms;
+}
+/* line 42, ping_pong.scss */
+.content li {
+  border-top: solid 1px;
+  border-bottom: solid 1px;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  overflow: hidden;
+  padding: 5px 10px;
+  text-overflow: ellipsis;
+  -webkit-transition: all 1s ease;
+  -moz-transition: all 1s ease;
+  -o-transition: all 1s ease;
+  transition: all 1s ease;
+  white-space: nowrap;
+}
+/* line 54, ping_pong.scss */
+.content li.success {
+  background-color: #496624;
+  border-top-color: #56792b;
+  border-bottom-color: #3c531d;
+}
+/* line 61, ping_pong.scss */
+.content li.error {
+  background-color: #973333;
+  border-top-color: #aa3939;
+  border-bottom-color: #842d2d;
+}
+/* line 68, ping_pong.scss */
+.content li.pending {
+  background-color: #626262;
+  border-top-color: #6f6f6f;
+  border-bottom-color: #555555;
+}
+/* line 74, ping_pong.scss */
+.content li:first-child {
+  border-radius: 3px 3px 0 0;
+}
+/* line 78, ping_pong.scss */
+.content li:last-child {
+  border-radius: 0 0 3px 3px;
+}
+
+/* line 84, ping_pong.scss */
+#fixtures.hidden {
+  display: none;
+}

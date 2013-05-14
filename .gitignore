@@ -2,3 +2,5 @@
 do_commands.yml
 settings.yml
 npm-debug.log
+.DS_Store
+.sass-cache

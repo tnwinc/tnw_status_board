@@ -1,5 +1,3 @@
-# A sample Guardfile
-# More info at https://github.com/guard/guard#readme
 interactor :off
 
 guard 'coffeescript', :input => 'src', :output => 'build' do
@@ -7,7 +5,7 @@ guard 'coffeescript', :input => 'src', :output => 'build' do
 end
 
 guard 'compass' do
-  watch(%r{(^.+\.s[ac]ss)})
+  watch(%r{(^.+\.scss)})
 end
 
 #guard 'livereload' do
