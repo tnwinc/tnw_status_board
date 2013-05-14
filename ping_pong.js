@@ -14,9 +14,15 @@
     var status;
     var counter = 0;
     var diags = [];
+    var parsedDiag;
     diag = localStorage.getItem("ping_pong_" + counter);
     while(diag) {
-      diags.push(JSON.parse(diag));
+      try {
+        parsedDiag = JSON.parse(diag);
+      } catch (e) {
+        parsedDiag = { name: diag, url: diag }
+      }
+      diags.push(parsedDiag);
       counter++;
       diag = localStorage.getItem("ping_pong_" + counter);
     }
