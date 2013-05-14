@@ -13,13 +13,14 @@ new TWTR.Widget({
   height: 400,
   theme: {
     shell: {
-      background: '#222',
-      color: '#000000'
+      background: '#333',
+      color: '#000'
     },
     tweets: {
-      background: '#222',
-      color: '#ccc',
-      links: '#00aa00'
+      background: '#333',
+      color: '#c7c7c7'
+      // ,
+      // links: '#496624'
     }
   },
   features: {
@@ -35,19 +36,32 @@ new TWTR.Widget({
     margin: 0;
     padding: 0;
   }
+
   .twtr-doc,
   .twtr-timeline {
     border-radius: 0;
   }
-  .twtr-hd {
+
+  .twtr-hd,
+  .twtr-ft {
     display: none;
   }
+
   .twtr-bd {
     padding: 0;
   }
+
   .twtr-bd p{
     color: #bbb;
   }
+
+  .twtr-tweets {
+  }
+
+  .twtr-tweet {
+
+  }
+
   .twtr-tweet-text {
     font-size: 28px;
   }
