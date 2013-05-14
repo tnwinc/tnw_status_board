@@ -1,0 +1,121 @@
+<!doctype html>
+<body>
+<style>
+body {
+    background-color: #333;
+    margin: 0;
+    padding: 0;
+    padding-right: 10px;
+}
+#countdown {
+    height: 7px;
+    margin-bottom: 3px;
+}
+#countdown.reset {
+    background: #333;
+    width: 100%;
+}
+#countdown.burndown {
+    -webkit-transition: all 59s linear;
+    transition: all 59s linear;
+    background: #710000;
+    width: 1px;
+}
+#content.hidden{
+    opacity: 0;
+    transition: opacity 250ms;
+}
+#content.shown {
+    opacity: 1;
+    transition: opacity 250ms;
+}
+#content span {
+    display: block;
+}
+.pending {
+    background: yellow;
+}
+
+.success {
+    background: green;
+}
+
+.error {
+    background: red;
+}
+</style>
+<div id="countdown" class="reset"></div>
+<div id="content"></div>
+<script>
+var current = 0;
+var countdown = document.getElementById("countdown")
+var content = document.getElementById("content");
+content.style.height = (window.innerHeight - 15) + "px";
+
+var get_urls = function() {
+    var url;
+    var counter = 0;
+    var urls = [];
+    url = localStorage.getItem("ping_pong_" + counter);
+    while(url) {
+        urls.push(url);
+        counter ++;
+        url = localStorage.getItem("ping_pong_" + counter);
+    }
+    console.log("Got URLS to ping: ", urls);
+    return urls;
+}
+
+var burn_down = function(){
+    content.className = "hidden";
+    window.setTimeout(function(){
+        countdown.className = "reset";
+        window.setTimeout(function(){
+            content.className = "shown";
+            countdown.className = "burndown";
+        }, 300);
+    }, 300);
+}
+
+var check = function(url, element) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', url, true);
+    xhr.responseType = 'document';
+
+    xhr.onloadend = function(e) {
+        console.log("Got response for ", url, this);
+        if (this.status >= 200 && this.status < 300) {
+            element.className = "success";
+        } else {
+            element.className = "error";
+        }
+    };
+
+    xhr.send();
+}
+
+var check_urls = function() {
+    var urls = get_urls();
+    while (content.firstChild) {
+        content.removeChild(content.firstChild);
+    }
+    for(var i in urls) {
+        var url = urls[i];
+        console.log("pinging ", url);
+        var ping = document.createElement("span");
+        ping.className = "pending";
+        ping.appendChild(document.createTextNode(url));
+        content.appendChild(ping);
+        check(url, ping);
+    }
+    if(urls) {
+        burn_down();
+    }
+};
+
+window.setInterval(check_urls, 60000);
+check_urls();
+
+</script>
+</body>
+</html>
