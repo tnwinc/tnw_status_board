@@ -37,10 +37,14 @@ body {
 }
 
 .success {
+    -webkit-transition: all 0.5s linear;
+    transition: all 0.5s linear;
     background: green;
 }
 
 .error {
+    -webkit-transition: all 0.5s linear;
+    transition: all 0.5s linear;
     background: red;
 }
 </style>
@@ -106,7 +110,7 @@ var check_urls = function() {
         ping.className = "pending";
         ping.appendChild(document.createTextNode(url));
         content.appendChild(ping);
-        check(url, ping);
+        window.setTimeout(check, 1000, url, ping);
     }
     if(urls) {
         burn_down();
