@@ -25,10 +25,10 @@
   };
 
   var burnDown = function(){
-    countdown.className = "reset";
+    countdown.className = "countdown reset";
     window.setTimeout(function(){
       content.className = "content shown";
-      countdown.className = "burndown";
+      countdown.className = "countdown burndown";
     }, 300);
   };
 
