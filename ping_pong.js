@@ -27,7 +27,7 @@
   var burnDown = function(){
     countdown.className = "reset";
     window.setTimeout(function(){
-      content.className = "shown";
+      content.className = "content shown";
       countdown.className = "burndown";
     }, 300);
   };
