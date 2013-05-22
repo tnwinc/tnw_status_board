@@ -10,7 +10,7 @@ new TWTR.Widget({
   title: '',
   subject: '',
   width: 'auto',
-  height: 400,
+  height: 500,
   theme: {
     shell: {
       background: '#333',
@@ -18,9 +18,8 @@ new TWTR.Widget({
     },
     tweets: {
       background: '#333',
-      color: '#c7c7c7'
-      // ,
-      // links: '#496624'
+      color: '#c7c7c7',
+      links: '#538b0b'
     }
   },
   features: {
@@ -34,6 +33,7 @@ new TWTR.Widget({
 <style>
   body {
     margin: 0;
+    overflow: hidden;
     padding: 0;
   }
 
@@ -56,14 +56,25 @@ new TWTR.Widget({
   }
 
   .twtr-tweets {
+    border-left: solid 1px #656565;
   }
 
-  .twtr-tweet {
+  .twtr-widget .twtr-tweet {
+    border-top: solid 1px #454545;
+    border-bottom: solid 1px #212121;
+    border-left: solid 1px #212121;
+  }
 
+  .twtr-avatar {
+    margin-top: 10px;
   }
 
   .twtr-tweet-text {
     font-size: 28px;
+  }
+
+  .twtr-tweet-text em {
+    display: none;
   }
 </style>
 </body>
