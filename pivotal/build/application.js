@@ -89,6 +89,7 @@
 
 (function() {
   App.ItemPickerComponent = Ember.Component.extend({
+    expanded: false,
     curatedItems: (function() {
       var withCurrent,
         _this = this;
@@ -100,7 +101,11 @@
       });
     }).property('items', 'currentItemId'),
     actions: {
+      toggleExpansion: function() {
+        this.toggleProperty('expanded');
+      },
       selectItem: function(item) {
+        this.set('expanded', false);
         if (!item.get('current')) {
           return this.sendAction('onSelect', item);
         }

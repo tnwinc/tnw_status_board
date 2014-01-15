@@ -1,5 +1,7 @@
 App.ItemPickerComponent = Ember.Component.extend
 
+  expanded: false
+
   curatedItems: (->
     withCurrent =_.map @get('items'), (item)=>
       item.set('current', @get('currentItemId') is item.get('id'))
@@ -9,5 +11,10 @@ App.ItemPickerComponent = Ember.Component.extend
 
   actions:
 
+    toggleExpansion: ->
+      @toggleProperty 'expanded'
+      return
+
     selectItem: (item)->
+      @set 'expanded', false
       @sendAction 'onSelect', item if not item.get('current')

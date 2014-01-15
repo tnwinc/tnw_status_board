@@ -77,3 +77,99 @@ body {
     }
   }
 }
+
+.project-container {
+  header {
+    @extend .clearfix;
+    background: $primary-color;
+    padding: 10px;
+  }
+}
+
+$item-picker-width: 200px;
+$item-picker-height: 30px;
+
+.item-picker {
+  float: left;
+  position: relative;
+  width: $item-picker-width;
+  height: $item-picker-height;
+  z-index: 10;
+
+  a.toggle-expansion {
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    color: #FFF;
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    text-align: center;
+    width: $item-picker-height;
+    height: $item-picker-height;
+    line-height: $item-picker-height;
+
+    &:hover {
+      background: darken($action-color, 10%);
+    }
+  }
+
+  &.expanded .toggle-expansion {
+    border-bottom-right-radius: 0;
+  }
+
+  ul {
+    background: $action-color;
+    border-radius: 3px;
+    margin: 0;
+    position: absolute;
+    width: $item-picker-width;
+  }
+
+  li {
+    display: none;
+
+    a {
+      box-sizing: border-box;
+      color: #FFF;
+      display: block;
+      height: $item-picker-height;
+      line-height: $item-picker-height;
+      overflow: hidden;
+      padding: 0 6px;
+      text-decoration: none;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      width: $item-picker-width;
+
+      &:first-of-type {
+        border-radius: 3px 3px 0 0;
+      }
+
+      &:last-of-type {
+        border-radius: 0 0 3px 3px;
+      }
+
+      &:hover {
+        background: darken($action-color, 10%);
+      }
+    }
+
+    &.current {
+      display: block;
+
+      a {
+        cursor: default;
+        width: $item-picker-width - $item-picker-height;
+
+        &:hover {
+          background: $action-color;
+        }
+      }
+    }
+  }
+
+  &.expanded li {
+    display: block;
+  }
+}

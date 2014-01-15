@@ -1,9 +1,18 @@
-<ul class="item-picker">
-  {{#each curatedItems}}
-    <li {{bind-attr class="current"}}>
-      <a href="#" {{action 'selectItem' this}}>
-        {{label}}
-      </a>
-    </li>
-  {{/each}}
-</ul>
+<div {{bind-attr class="expanded :item-picker"}}>
+  <ul>
+    {{#each curatedItems}}
+      <li {{bind-attr class="current"}}>
+        <a href="#" {{action 'selectItem' this}} {{bind-attr title=label}}>
+          {{label}}
+        </a>
+      </li>
+    {{/each}}
+  </ul>
+  <a href="#" class="toggle-expansion" {{action 'toggleExpansion'}}>
+    {{#if expanded}}
+      <i class="fa fa-caret-up"></i>
+    {{else}}
+      <i class="fa fa-caret-down"></i>
+    {{/if}}
+  </a>
+</div>
