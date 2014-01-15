@@ -7,4 +7,10 @@ App.LoginController = Ember.Controller.extend
 
     submit: ->
       App.pivotal.setToken @get('token')
-      @transitionToRoute 'projects'
+
+      attemptedTransition = @get 'attemptedTransition'
+      if attemptedTransition
+        attemptedTransition.retry()
+        @set 'attemptedTransition', null
+      else
+        @transitionToRoute 'projects'

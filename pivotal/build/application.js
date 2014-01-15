@@ -45,8 +45,15 @@
     },
     actions: {
       submit: function() {
+        var attemptedTransition;
         App.pivotal.setToken(this.get('token'));
-        return this.transitionToRoute('projects');
+        attemptedTransition = this.get('attemptedTransition');
+        if (attemptedTransition) {
+          attemptedTransition.retry();
+          return this.set('attemptedTransition', null);
+        } else {
+          return this.transitionToRoute('projects');
+        }
       }
     }
   });
@@ -55,9 +62,18 @@
 
 (function() {
   App.Route = Ember.Route.extend({
-    beforeModel: function() {
+    redirectToLogin: function(transition) {
+      this.controllerFor('login').set('attemptedTransition', transition);
+      return this.transitionTo('login');
+    },
+    beforeModel: function(transition) {
       if (!App.pivotal.isAuthenticated()) {
-        return this.transitionTo('login');
+        return this.redirectToLogin(transition);
+      }
+    },
+    actions: {
+      error: function(reason, transition) {
+        return this.redirectToLogin(transition);
       }
     }
   });
