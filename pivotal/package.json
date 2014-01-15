@@ -5,7 +5,8 @@
     "gulp": "*",
     "gulp-util": "*",
     "gulp-concat": "*",
-    "gulp-handlebars": "*",
+    "handlebars": "*",
+    "event-stream": "*",
     "gulp-compass": "*",
     "gulp-coffee": "*",
     "coffee-script": "*"
