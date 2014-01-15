@@ -1,9 +1,12 @@
+.clearfix:before,.clearfix:after { content:""; display:table; }
+.clearfix:after { clear:both; }
+
 body {
   background: #f8f8f8;
 }
 
-.login {
-  margin: 100px auto 0;
+.login-container {
+  margin: 50px auto 0;
   width: 530px;
 
   h2 {
@@ -30,6 +33,47 @@ body {
     button {
       display: block;
       padding: 13px;
+    }
+  }
+}
+
+.projects-index .projects-container {
+  margin: 50px auto 0;
+  width: 530px;
+
+  h2 {
+    background: $primary-color;
+    color: #FFF;
+    font-weight: normal;
+    margin: 0;
+    padding: 12px;
+  }
+
+  ul {
+    @extend .clearfix;
+    background: #e3e3e3;
+    margin: 0;
+    padding: 7px;
+
+    li {
+      float: left;
+      width: 244px;
+      margin: 7px 7px;
+
+      a {
+        background: $action-color;
+        border-radius: 3px;
+        color: #FFF;
+        display: block;
+        font-size: 1.2em;
+        padding: 10px;
+        text-decoration: none;
+
+        &:hover,
+        &:focus {
+          background: darken($action-color, 10%);
+        }
+      }
     }
   }
 }

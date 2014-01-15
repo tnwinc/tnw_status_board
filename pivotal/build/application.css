@@ -141,39 +141,90 @@ button:hover, button:focus {
 }
 
 /* line 1, ../src/stylesheets/_main.scss */
+.clearfix:before, .projects-index .projects-container ul:before, .clearfix:after, .projects-index .projects-container ul:after {
+  content: "";
+  display: table;
+}
+
+/* line 2, ../src/stylesheets/_main.scss */
+.clearfix:after, .projects-index .projects-container ul:after {
+  clear: both;
+}
+
+/* line 4, ../src/stylesheets/_main.scss */
 body {
   background: #f8f8f8;
 }
 
-/* line 5, ../src/stylesheets/_main.scss */
-.login {
-  margin: 100px auto 0;
+/* line 8, ../src/stylesheets/_main.scss */
+.login-container {
+  margin: 50px auto 0;
   width: 530px;
 }
-/* line 9, ../src/stylesheets/_main.scss */
-.login h2 {
+/* line 12, ../src/stylesheets/_main.scss */
+.login-container h2 {
   background: #5283af;
   color: #FFF;
   font-weight: normal;
   margin: 0;
   padding: 12px;
 }
-/* line 17, ../src/stylesheets/_main.scss */
-.login form {
+/* line 20, ../src/stylesheets/_main.scss */
+.login-container form {
   background: #e3e3e3;
   margin: 0;
   padding: 30px;
 }
-/* line 22, ../src/stylesheets/_main.scss */
-.login form input {
+/* line 25, ../src/stylesheets/_main.scss */
+.login-container form input {
   display: block;
   float: left;
   margin-right: 10px;
   padding: 12px;
   width: 309px;
 }
-/* line 30, ../src/stylesheets/_main.scss */
-.login form button {
+/* line 33, ../src/stylesheets/_main.scss */
+.login-container form button {
   display: block;
   padding: 13px;
+}
+
+/* line 40, ../src/stylesheets/_main.scss */
+.projects-index .projects-container {
+  margin: 50px auto 0;
+  width: 530px;
+}
+/* line 44, ../src/stylesheets/_main.scss */
+.projects-index .projects-container h2 {
+  background: #5283af;
+  color: #FFF;
+  font-weight: normal;
+  margin: 0;
+  padding: 12px;
+}
+/* line 52, ../src/stylesheets/_main.scss */
+.projects-index .projects-container ul {
+  background: #e3e3e3;
+  margin: 0;
+  padding: 7px;
+}
+/* line 58, ../src/stylesheets/_main.scss */
+.projects-index .projects-container ul li {
+  float: left;
+  width: 244px;
+  margin: 7px 7px;
+}
+/* line 63, ../src/stylesheets/_main.scss */
+.projects-index .projects-container ul li a {
+  background: #eb7c19;
+  border-radius: 3px;
+  color: #FFF;
+  display: block;
+  font-size: 1.2em;
+  padding: 10px;
+  text-decoration: none;
+}
+/* line 73, ../src/stylesheets/_main.scss */
+.projects-index .projects-container ul li a:hover, .projects-index .projects-container ul li a:focus {
+  background: #c06311;
 }

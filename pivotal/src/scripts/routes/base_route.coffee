@@ -1,14 +1,17 @@
 App.Route = Ember.Route.extend
 
-  redirectToLogin: (transition)->
-      @controllerFor('login').set 'attemptedTransition', transition
-      @transitionTo 'login'
+  activate: ->
+    cssClass = @cssClass()
+    if cssClass isnt 'application'
+      Ember.$('body').addClass cssClass
+
+  deactivate: ->
+    Ember.$('body').removeClass @cssClass()
+
+  cssClass: ->
+    @routeName.replace(/\./g, '-').dasherize()
 
   beforeModel: (transition)->
     if not App.pivotal.isAuthenticated()
-      @redirectToLogin transition
-
-  actions:
-
-    error: (reason, transition)->
-      @redirectToLogin transition
+      @controllerFor('login').set 'attemptedTransition', transition
+      @transitionTo 'login'

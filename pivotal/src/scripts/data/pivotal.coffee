@@ -16,6 +16,9 @@ Pivotal = Ember.Object.extend
   getProjects: ->
     @queryPivotal url: 'projects'
 
+  getProject: (id)->
+    @queryPivotal url: "projects/#{id}"
+
   queryPivotal: (config)->
     $.ajax
       type: 'GET'

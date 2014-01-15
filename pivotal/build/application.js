@@ -1,30 +1,40 @@
 (function() {
-  var BASE_URL, Pivotal, queryPivotal, token;
+  var BASE_URL, Pivotal;
 
   BASE_URL = 'https://www.pivotaltracker.com/services/v5/';
 
-  token = null;
-
-  queryPivotal = function(config) {
-    return $.ajax({
-      type: 'GET',
-      url: "" + BASE_URL + config.url,
-      headers: {
-        'X-TrackerToken': token
-      }
-    });
-  };
-
   Pivotal = Ember.Object.extend({
-    isAuthenticated: function() {
-      return token != null;
+    init: function() {
+      var token;
+      token = localStorage.apiToken;
+      if (token) {
+        return this.set('token', JSON.parse(token));
+      }
     },
-    setToken: function(aToken) {
-      return token = aToken;
+    isAuthenticated: function() {
+      return this.get('token') != null;
+    },
+    setToken: function(token) {
+      localStorage.apiToken = JSON.stringify(token);
+      return this.set('token', token);
     },
     getProjects: function() {
-      return queryPivotal({
+      return this.queryPivotal({
         url: 'projects'
+      });
+    },
+    getProject: function(id) {
+      return this.queryPivotal({
+        url: "projects/" + id
+      });
+    },
+    queryPivotal: function(config) {
+      return $.ajax({
+        type: 'GET',
+        url: "" + BASE_URL + config.url,
+        headers: {
+          'X-TrackerToken': this.get('token')
+        }
       });
     }
   });
@@ -48,7 +58,7 @@
         var attemptedTransition;
         App.pivotal.setToken(this.get('token'));
         attemptedTransition = this.get('attemptedTransition');
-        if (attemptedTransition) {
+        if (attemptedTransition && attemptedTransition.targetName !== 'login') {
           attemptedTransition.retry();
           return this.set('attemptedTransition', null);
         } else {
@@ -61,19 +71,29 @@
 }).call(this);
 
 (function() {
+
+
+}).call(this);
+
+(function() {
   App.Route = Ember.Route.extend({
-    redirectToLogin: function(transition) {
-      this.controllerFor('login').set('attemptedTransition', transition);
-      return this.transitionTo('login');
+    activate: function() {
+      var cssClass;
+      cssClass = this.cssClass();
+      if (cssClass !== 'application') {
+        return Ember.$('body').addClass(cssClass);
+      }
+    },
+    deactivate: function() {
+      return Ember.$('body').removeClass(this.cssClass());
+    },
+    cssClass: function() {
+      return this.routeName.replace(/\./g, '-').dasherize();
     },
     beforeModel: function(transition) {
       if (!App.pivotal.isAuthenticated()) {
-        return this.redirectToLogin(transition);
-      }
-    },
-    actions: {
-      error: function(reason, transition) {
-        return this.redirectToLogin(transition);
+        this.controllerFor('login').set('attemptedTransition', transition);
+        return this.transitionTo('login');
       }
     }
   });
@@ -99,9 +119,24 @@
 }).call(this);
 
 (function() {
+  App.ProjectRoute = Ember.Route.extend({
+    model: function(params) {
+      return App.pivotal.getProject(params.project_id).then(function(project) {
+        return _.pick(project, 'id', 'name');
+      });
+    }
+  });
+
+}).call(this);
+
+(function() {
   App.ProjectsRoute = App.Route.extend({
     model: function() {
-      return App.pivotal.getProjects();
+      return App.pivotal.getProjects().then(function(projects) {
+        return _.map(projects, function(project) {
+          return _.pick(project, 'id', 'name');
+        });
+      });
     }
   });
 
@@ -110,7 +145,11 @@
 (function() {
   App.Router.map(function() {
     this.route('login');
-    return this.resource('projects');
+    return this.resource('projects', function() {
+      return this.resource('project', {
+        path: ':project_id'
+      });
+    });
   });
 
 }).call(this);
