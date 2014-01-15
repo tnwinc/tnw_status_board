@@ -14,10 +14,13 @@ Pivotal = Ember.Object.extend
     @set 'token', token
 
   getProjects: ->
-    @queryPivotal url: 'projects'
+    @queryPivotal(url: 'projects').then (projects)->
+      _.map projects, (project)->
+        _.pick project, 'id', 'name'
 
   getProject: (id)->
-    @queryPivotal url: "projects/#{id}"
+    @queryPivotal(url: "projects/#{id}").then (project)->
+      _.pick project, 'id', 'name'
 
   queryPivotal: (config)->
     $.ajax

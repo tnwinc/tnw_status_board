@@ -17,7 +17,7 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   var buffer = '', stack1, hashContexts, hashTypes, options, escapeExpression=this.escapeExpression, helperMissing=helpers.helperMissing;
 
 
-  data.buffer.push("<div class=\"login-container\">\n\n  <h2>Please Authenticate</h2>\n\n  <form ");
+  data.buffer.push("<section class=\"login-container\">\n\n  <h2>Please Authenticate</h2>\n\n  <form ");
   hashContexts = {'on': depth0};
   hashTypes = {'on': "STRING"};
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "submit", {hash:{
@@ -32,7 +32,7 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
     'placeholder': ("API Token")
   },contexts:[],types:[],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
   data.buffer.push(escapeExpression(((stack1 = helpers.input || (depth0 && depth0.input)),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "input", options))));
-  data.buffer.push("\n    <button type=\"submit\">Authenticate</button>\n  </form>\n\n</div>\n");
+  data.buffer.push("\n    <button type=\"submit\">Authenticate</button>\n  </form>\n\n</section>\n");
   return buffer;
   
 });
@@ -42,7 +42,7 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   var buffer = '', hashTypes, hashContexts, escapeExpression=this.escapeExpression;
 
 
-  data.buffer.push("<div class=\"project-container\">\n\n  <h2>");
+  data.buffer.push("<header>\n\n</header>\n\n<div class=\"project-container\">\n\n  <h2>");
   hashTypes = {};
   hashContexts = {};
   data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "name", {hash:{},contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
@@ -78,16 +78,12 @@ function program2(depth0,data) {
   return buffer;
   }
 
-  data.buffer.push("<div class=\"projects-container\">\n\n  <h2>Projects</h2>\n\n  <ul>\n    ");
+  data.buffer.push("<section class=\"projects-container\">\n\n  <h2>Projects</h2>\n\n  <ul>\n    ");
   hashTypes = {};
   hashContexts = {};
   stack1 = helpers.each.call(depth0, {hash:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[],types:[],hashContexts:hashContexts,hashTypes:hashTypes,data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n  </ul>\n\n</div>\n\n");
-  hashTypes = {};
-  hashContexts = {};
-  data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "outlet", {hash:{},contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
-  data.buffer.push("\n");
+  data.buffer.push("\n  </ul>\n\n</section>\n");
   return buffer;
   
 });

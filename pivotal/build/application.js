@@ -21,11 +21,17 @@
     getProjects: function() {
       return this.queryPivotal({
         url: 'projects'
+      }).then(function(projects) {
+        return _.map(projects, function(project) {
+          return _.pick(project, 'id', 'name');
+        });
       });
     },
     getProject: function(id) {
       return this.queryPivotal({
         url: "projects/" + id
+      }).then(function(project) {
+        return _.pick(project, 'id', 'name');
       });
     },
     queryPivotal: function(config) {
@@ -77,19 +83,6 @@
 
 (function() {
   App.Route = Ember.Route.extend({
-    activate: function() {
-      var cssClass;
-      cssClass = this.cssClass();
-      if (cssClass !== 'application') {
-        return Ember.$('body').addClass(cssClass);
-      }
-    },
-    deactivate: function() {
-      return Ember.$('body').removeClass(this.cssClass());
-    },
-    cssClass: function() {
-      return this.routeName.replace(/\./g, '-').dasherize();
-    },
     beforeModel: function(transition) {
       if (!App.pivotal.isAuthenticated()) {
         this.controllerFor('login').set('attemptedTransition', transition);
@@ -119,10 +112,15 @@
 }).call(this);
 
 (function() {
-  App.ProjectRoute = Ember.Route.extend({
+  App.ProjectRoute = App.Route.extend({
     model: function(params) {
-      return App.pivotal.getProject(params.project_id).then(function(project) {
-        return _.pick(project, 'id', 'name');
+      return App.pivotal.getProject(params.project_id);
+    },
+    setupController: function(controller, model) {
+      this._super();
+      controller.set('model', model);
+      return App.pivotal.getProjects().then(function(projects) {
+        return controller.set('projects', projects);
       });
     }
   });
@@ -132,11 +130,7 @@
 (function() {
   App.ProjectsRoute = App.Route.extend({
     model: function() {
-      return App.pivotal.getProjects().then(function(projects) {
-        return _.map(projects, function(project) {
-          return _.pick(project, 'id', 'name');
-        });
-      });
+      return App.pivotal.getProjects();
     }
   });
 
@@ -145,10 +139,9 @@
 (function() {
   App.Router.map(function() {
     this.route('login');
-    return this.resource('projects', function() {
-      return this.resource('project', {
-        path: ':project_id'
-      });
+    this.resource('projects');
+    return this.resource('project', {
+      path: 'projects/:project_id'
     });
   });
 

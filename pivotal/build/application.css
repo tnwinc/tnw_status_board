@@ -141,13 +141,13 @@ button:hover, button:focus {
 }
 
 /* line 1, ../src/stylesheets/_main.scss */
-.clearfix:before, .projects-index .projects-container ul:before, .clearfix:after, .projects-index .projects-container ul:after {
+.clearfix:before, .projects-container ul:before, .clearfix:after, .projects-container ul:after {
   content: "";
   display: table;
 }
 
 /* line 2, ../src/stylesheets/_main.scss */
-.clearfix:after, .projects-index .projects-container ul:after {
+.clearfix:after, .projects-container ul:after {
   clear: both;
 }
 
@@ -190,12 +190,12 @@ body {
 }
 
 /* line 40, ../src/stylesheets/_main.scss */
-.projects-index .projects-container {
+.projects-container {
   margin: 50px auto 0;
   width: 530px;
 }
 /* line 44, ../src/stylesheets/_main.scss */
-.projects-index .projects-container h2 {
+.projects-container h2 {
   background: #5283af;
   color: #FFF;
   font-weight: normal;
@@ -203,19 +203,19 @@ body {
   padding: 12px;
 }
 /* line 52, ../src/stylesheets/_main.scss */
-.projects-index .projects-container ul {
+.projects-container ul {
   background: #e3e3e3;
   margin: 0;
   padding: 7px;
 }
 /* line 58, ../src/stylesheets/_main.scss */
-.projects-index .projects-container ul li {
+.projects-container ul li {
   float: left;
   width: 244px;
   margin: 7px 7px;
 }
 /* line 63, ../src/stylesheets/_main.scss */
-.projects-index .projects-container ul li a {
+.projects-container ul li a {
   background: #eb7c19;
   border-radius: 3px;
   color: #FFF;
@@ -225,6 +225,6 @@ body {
   text-decoration: none;
 }
 /* line 73, ../src/stylesheets/_main.scss */
-.projects-index .projects-container ul li a:hover, .projects-index .projects-container ul li a:focus {
+.projects-container ul li a:hover, .projects-container ul li a:focus {
   background: #c06311;
 }
