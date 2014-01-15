@@ -77,7 +77,36 @@
 }).call(this);
 
 (function() {
+  App.ProjectController = Ember.ObjectController.extend({
+    actions: {
+      didSelectProject: function(project) {
+        return this.transitionToRoute('project', project.get('id'));
+      }
+    }
+  });
 
+}).call(this);
+
+(function() {
+  App.ItemPickerComponent = Ember.Component.extend({
+    curatedItems: (function() {
+      var withCurrent,
+        _this = this;
+      withCurrent = _.map(this.get('items'), function(item) {
+        return item.set('current', _this.get('currentItemId') === item.get('id'));
+      });
+      return withCurrent.sort(function(a, b) {
+        return b.get('current') - a.get('current');
+      });
+    }).property('items', 'currentItemId'),
+    actions: {
+      selectItem: function(item) {
+        if (!item.get('current')) {
+          return this.sendAction('onSelect', item);
+        }
+      }
+    }
+  });
 
 }).call(this);
 
@@ -120,7 +149,12 @@
       this._super();
       controller.set('model', model);
       return App.pivotal.getProjects().then(function(projects) {
-        return controller.set('projects', projects);
+        return controller.set('projects', _.map(projects, function(project) {
+          return Ember.Object.create({
+            id: project.id,
+            label: project.name
+          });
+        }));
       });
     }
   });

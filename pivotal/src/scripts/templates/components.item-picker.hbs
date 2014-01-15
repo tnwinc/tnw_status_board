@@ -1,0 +1,9 @@
+<ul class="item-picker">
+  {{#each curatedItems}}
+    <li {{bind-attr class="current"}}>
+      <a href="#" {{action 'selectItem' this}}>
+        {{label}}
+      </a>
+    </li>
+  {{/each}}
+</ul>

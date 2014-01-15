@@ -7,4 +7,7 @@ App.ProjectRoute = App.Route.extend
     @_super()
     controller.set 'model', model
     App.pivotal.getProjects().then (projects)->
-      controller.set 'projects', projects
+      controller.set 'projects', _.map projects, (project)->
+        Ember.Object.create
+          id: project.id
+          label: project.name

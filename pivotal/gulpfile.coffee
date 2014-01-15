@@ -11,6 +11,7 @@ coffeeFiles = [
   'models/*'
   'controllers/*'
   'views/*'
+  'components/*'
   'routes/*'
   'router'
 ].map (fileName)-> "./src/scripts/#{fileName}.coffee"
