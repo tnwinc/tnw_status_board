@@ -3,9 +3,7 @@ gutil = require 'gulp-util'
 concat = require 'gulp-concat'
 coffee = require 'gulp-coffee'
 compass = require 'gulp-compass'
-es = require 'event-stream'
-path = require 'path'
-Handlebars = require 'handlebars'
+precompile = require './gulp/gulp-ember-handlebars'
 
 coffeeFiles = [
   'data/pivotal'
@@ -27,21 +25,7 @@ gulp.task 'coffee', ->
     .pipe(concat('application.js'))
     .pipe(gulp.dest('./build/'))
 
-precompile = ->
-  es.map (file, callback)->
-    try
-      compiled = Handlebars.precompile file.contents.toString(), {}
-    catch err
-      return callback err, file
-
-    fileName = path.basename(file.path, path.extname(file.path))
-    templateName = fileName.replace(/\.(handlebars|hbs)$/, '').replace(/\./g, '/')
-    compiled = 'Ember.TEMPLATES["' + templateName + '"] = Ember.Handlebars.template(' + compiled + ');'
-    file.path = path.join path.dirname(file.path), "#{fileName}.js"
-    file.contents = new Buffer compiled
-    callback null, file
-
-gulp.task 'compileTemplates', ->
+gulp.task 'precompile', ->
   gulp.src('./src/scripts/templates/*.hbs')
     .pipe(precompile())
     .pipe(concat('templates.js'))
@@ -57,7 +41,7 @@ gulp.task 'default', ->
     gulp.run 'coffee'
 
   gulp.watch './src/scripts/templates/*.hbs', ->
-    gulp.run 'compileTemplates'
+    gulp.run 'precompile'
 
   gulp.watch './src/stylesheets/*.scss', ->
     gulp.run 'compass'
