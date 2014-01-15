@@ -1,1 +1,6 @@
-<h1>Please Log In</h1>
+<h1>Please Authenticate</h1>
+
+<form {{action 'submit' on="submit"}}>
+  {{input value=token type="text" placeholder="API Token"}}
+  <button type="submit">Authenticate</button>
+</form>
