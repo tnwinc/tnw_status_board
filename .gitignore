@@ -4,3 +4,5 @@ settings.yml
 npm-debug.log
 .DS_Store
 .sass-cache
+tmp
+node_modules

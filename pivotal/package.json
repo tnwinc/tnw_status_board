@@ -1,0 +1,16 @@
+{
+  "name": "pivotal",
+  "version": "0.1.0",
+  "dependencies": {
+    "gulp": "*",
+    "gulp-util": "*",
+    "gulp-concat": "*",
+    "gulp-handlebars": "*",
+    "gulp-compass": "*",
+    "gulp-coffee": "*",
+    "coffee-script": "*"
+  },
+  "scripts": {
+    "start": "gulp --require coffee-script"
+  }
+}

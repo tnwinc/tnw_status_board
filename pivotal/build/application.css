@@ -1,0 +1,82 @@
+/* line 1, ../src/stylesheets/_base.scss */
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, button, textarea, p, blockquote, th, td {
+  margin: 0;
+  padding: 0;
+}
+
+/* line 1, ../src/stylesheets/_base.scss */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* line 1, ../src/stylesheets/_base.scss */
+fieldset, img, a img {
+  border: none;
+}
+
+/* line 1, ../src/stylesheets/_base.scss */
+address, caption, cite, code, dfn, em, strong, th, var, optgroup {
+  font-style: inherit;
+  font-weight: inherit;
+}
+
+/* line 1, ../src/stylesheets/_base.scss */
+del, ins {
+  text-decoration: none;
+}
+
+/* line 1, ../src/stylesheets/_base.scss */
+li {
+  list-style: none;
+}
+
+/* line 1, ../src/stylesheets/_base.scss */
+caption, th {
+  text-align: left;
+}
+
+/* line 1, ../src/stylesheets/_base.scss */
+h1, h2, h3, h4, h5, h6 {
+  font-size: 100%;
+  font-weight: normal;
+}
+
+/* line 1, ../src/stylesheets/_base.scss */
+q:before, q:after {
+  content: '';
+}
+
+/* line 1, ../src/stylesheets/_base.scss */
+abbr, acronym {
+  border: 0;
+  font-variant: normal;
+}
+
+/* line 1, ../src/stylesheets/_base.scss */
+sup {
+  vertical-align: baseline;
+}
+
+/* line 1, ../src/stylesheets/_base.scss */
+sub {
+  vertical-align: baseline;
+}
+
+/* line 1, ../src/stylesheets/_base.scss */
+legend {
+  color: #000;
+}
+
+/* line 3, ../src/stylesheets/_base.scss */
+body {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 16px;
+  width: 100%;
+  height: 100%;
+}
+
+/* line 1, ../src/stylesheets/_main.scss */
+body {
+  background: #f8f8f8;
+}
