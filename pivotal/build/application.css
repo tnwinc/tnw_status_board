@@ -76,7 +76,104 @@ body {
   height: 100%;
 }
 
+/* line 10, ../src/stylesheets/_base.scss */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+/* line 15, ../src/stylesheets/_base.scss */
+h1 {
+  font-size: 1.5em;
+}
+
+/* line 19, ../src/stylesheets/_base.scss */
+h2 {
+  font-size: 1.3em;
+}
+
+/* line 23, ../src/stylesheets/_base.scss */
+h3 {
+  font-size: 1.1em;
+}
+
+/* line 30, ../src/stylesheets/_base.scss */
+p,
+ul,
+ol,
+form {
+  line-height: 1.5;
+  margin: 10px 0;
+}
+
+/* line 37, ../src/stylesheets/_base.scss */
+a:link, a:visited {
+  color: #eb7c19;
+  text-decoration: none;
+}
+/* line 44, ../src/stylesheets/_base.scss */
+a:hover, a:focus, a:active {
+  color: #c06311;
+  text-decoration: underline;
+}
+
+/* line 50, ../src/stylesheets/_base.scss */
+input {
+  border: solid 1px #c7c7c7;
+  border-radius: 3px;
+  font-size: 1em;
+  padding: 5px 10px;
+}
+
+/* line 57, ../src/stylesheets/_base.scss */
+button {
+  background: #eb7c19;
+  border: none;
+  border-radius: 3px;
+  color: #FFF;
+  font-size: 1em;
+  cursor: pointer;
+  padding: 6px 11px;
+}
+/* line 67, ../src/stylesheets/_base.scss */
+button:hover, button:focus {
+  background: #c06311;
+}
+
 /* line 1, ../src/stylesheets/_main.scss */
 body {
   background: #f8f8f8;
+}
+
+/* line 5, ../src/stylesheets/_main.scss */
+.login {
+  margin: 100px auto 0;
+  width: 530px;
+}
+/* line 9, ../src/stylesheets/_main.scss */
+.login h2 {
+  background: #5283af;
+  color: #FFF;
+  font-weight: normal;
+  margin: 0;
+  padding: 12px;
+}
+/* line 17, ../src/stylesheets/_main.scss */
+.login form {
+  background: #e3e3e3;
+  margin: 0;
+  padding: 30px;
+}
+/* line 22, ../src/stylesheets/_main.scss */
+.login form input {
+  display: block;
+  float: left;
+  margin-right: 10px;
+  padding: 12px;
+  width: 309px;
+}
+/* line 30, ../src/stylesheets/_main.scss */
+.login form button {
+  display: block;
+  padding: 13px;
 }
