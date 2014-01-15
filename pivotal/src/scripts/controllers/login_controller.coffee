@@ -9,7 +9,7 @@ App.LoginController = Ember.Controller.extend
       App.pivotal.setToken @get('token')
 
       attemptedTransition = @get 'attemptedTransition'
-      if attemptedTransition
+      if attemptedTransition and attemptedTransition.targetName isnt 'login'
         attemptedTransition.retry()
         @set 'attemptedTransition', null
       else

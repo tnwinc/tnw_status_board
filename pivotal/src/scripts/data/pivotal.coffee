@@ -1,22 +1,26 @@
 BASE_URL = 'https://www.pivotaltracker.com/services/v5/'
-token = null
-
-queryPivotal = (config)->
-  $.ajax
-    type: 'GET'
-    url: "#{BASE_URL}#{config.url}"
-    headers:
-      'X-TrackerToken': token
 
 Pivotal = Ember.Object.extend
 
-  isAuthenticated: ->
-    token?
+  init: ->
+    token = localStorage.apiToken
+    @set 'token', JSON.parse(token) if token
 
-  setToken: (aToken)->
-    token = aToken
+  isAuthenticated: ->
+    @get('token')?
+
+  setToken: (token)->
+    localStorage.apiToken = JSON.stringify token
+    @set 'token', token
 
   getProjects: ->
-    queryPivotal url: 'projects'
+    @queryPivotal url: 'projects'
+
+  queryPivotal: (config)->
+    $.ajax
+      type: 'GET'
+      url: "#{BASE_URL}#{config.url}"
+      headers:
+        'X-TrackerToken': @get 'token'
 
 App.pivotal = Pivotal.create()
