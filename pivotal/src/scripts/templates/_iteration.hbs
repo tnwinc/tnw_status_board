@@ -1,6 +1,6 @@
-<article {{bind-attr class="expanded"}}>
+<article {{bind-attr class="expanded :iteration"}}>
   <header>
-    <h3>{{date start}} - {{date finish}}</h3>
+    <h4>{{date start}} - {{date finish}}</h4>
     {{#if hasStories}}
       <a href="#" class="toggle-expansion" {{action 'toggleExpansion' this}}>
         {{expando_icon expanded}}

@@ -35,10 +35,10 @@ function program3(depth0,data) {
   hashContexts = {'class': depth0};
   hashTypes = {'class': "STRING"};
   options = {hash:{
-    'class': ("expanded")
+    'class': ("expanded :iteration")
   },contexts:[],types:[],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
   data.buffer.push(escapeExpression(((stack1 = helpers['bind-attr'] || (depth0 && depth0['bind-attr'])),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "bind-attr", options))));
-  data.buffer.push(">\n  <header>\n    <h3>");
+  data.buffer.push(">\n  <header>\n    <h4>");
   hashTypes = {};
   hashContexts = {};
   options = {hash:{},contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
@@ -48,7 +48,7 @@ function program3(depth0,data) {
   hashContexts = {};
   options = {hash:{},contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
   data.buffer.push(escapeExpression(((stack1 = helpers.date || (depth0 && depth0.date)),stack1 ? stack1.call(depth0, "finish", options) : helperMissing.call(depth0, "date", "finish", options))));
-  data.buffer.push("</h3>\n    ");
+  data.buffer.push("</h4>\n    ");
   hashTypes = {};
   hashContexts = {};
   stack2 = helpers['if'].call(depth0, "hasStories", {hash:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data});
@@ -219,7 +219,15 @@ function program1(depth0,data) {
     'onSelect': ("didSelectProject")
   },contexts:[],types:[],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
   data.buffer.push(escapeExpression(((stack1 = helpers['item-picker'] || (depth0 && depth0['item-picker'])),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "item-picker", options))));
-  data.buffer.push("\n  </header>\n\n  <section class=\"iterations\">\n    ");
+  data.buffer.push("\n  </header>\n\n  <section class=\"iterations\">\n    <header>\n      <h3>Backlog</h3>\n      <a href=\"#\" ");
+  hashTypes = {};
+  hashContexts = {};
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "expandAll", {hash:{},contexts:[depth0],types:["STRING"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
+  data.buffer.push(" class=\"expand-all\" title=\"Expand All\">\n        <i class=\"fa fa-toggle-down\"></i>\n      </a>\n      <a href=\"#\" ");
+  hashTypes = {};
+  hashContexts = {};
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "collapseAll", {hash:{},contexts:[depth0],types:["STRING"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
+  data.buffer.push(" class=\"collapse-all\" title=\"Collapse All\">\n        <i class=\"fa fa-toggle-up\"></i>\n      </a>\n    </header>\n\n    ");
   hashTypes = {};
   hashContexts = {};
   stack2 = helpers.each.call(depth0, "iterations", {hash:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data});

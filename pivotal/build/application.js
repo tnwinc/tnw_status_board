@@ -107,6 +107,16 @@
       },
       toggleExpansion: function(iteration) {
         iteration.toggleProperty('expanded');
+      },
+      expandAll: function() {
+        return _.each(this.get('iterations'), function(iteration) {
+          return iteration.set('expanded', true);
+        });
+      },
+      collapseAll: function() {
+        return _.each(this.get('iterations'), function(iteration) {
+          return iteration.set('expanded', false);
+        });
       }
     }
   });

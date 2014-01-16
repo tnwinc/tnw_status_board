@@ -5,6 +5,16 @@
   </header>
 
   <section class="iterations">
+    <header>
+      <h3>Backlog</h3>
+      <a href="#" {{action 'expandAll'}} class="expand-all" title="Expand All">
+        <i class="fa fa-toggle-down"></i>
+      </a>
+      <a href="#" {{action 'collapseAll'}} class="collapse-all" title="Collapse All">
+        <i class="fa fa-toggle-up"></i>
+      </a>
+    </header>
+
     {{#each iterations}}
       {{partial 'iteration'}}
     {{/each}}

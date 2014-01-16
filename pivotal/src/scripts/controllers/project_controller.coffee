@@ -14,3 +14,11 @@ App.ProjectController = Ember.ObjectController.extend
     toggleExpansion: (iteration)->
       iteration.toggleProperty 'expanded'
       return
+
+    expandAll: ->
+      _.each @get('iterations'), (iteration)->
+        iteration.set 'expanded', true
+
+    collapseAll: ->
+      _.each @get('iterations'), (iteration)->
+        iteration.set 'expanded', false

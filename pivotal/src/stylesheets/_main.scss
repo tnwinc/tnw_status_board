@@ -174,17 +174,65 @@ $item-picker-height: 30px;
     border-bottom: solid 1px darken($color, 10%);
 }
 
+@mixin centered-icon($width) {
+  margin-top: -10px;
+  position: absolute;
+  top: 50%;
+  right: 0;
+  text-align: center;
+  width: $width;
+  height: 20px;
+  line-height: 20px;
+}
+
 .iterations {
   margin: 20px;
 
+  & > header {
+    background: #333;
+    padding: 8px 10px;
+    position: relative;
+
+    h3 {
+      color: #FFF;
+      font-size: 1em;
+      margin: 0;
+      text-transform: uppercase;
+    }
+
+    a {
+      color: #d3d3d3;
+      display: block;
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 30px;
+
+      &.expand-all {
+        right: 30px;
+      }
+
+      &:hover,
+      &:focus {
+        background: rgba(255,255,255,0.1);
+      }
+
+      i {
+        @include centered-icon(30px);
+      }
+    }
+  }
+}
+
+.iteration {
   header {
     position: relative;
   }
 
-  h3 {
+  h4 {
     @include bezeled(#959595);
     color: #FFF;
-    font-size: 1em;
     margin: 0;
     padding: 5px 10px;
   }
@@ -197,7 +245,6 @@ $item-picker-height: 30px;
     right: 0;
     bottom: 0;
     width: 30px;
-    text-align: center;
 
     &:hover,
     &:focus {
@@ -205,13 +252,7 @@ $item-picker-height: 30px;
     }
 
     i {
-      margin-top: -10px;
-      position: absolute;
-      top: 50%;
-      right: 0;
-      width: 30px;
-      height: 20px;
-      line-height: 20px;
+      @include centered-icon(30px);
     }
   }
 }
