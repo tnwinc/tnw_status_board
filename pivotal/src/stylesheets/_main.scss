@@ -77,6 +77,33 @@ body {
   }
 }
 
+@-webkit-keyframes flashwarning {
+  0% { background-color: #B61818; }
+  0.5% { background-color: #F10E0E; }
+  1% { background-color: #B61818; }
+  1.5% { background-color: #F10E0E; }
+  2% { background-color: #B61818; }
+  2.5% { background-color: #F10E0E; }
+  3% { background-color: #B61818; }
+  3.5% { background-color: #F10E0E; }
+  4% { background-color: #B61818; }
+  100% { background-color: #B61818; }
+}
+
+.banner {
+  background-color: #545454;
+  color: #FFF;
+  font-size: 1.2em;
+  padding: 15px;
+  text-align: center;
+
+  &.warning {
+    background: #B61818;
+    -webkit-animation: flashwarning 300s infinite;
+    animation: flashwarning 300s infinite;
+  }
+}
+
 .project-container > header {
   @extend .clearfix;
   background: $primary-color;

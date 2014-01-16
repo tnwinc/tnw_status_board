@@ -72,6 +72,23 @@
 }).call(this);
 
 (function() {
+  App.ApplicationController = Ember.Controller.extend({
+    actions: {
+      showBanner: function(message, type) {
+        return this.set('banner', {
+          message: message,
+          type: type
+        });
+      },
+      hideBanner: function() {
+        return this.set('banner', null);
+      }
+    }
+  });
+
+}).call(this);
+
+(function() {
   App.LoginController = Ember.Controller.extend({
     reset: function() {
       return this.set('token', '');
@@ -362,6 +379,10 @@
 }).call(this);
 
 (function() {
+  var unacceptedStoryTypes;
+
+  unacceptedStoryTypes = ['started', 'finished', 'delivered', 'rejected'];
+
   App.ScopesRoute = App.Route.extend({
     model: function() {
       var projectId;
@@ -380,13 +401,29 @@
       });
     },
     setupController: function(controller, model) {
+      var _this = this;
       controller.set('model', model);
       return _.each(model, function(scope) {
-        return _.each(scope.get('iterations'), function(iteration) {
+        return _.each(scope.get('iterations'), function(iteration, index) {
+          if (index === 0) {
+            _this.checkStories(iteration.get('stories'));
+          }
           iteration.set('expanded', true);
           return iteration.set('hasStories', iteration.get('stories.length'));
         });
       });
+    },
+    checkStories: function(stories) {
+      var applicationController, unacceptedStories;
+      unacceptedStories = _.filter(stories, function(story) {
+        return _.contains(unacceptedStoryTypes, story.current_state);
+      });
+      applicationController = this.controllerFor('application');
+      if (unacceptedStories.length > 5) {
+        return applicationController.send('showBanner', 'Your team has over 5 unaccepted stories in progress', 'warning');
+      } else {
+        return applicationController.send('hideBanner');
+      }
     }
   });
 
