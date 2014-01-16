@@ -237,13 +237,15 @@ body {
 
 /* line 92, ../src/stylesheets/_main.scss */
 .item-picker {
+  background: #eb7c19;
+  border-radius: 3px;
   float: left;
   position: relative;
   width: 200px;
   height: 30px;
   z-index: 10;
 }
-/* line 99, ../src/stylesheets/_main.scss */
+/* line 101, ../src/stylesheets/_main.scss */
 .item-picker a.toggle-expansion {
   border-top-right-radius: 3px;
   border-bottom-right-radius: 3px;
@@ -257,15 +259,16 @@ body {
   height: 30px;
   line-height: 30px;
 }
-/* line 112, ../src/stylesheets/_main.scss */
+/* line 114, ../src/stylesheets/_main.scss */
 .item-picker a.toggle-expansion:hover {
   background: #c06311;
 }
-/* line 117, ../src/stylesheets/_main.scss */
-.item-picker.expanded .toggle-expansion {
+/* line 119, ../src/stylesheets/_main.scss */
+.item-picker.expanded a.toggle-expansion {
   border-bottom-right-radius: 0;
+  line-height: 27px;
 }
-/* line 121, ../src/stylesheets/_main.scss */
+/* line 124, ../src/stylesheets/_main.scss */
 .item-picker ul {
   background: #eb7c19;
   border-radius: 3px;
@@ -273,11 +276,11 @@ body {
   position: absolute;
   width: 200px;
 }
-/* line 129, ../src/stylesheets/_main.scss */
+/* line 132, ../src/stylesheets/_main.scss */
 .item-picker li {
   display: none;
 }
-/* line 132, ../src/stylesheets/_main.scss */
+/* line 135, ../src/stylesheets/_main.scss */
 .item-picker li a {
   box-sizing: border-box;
   color: #FFF;
@@ -291,32 +294,32 @@ body {
   white-space: nowrap;
   width: 200px;
 }
-/* line 145, ../src/stylesheets/_main.scss */
+/* line 148, ../src/stylesheets/_main.scss */
 .item-picker li a:first-of-type {
   border-radius: 3px 3px 0 0;
 }
-/* line 149, ../src/stylesheets/_main.scss */
+/* line 152, ../src/stylesheets/_main.scss */
 .item-picker li a:last-of-type {
   border-radius: 0 0 3px 3px;
 }
-/* line 153, ../src/stylesheets/_main.scss */
+/* line 156, ../src/stylesheets/_main.scss */
 .item-picker li a:hover {
   background: #c06311;
 }
-/* line 158, ../src/stylesheets/_main.scss */
+/* line 161, ../src/stylesheets/_main.scss */
 .item-picker li.current {
   display: block;
 }
-/* line 161, ../src/stylesheets/_main.scss */
+/* line 164, ../src/stylesheets/_main.scss */
 .item-picker li.current a {
   cursor: default;
   width: 170px;
 }
-/* line 165, ../src/stylesheets/_main.scss */
+/* line 168, ../src/stylesheets/_main.scss */
 .item-picker li.current a:hover {
   background: #eb7c19;
 }
-/* line 172, ../src/stylesheets/_main.scss */
+/* line 175, ../src/stylesheets/_main.scss */
 .item-picker.expanded li {
   display: block;
 }

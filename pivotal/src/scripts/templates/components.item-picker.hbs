@@ -2,13 +2,13 @@
   <ul>
     {{#each curatedItems}}
       <li {{bind-attr class="current"}}>
-        <a href="#" {{action 'selectItem' this}} {{bind-attr title=label}}>
+        <a href="#" {{action 'selectItem' this bubbles=false}} {{bind-attr title=label}}>
           {{label}}
         </a>
       </li>
     {{/each}}
   </ul>
-  <a href="#" class="toggle-expansion" {{action 'toggleExpansion'}}>
+  <a href="#" class="toggle-expansion" {{action 'toggleExpansion' bubbles=false}}>
     {{#if expanded}}
       <i class="fa fa-caret-up"></i>
     {{else}}

@@ -90,6 +90,8 @@ $item-picker-width: 200px;
 $item-picker-height: 30px;
 
 .item-picker {
+  background: $action-color;
+  border-radius: 3px;
   float: left;
   position: relative;
   width: $item-picker-width;
@@ -114,8 +116,9 @@ $item-picker-height: 30px;
     }
   }
 
-  &.expanded .toggle-expansion {
+  &.expanded a.toggle-expansion {
     border-bottom-right-radius: 0;
+    line-height: $item-picker-height - 3;
   }
 
   ul {

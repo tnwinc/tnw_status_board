@@ -90,6 +90,15 @@
 (function() {
   App.ItemPickerComponent = Ember.Component.extend({
     expanded: false,
+    didInsertElement: function() {
+      var _this = this;
+      return Ember.$('body').on('click.expansion', function() {
+        return _this.set('expanded', false);
+      });
+    },
+    willDestroy: function() {
+      return Ember.$('body').off('click.expansion');
+    },
     curatedItems: (function() {
       var withCurrent,
         _this = this;
