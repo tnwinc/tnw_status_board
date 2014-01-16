@@ -169,6 +169,41 @@ $item-picker-height: 30px;
   }
 }
 
+.multi-picker {
+  margin: 0 0 0 20px;
+  float: left;
+
+  li {
+    display: inline-block;
+    margin-right: 10px;
+
+    a {
+      border-radius: 3px;
+      color: #FFF;
+      display: block;
+      height: $item-picker-height;
+      line-height: $item-picker-height;
+      padding: 0 10px;
+      text-decoration: none;
+
+      &:hover,
+      &:focus {
+        background: rgba(0,0,0,0.1);
+      }
+    }
+
+    &.selected a {
+      background: $action-color;
+
+      &:hover,
+      &:focus {
+        background: darken($action-color, 20%);
+      }
+    }
+
+  }
+}
+
 @mixin bezeled($color) {
     background: $color;
     border-bottom: solid 1px darken($color, 10%);
@@ -191,7 +226,21 @@ $item-picker-height: 30px;
 }
 
 .scope {
-  margin: 10px;
+  box-sizing: border-box;
+  float: left;
+  padding: 10px;
+
+  .scopes-count-1 & {
+    float: none;
+  }
+
+  .scopes-count-2 & {
+    width: 50%;
+  }
+
+  .scope-count-3 & {
+    width: 33%;
+  }
 
   & > header {
     background: #333;

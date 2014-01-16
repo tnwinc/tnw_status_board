@@ -95,9 +95,18 @@
 
 (function() {
   App.ProjectController = Ember.ObjectController.extend({
+    needs: 'scopes',
     actions: {
       didSelectProject: function(project) {
         return this.transitionToRoute('project', project.get('id'));
+      },
+      didSelectScope: function(scope) {
+        scope.set('selected', true);
+        return this.get('controllers.scopes').send('addScope', scope);
+      },
+      didUnselectScope: function(scope) {
+        scope.set('selected', false);
+        return this.get('controllers.scopes').send('removeScope', scope);
       }
     }
   });
@@ -105,20 +114,67 @@
 }).call(this);
 
 (function() {
-  App.ScopesController = Ember.ArrayController.extend({
+  App.ScopeController = Ember.ObjectController.extend({
     actions: {
-      toggleExpansion: function(iteration) {
-        iteration.toggleProperty('expanded');
-      },
-      expandAll: function(scope) {
-        return _.each(scope.get('iterations'), function(iteration) {
+      expandAll: function() {
+        return _.each(this.get('iterations'), function(iteration) {
           return iteration.set('expanded', true);
         });
       },
-      collapseAll: function(scope) {
-        return _.each(scope.get('iterations'), function(iteration) {
+      collapseAll: function() {
+        return _.each(this.get('iterations'), function(iteration) {
           return iteration.set('expanded', false);
         });
+      }
+    }
+  });
+
+}).call(this);
+
+(function() {
+  var scopeOrder;
+
+  scopeOrder = ['done', 'current_backlog', 'icebox'];
+
+  App.ScopesController = Ember.ArrayController.extend({
+    needs: 'project',
+    sortProperties: ['order'],
+    count: (function() {
+      return "scopes-count-" + (this.get('model.length'));
+    }).property('model.length'),
+    actions: {
+      addScope: function(scope) {
+        var projectId, type,
+          _this = this;
+        projectId = this.get('controllers.project').get('id');
+        type = scope.get('type');
+        if (scope.get('conditions')) {
+
+        } else {
+          return App.pivotal.getIterations(projectId, type).then(function(iterations) {
+            scope = Ember.Object.create({
+              id: type,
+              name: scope.get('label'),
+              order: scopeOrder.indexOf(type),
+              iterations: _.map(iterations, function(iteration) {
+                iteration.expanded = true;
+                return Ember.Object.create(iteration);
+              })
+            });
+            return _this.get('model').addObject(scope);
+          });
+        }
+      },
+      removeScope: function(scope) {
+        var scopeToRemove, scopes;
+        scopes = this.get('model');
+        scopeToRemove = _.find(scopes, function(thisScope) {
+          return thisScope.get('id') === scope.get('type');
+        });
+        return scopes.removeObject(scopeToRemove);
+      },
+      toggleExpansion: function(iteration) {
+        iteration.toggleProperty('expanded');
       }
     }
   });
@@ -154,6 +210,29 @@
       selectItem: function(item) {
         this.set('expanded', false);
         if (!item.get('current')) {
+          return this.sendAction('onSelect', item);
+        }
+      }
+    }
+  });
+
+}).call(this);
+
+(function() {
+  App.MultiPickerComponent = Ember.Component.extend({
+    tagName: 'ul',
+    classNames: ['multi-picker'],
+    actions: {
+      selectItem: function(item) {
+        var numSelected;
+        if (item.selected) {
+          numSelected = _.where(this.get('items'), {
+            selected: true
+          }).length;
+          if (numSelected > 1) {
+            return this.sendAction('onUnselect', item);
+          }
+        } else {
           return this.sendAction('onSelect', item);
         }
       }
@@ -234,9 +313,29 @@
       return App.pivotal.getProject(params.project_id);
     },
     setupController: function(controller, model) {
-      var _this = this;
+      var scopes,
+        _this = this;
       this._super();
       controller.set('model', model);
+      scopes = [
+        {
+          label: 'Done',
+          type: 'done'
+        }, {
+          label: 'Backlog',
+          type: 'current_backlog',
+          selected: true
+        }, {
+          label: 'Icebox',
+          type: 'icebox',
+          conditions: {
+            with_state: 'unscheduled'
+          }
+        }
+      ];
+      controller.set('scopes', _.map(scopes, function(scope) {
+        return Ember.Object.create(scope);
+      }));
       return App.pivotal.getProjects().then(function(projects) {
         controller.set('projects', _.map(projects, function(project) {
           return Ember.Object.create({
@@ -269,6 +368,8 @@
         var scope;
         scope = Ember.Object.create({
           id: 'current_backlog',
+          name: 'Backlog',
+          order: 0,
           iterations: _.map(iterations, function(iteration) {
             return Ember.Object.create(iteration);
           })

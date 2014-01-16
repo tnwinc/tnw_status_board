@@ -5,6 +5,8 @@ App.ScopesRoute = App.Route.extend
     App.pivotal.getIterations(projectId, 'current_backlog').then (iterations)->
       scope = Ember.Object.create
         id: 'current_backlog'
+        name: 'Backlog'
+        order: 0
         iterations: _.map iterations, (iteration)->
           Ember.Object.create iteration
       [scope]

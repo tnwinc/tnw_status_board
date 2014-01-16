@@ -1,6 +1,8 @@
 <section class="project-container">
   <header>
     {{item-picker items=projects currentItemId=id onSelect="didSelectProject"}}
+
+    {{multi-picker items=scopes onSelect="didSelectScope" onUnselect="didUnselectScope"}}
   </header>
 
   {{outlet}}
