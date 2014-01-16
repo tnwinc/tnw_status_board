@@ -185,8 +185,13 @@ $item-picker-height: 30px;
   line-height: 20px;
 }
 
-.iterations {
-  margin: 20px;
+.scopes {
+  @extend .clearfix;
+  padding: 10px;
+}
+
+.scope {
+  margin: 10px;
 
   & > header {
     background: #333;

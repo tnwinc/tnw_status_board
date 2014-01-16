@@ -140,13 +140,13 @@ button:hover, button:focus {
 }
 
 /* line 1, ../src/stylesheets/_main.scss */
-.clearfix:before, .projects-container ul:before, .project-container > header:before, .clearfix:after, .projects-container ul:after, .project-container > header:after {
+.clearfix:before, .projects-container ul:before, .project-container > header:before, .scopes:before, .clearfix:after, .projects-container ul:after, .project-container > header:after, .scopes:after {
   content: "";
   display: table;
 }
 
 /* line 2, ../src/stylesheets/_main.scss */
-.clearfix:after, .projects-container ul:after, .project-container > header:after {
+.clearfix:after, .projects-container ul:after, .project-container > header:after, .scopes:after {
   clear: both;
 }
 
@@ -314,24 +314,29 @@ body {
 }
 
 /* line 188, ../src/stylesheets/_main.scss */
-.iterations {
-  margin: 20px;
+.scopes {
+  padding: 10px;
 }
-/* line 191, ../src/stylesheets/_main.scss */
-.iterations > header {
+
+/* line 193, ../src/stylesheets/_main.scss */
+.scope {
+  margin: 10px;
+}
+/* line 196, ../src/stylesheets/_main.scss */
+.scope > header {
   background: #333;
   padding: 8px 10px;
   position: relative;
 }
-/* line 196, ../src/stylesheets/_main.scss */
-.iterations > header h3 {
+/* line 201, ../src/stylesheets/_main.scss */
+.scope > header h3 {
   color: #FFF;
   font-size: 1em;
   margin: 0;
   text-transform: uppercase;
 }
-/* line 203, ../src/stylesheets/_main.scss */
-.iterations > header a {
+/* line 208, ../src/stylesheets/_main.scss */
+.scope > header a {
   color: #d3d3d3;
   display: block;
   position: absolute;
@@ -340,16 +345,16 @@ body {
   bottom: 0;
   width: 30px;
 }
-/* line 212, ../src/stylesheets/_main.scss */
-.iterations > header a.expand-all {
+/* line 217, ../src/stylesheets/_main.scss */
+.scope > header a.expand-all {
   right: 30px;
 }
-/* line 217, ../src/stylesheets/_main.scss */
-.iterations > header a:hover, .iterations > header a:focus {
+/* line 222, ../src/stylesheets/_main.scss */
+.scope > header a:hover, .scope > header a:focus {
   background: rgba(255, 255, 255, 0.1);
 }
-/* line 221, ../src/stylesheets/_main.scss */
-.iterations > header a i {
+/* line 226, ../src/stylesheets/_main.scss */
+.scope > header a i {
   margin-top: -10px;
   position: absolute;
   top: 50%;
@@ -360,11 +365,11 @@ body {
   line-height: 20px;
 }
 
-/* line 229, ../src/stylesheets/_main.scss */
+/* line 234, ../src/stylesheets/_main.scss */
 .iteration header {
   position: relative;
 }
-/* line 233, ../src/stylesheets/_main.scss */
+/* line 238, ../src/stylesheets/_main.scss */
 .iteration h4 {
   background: #959595;
   border-bottom: solid 1px #7c7c7c;
@@ -372,7 +377,7 @@ body {
   margin: 0;
   padding: 5px 10px;
 }
-/* line 240, ../src/stylesheets/_main.scss */
+/* line 245, ../src/stylesheets/_main.scss */
 .iteration a.toggle-expansion {
   color: #FFF;
   display: block;
@@ -382,11 +387,11 @@ body {
   bottom: 0;
   width: 30px;
 }
-/* line 250, ../src/stylesheets/_main.scss */
+/* line 255, ../src/stylesheets/_main.scss */
 .iteration a.toggle-expansion:hover, .iteration a.toggle-expansion:focus {
   background: #828282;
 }
-/* line 254, ../src/stylesheets/_main.scss */
+/* line 259, ../src/stylesheets/_main.scss */
 .iteration a.toggle-expansion i {
   margin-top: -10px;
   position: absolute;
@@ -398,57 +403,57 @@ body {
   line-height: 20px;
 }
 
-/* line 260, ../src/stylesheets/_main.scss */
+/* line 265, ../src/stylesheets/_main.scss */
 .stories {
   display: none;
   margin: 0;
 }
-/* line 264, ../src/stylesheets/_main.scss */
+/* line 269, ../src/stylesheets/_main.scss */
 .expanded .stories {
   display: block;
 }
-/* line 268, ../src/stylesheets/_main.scss */
+/* line 273, ../src/stylesheets/_main.scss */
 .stories li {
   background: #e3e3e3;
   border-bottom: solid 1px #cacaca;
   padding: 5px 10px;
 }
-/* line 272, ../src/stylesheets/_main.scss */
+/* line 277, ../src/stylesheets/_main.scss */
 .stories li.unscheduled {
   background: #bfcee9;
   border-bottom: solid 1px #99b1dc;
 }
-/* line 278, ../src/stylesheets/_main.scss */
+/* line 283, ../src/stylesheets/_main.scss */
 .stories li.started, .stories li.finished, .stories li.delivered {
   background: #e6e4aa;
   border-bottom: solid 1px #dad783;
 }
-/* line 282, ../src/stylesheets/_main.scss */
+/* line 287, ../src/stylesheets/_main.scss */
 .stories li.accepted {
   background: #c9dfa5;
   border-bottom: solid 1px #b2d27f;
 }
-/* line 286, ../src/stylesheets/_main.scss */
+/* line 291, ../src/stylesheets/_main.scss */
 .stories li.rejected {
   background: #e7b4b4;
   border-bottom: solid 1px #db8d8d;
 }
-/* line 290, ../src/stylesheets/_main.scss */
+/* line 295, ../src/stylesheets/_main.scss */
 .stories li.release {
   background: #5283af;
   border-bottom: solid 1px #41698d;
   color: #DBE9F7;
 }
-/* line 294, ../src/stylesheets/_main.scss */
+/* line 299, ../src/stylesheets/_main.scss */
 .stories li.release i {
   color: #FFF;
 }
-/* line 299, ../src/stylesheets/_main.scss */
+/* line 304, ../src/stylesheets/_main.scss */
 .stories li i {
   float: left;
   margin-top: 5px;
 }
-/* line 304, ../src/stylesheets/_main.scss */
+/* line 309, ../src/stylesheets/_main.scss */
 .stories li span {
   color: #787878;
   float: left;
@@ -458,19 +463,19 @@ body {
   text-align: center;
   width: 22px;
 }
-/* line 314, ../src/stylesheets/_main.scss */
+/* line 319, ../src/stylesheets/_main.scss */
 .stories li p {
   margin: 0 0 0 45px;
 }
-/* line 318, ../src/stylesheets/_main.scss */
+/* line 323, ../src/stylesheets/_main.scss */
 .stories li.feature i {
   color: #eb7c19;
 }
-/* line 322, ../src/stylesheets/_main.scss */
+/* line 327, ../src/stylesheets/_main.scss */
 .stories li.chore i {
   color: #434343;
 }
-/* line 326, ../src/stylesheets/_main.scss */
+/* line 331, ../src/stylesheets/_main.scss */
 .stories li.bug i {
   color: #921414;
 }

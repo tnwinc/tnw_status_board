@@ -1,6 +1,4 @@
 (function() {
-  window.App = Ember.Application.create({
-    LOG_TRANSITIONS: true
-  });
+  window.App = Ember.Application.create();
 
 }).call(this);

@@ -1,0 +1,19 @@
+<section class="scopes">
+  {{#each}}
+    <section class="scope">
+      <header>
+        <h3>Backlog</h3>
+        <a href="#" {{action 'expandAll' this}} class="expand-all" title="Expand All">
+          <i class="fa fa-toggle-down"></i>
+        </a>
+        <a href="#" {{action 'collapseAll' this}} class="collapse-all" title="Collapse All">
+          <i class="fa fa-toggle-up"></i>
+        </a>
+      </header>
+
+      {{#each iterations}}
+        {{partial 'iteration'}}
+      {{/each}}
+    </section>
+  {{/each}}
+</section>

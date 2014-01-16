@@ -95,26 +95,28 @@
 
 (function() {
   App.ProjectController = Ember.ObjectController.extend({
-    attributeIterations: (function() {
-      return _.each(this.get('iterations'), function(iteration) {
-        iteration.set('expanded', true);
-        return iteration.set('hasStories', iteration.get('stories.length'));
-      });
-    }).observes('iterations'),
     actions: {
       didSelectProject: function(project) {
         return this.transitionToRoute('project', project.get('id'));
-      },
+      }
+    }
+  });
+
+}).call(this);
+
+(function() {
+  App.ScopesController = Ember.ArrayController.extend({
+    actions: {
       toggleExpansion: function(iteration) {
         iteration.toggleProperty('expanded');
       },
-      expandAll: function() {
-        return _.each(this.get('iterations'), function(iteration) {
+      expandAll: function(scope) {
+        return _.each(scope.get('iterations'), function(iteration) {
           return iteration.set('expanded', true);
         });
       },
-      collapseAll: function() {
-        return _.each(this.get('iterations'), function(iteration) {
+      collapseAll: function(scope) {
+        return _.each(scope.get('iterations'), function(iteration) {
           return iteration.set('expanded', false);
         });
       }
@@ -232,20 +234,17 @@
       return App.pivotal.getProject(params.project_id);
     },
     setupController: function(controller, model) {
+      var _this = this;
       this._super();
       controller.set('model', model);
-      App.pivotal.getProjects().then(function(projects) {
-        return controller.set('projects', _.map(projects, function(project) {
+      return App.pivotal.getProjects().then(function(projects) {
+        controller.set('projects', _.map(projects, function(project) {
           return Ember.Object.create({
             id: project.id,
             label: project.name
           });
         }));
-      });
-      return App.pivotal.getIterations(model.id, 'current_backlog').then(function(iterations) {
-        return controller.set('iterations', _.map(iterations, function(iteration) {
-          return Ember.Object.create(iteration);
-        }));
+        return _this.transitionTo('scopes');
       });
     }
   });
@@ -262,11 +261,42 @@
 }).call(this);
 
 (function() {
+  App.ScopesRoute = App.Route.extend({
+    model: function() {
+      var projectId;
+      projectId = this.modelFor('project').id;
+      return App.pivotal.getIterations(projectId, 'current_backlog').then(function(iterations) {
+        var scope;
+        scope = Ember.Object.create({
+          id: 'current_backlog',
+          iterations: _.map(iterations, function(iteration) {
+            return Ember.Object.create(iteration);
+          })
+        });
+        return [scope];
+      });
+    },
+    setupController: function(controller, model) {
+      controller.set('model', model);
+      return _.each(model, function(scope) {
+        return _.each(scope.get('iterations'), function(iteration) {
+          iteration.set('expanded', true);
+          return iteration.set('hasStories', iteration.get('stories.length'));
+        });
+      });
+    }
+  });
+
+}).call(this);
+
+(function() {
   App.Router.map(function() {
     this.route('login');
     this.resource('projects');
     return this.resource('project', {
       path: 'projects/:project_id'
+    }, function() {
+      return this.resource('scopes');
     });
   });
 
