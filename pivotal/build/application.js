@@ -19,25 +19,41 @@
       return this.set('token', token);
     },
     getProjects: function() {
-      return this.queryPivotal({
-        url: 'projects'
-      }).then(function(projects) {
+      return this.queryPivotal('projects').then(function(projects) {
         return _.map(projects, function(project) {
           return _.pick(project, 'id', 'name');
         });
       });
     },
     getProject: function(id) {
-      return this.queryPivotal({
-        url: "projects/" + id
-      }).then(function(project) {
+      return this.queryPivotal("projects/" + id).then(function(project) {
         return _.pick(project, 'id', 'name');
       });
     },
-    queryPivotal: function(config) {
+    getIterations: function(projectId, scope) {
+      return this.queryPivotal("projects/" + projectId + "/iterations", {
+        scope: scope
+      }).then(function(iterations) {
+        return _.map(iterations, function(iteration) {
+          var curatedIteration;
+          curatedIteration = _.pick(iteration, 'start', 'finish');
+          curatedIteration.stories = _.map(iteration.stories, function(story) {
+            var curatedStory;
+            curatedStory = _.pick(story, 'id', 'name', 'current_state', 'story_type');
+            curatedStory.labels = _.map(story.labels, function(label) {
+              return _.pick(label, 'id', 'name');
+            });
+            return curatedStory;
+          });
+          return curatedIteration;
+        });
+      });
+    },
+    queryPivotal: function(url, data) {
       return $.ajax({
         type: 'GET',
-        url: "" + BASE_URL + config.url,
+        url: "" + BASE_URL + url,
+        data: data,
         headers: {
           'X-TrackerToken': this.get('token')
         }
@@ -162,12 +178,17 @@
     setupController: function(controller, model) {
       this._super();
       controller.set('model', model);
-      return App.pivotal.getProjects().then(function(projects) {
+      App.pivotal.getProjects().then(function(projects) {
         return controller.set('projects', _.map(projects, function(project) {
           return Ember.Object.create({
             id: project.id,
             label: project.name
           });
+        }));
+      });
+      return App.pivotal.getIterations(model.id, 'current_backlog').then(function(iterations) {
+        return controller.set('iterations', _.map(iterations, function(iteration) {
+          return Ember.Object.create(iteration);
         }));
       });
     }

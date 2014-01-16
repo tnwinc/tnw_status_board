@@ -14,18 +14,30 @@ Pivotal = Ember.Object.extend
     @set 'token', token
 
   getProjects: ->
-    @queryPivotal(url: 'projects').then (projects)->
+    @queryPivotal('projects').then (projects)->
       _.map projects, (project)->
         _.pick project, 'id', 'name'
 
   getProject: (id)->
-    @queryPivotal(url: "projects/#{id}").then (project)->
+    @queryPivotal("projects/#{id}").then (project)->
       _.pick project, 'id', 'name'
 
-  queryPivotal: (config)->
+  getIterations: (projectId, scope)->
+    @queryPivotal("projects/#{projectId}/iterations", scope: scope).then (iterations)->
+      _.map iterations, (iteration)->
+        curatedIteration = _.pick iteration, 'start', 'finish'
+        curatedIteration.stories = _.map iteration.stories, (story)->
+          curatedStory = _.pick story, 'id', 'name', 'current_state', 'story_type'
+          curatedStory.labels = _.map story.labels, (label)->
+            _.pick label, 'id', 'name'
+          curatedStory
+        curatedIteration
+
+  queryPivotal: (url, data)->
     $.ajax
       type: 'GET'
-      url: "#{BASE_URL}#{config.url}"
+      url: "#{BASE_URL}#{url}"
+      data: data
       headers:
         'X-TrackerToken': @get 'token'
 

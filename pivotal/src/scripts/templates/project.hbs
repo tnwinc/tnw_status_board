@@ -4,4 +4,17 @@
     {{item-picker items=projects currentItemId=id onSelect="didSelectProject"}}
   </header>
 
+  <section>
+    {{#each iterations}}
+      <article>
+        <h3>{{start}}</h3>
+        <ul>
+          {{#each stories}}
+            <li>{{name}}</li>
+          {{/each}}
+        </ul>
+      </article>
+    {{/each}}
+  </section>
+
 </section>
