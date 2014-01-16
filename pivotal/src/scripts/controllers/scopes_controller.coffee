@@ -1,4 +1,4 @@
-scopeOrder = ['done', 'current_backlog', 'icebox']
+scopeOrder = ['done', 'current_backlog']
 
 App.ScopesController = Ember.ArrayController.extend
 
@@ -15,18 +15,16 @@ App.ScopesController = Ember.ArrayController.extend
     addScope: (scope)->
       projectId = @get('controllers.project').get 'id'
       type = scope.get 'type'
-      if scope.get('conditions')
-
-      else
-        App.pivotal.getIterations(projectId, type).then (iterations)=>
-          scope = Ember.Object.create
-            id: type
-            name: scope.get 'label'
-            order: scopeOrder.indexOf type
-            iterations: _.map iterations, (iteration)->
-              iteration.expanded = true
-              Ember.Object.create iteration
-          @get('model').addObject scope
+      App.pivotal.getIterations(projectId, type).then (iterations)=>
+        scope = Ember.Object.create
+          id: type
+          name: scope.get 'label'
+          order: scopeOrder.indexOf type
+          iterations: _.map iterations, (iteration)->
+            iteration.expanded = true
+            iteration.hasStories = iteration.stories.length > 0
+            Ember.Object.create iteration
+        @get('model').addObject scope
 
     removeScope: (scope)->
       scopes = @get 'model'

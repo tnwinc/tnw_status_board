@@ -134,7 +134,7 @@
 (function() {
   var scopeOrder;
 
-  scopeOrder = ['done', 'current_backlog', 'icebox'];
+  scopeOrder = ['done', 'current_backlog'];
 
   App.ScopesController = Ember.ArrayController.extend({
     needs: 'project',
@@ -148,22 +148,19 @@
           _this = this;
         projectId = this.get('controllers.project').get('id');
         type = scope.get('type');
-        if (scope.get('conditions')) {
-
-        } else {
-          return App.pivotal.getIterations(projectId, type).then(function(iterations) {
-            scope = Ember.Object.create({
-              id: type,
-              name: scope.get('label'),
-              order: scopeOrder.indexOf(type),
-              iterations: _.map(iterations, function(iteration) {
-                iteration.expanded = true;
-                return Ember.Object.create(iteration);
-              })
-            });
-            return _this.get('model').addObject(scope);
+        return App.pivotal.getIterations(projectId, type).then(function(iterations) {
+          scope = Ember.Object.create({
+            id: type,
+            name: scope.get('label'),
+            order: scopeOrder.indexOf(type),
+            iterations: _.map(iterations, function(iteration) {
+              iteration.expanded = true;
+              iteration.hasStories = iteration.stories.length > 0;
+              return Ember.Object.create(iteration);
+            })
           });
-        }
+          return _this.get('model').addObject(scope);
+        });
       },
       removeScope: function(scope) {
         var scopeToRemove, scopes;
@@ -325,12 +322,6 @@
           label: 'Backlog',
           type: 'current_backlog',
           selected: true
-        }, {
-          label: 'Icebox',
-          type: 'icebox',
-          conditions: {
-            with_state: 'unscheduled'
-          }
         }
       ];
       controller.set('scopes', _.map(scopes, function(scope) {

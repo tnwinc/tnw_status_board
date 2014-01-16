@@ -14,11 +14,6 @@ App.ProjectRoute = App.Route.extend
       label: 'Backlog'
       type: 'current_backlog'
       selected: true
-    ,
-      label: 'Icebox'
-      type: 'icebox'
-      conditions:
-        with_state: 'unscheduled'
     ]
 
     controller.set 'scopes', _.map scopes, (scope)-> Ember.Object.create scope
