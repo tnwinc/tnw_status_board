@@ -152,11 +152,15 @@ function program2(depth0,data) {
   hashContexts = {};
   options = {hash:{},contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
   data.buffer.push(escapeExpression(((stack1 = helpers.story_icon || (depth0 && depth0.story_icon)),stack1 ? stack1.call(depth0, "story_type", options) : helperMissing.call(depth0, "story_icon", "story_type", options))));
-  data.buffer.push("\n              ");
+  data.buffer.push("\n              <span>");
+  hashTypes = {};
+  hashContexts = {};
+  data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "estimate", {hash:{},contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
+  data.buffer.push("</span>\n              <p>");
   hashTypes = {};
   hashContexts = {};
   data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "name", {hash:{},contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
-  data.buffer.push("\n            </li>\n          ");
+  data.buffer.push("</p>\n            </li>\n          ");
   return buffer;
   }
 

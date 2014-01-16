@@ -264,21 +264,24 @@ body {
 /* line 118, ../src/stylesheets/_main.scss */
 .item-picker.expanded a.toggle-expansion {
   border-bottom-right-radius: 0;
+  border-bottom-left-radius: 3px;
   line-height: 27px;
 }
-/* line 123, ../src/stylesheets/_main.scss */
+/* line 124, ../src/stylesheets/_main.scss */
 .item-picker ul {
   background: #eb7c19;
   border-radius: 3px;
   margin: 0;
+  overflow: hidden;
   position: absolute;
   width: 200px;
-}
-/* line 131, ../src/stylesheets/_main.scss */
-.item-picker li {
-  display: none;
+  height: 30px;
 }
 /* line 134, ../src/stylesheets/_main.scss */
+.item-picker.expanded ul {
+  height: auto;
+}
+/* line 139, ../src/stylesheets/_main.scss */
 .item-picker li a {
   box-sizing: border-box;
   color: #FFF;
@@ -292,41 +295,29 @@ body {
   white-space: nowrap;
   width: 200px;
 }
-/* line 147, ../src/stylesheets/_main.scss */
-.item-picker li a:first-of-type {
-  border-radius: 3px 3px 0 0;
-}
-/* line 151, ../src/stylesheets/_main.scss */
-.item-picker li a:last-of-type {
-  border-radius: 0 0 3px 3px;
-}
-/* line 155, ../src/stylesheets/_main.scss */
+/* line 152, ../src/stylesheets/_main.scss */
 .item-picker li a:hover {
   background: #c06311;
 }
-/* line 160, ../src/stylesheets/_main.scss */
-.item-picker li.current {
-  display: block;
+/* line 157, ../src/stylesheets/_main.scss */
+.item-picker li:last-of-type a {
+  border-radius: 0 0 3px 3px;
 }
-/* line 163, ../src/stylesheets/_main.scss */
+/* line 162, ../src/stylesheets/_main.scss */
 .item-picker li.current a {
   cursor: default;
   width: 170px;
 }
-/* line 167, ../src/stylesheets/_main.scss */
+/* line 166, ../src/stylesheets/_main.scss */
 .item-picker li.current a:hover {
   background: #eb7c19;
 }
-/* line 174, ../src/stylesheets/_main.scss */
-.item-picker.expanded li {
-  display: block;
-}
 
-/* line 184, ../src/stylesheets/_main.scss */
+/* line 179, ../src/stylesheets/_main.scss */
 .iterations {
   margin: 20px;
 }
-/* line 187, ../src/stylesheets/_main.scss */
+/* line 182, ../src/stylesheets/_main.scss */
 .iterations h3 {
   background: #959595;
   border-bottom: solid 1px #7c7c7c;
@@ -336,61 +327,76 @@ body {
   padding: 5px 10px;
 }
 
-/* line 196, ../src/stylesheets/_main.scss */
+/* line 191, ../src/stylesheets/_main.scss */
 .stories {
   margin: 0;
 }
-/* line 199, ../src/stylesheets/_main.scss */
+/* line 194, ../src/stylesheets/_main.scss */
 .stories li {
   background: #e3e3e3;
   border-bottom: solid 1px #cacaca;
   padding: 5px 10px;
 }
-/* line 203, ../src/stylesheets/_main.scss */
+/* line 198, ../src/stylesheets/_main.scss */
 .stories li.unscheduled {
   background: #bfcee9;
   border-bottom: solid 1px #99b1dc;
 }
-/* line 209, ../src/stylesheets/_main.scss */
+/* line 204, ../src/stylesheets/_main.scss */
 .stories li.started, .stories li.finished, .stories li.delivered {
   background: #e6e4aa;
   border-bottom: solid 1px #dad783;
 }
-/* line 213, ../src/stylesheets/_main.scss */
+/* line 208, ../src/stylesheets/_main.scss */
 .stories li.accepted {
   background: #c9dfa5;
   border-bottom: solid 1px #b2d27f;
 }
-/* line 217, ../src/stylesheets/_main.scss */
+/* line 212, ../src/stylesheets/_main.scss */
 .stories li.rejected {
   background: #e7b4b4;
   border-bottom: solid 1px #db8d8d;
 }
-/* line 221, ../src/stylesheets/_main.scss */
+/* line 216, ../src/stylesheets/_main.scss */
 .stories li.release {
   background: #5283af;
   border-bottom: solid 1px #41698d;
   color: #DBE9F7;
 }
-/* line 225, ../src/stylesheets/_main.scss */
+/* line 220, ../src/stylesheets/_main.scss */
 .stories li.release i {
   color: #FFF;
 }
+/* line 225, ../src/stylesheets/_main.scss */
+.stories li i {
+  float: left;
+  margin-top: 5px;
+}
 /* line 230, ../src/stylesheets/_main.scss */
+.stories li span {
+  color: #787878;
+  float: left;
+  font-size: .9em;
+  margin-top: 2px;
+  margin-left: 5px;
+  text-align: center;
+  width: 22px;
+}
+/* line 240, ../src/stylesheets/_main.scss */
+.stories li p {
+  margin: 0 0 0 45px;
+}
+/* line 244, ../src/stylesheets/_main.scss */
 .stories li.feature i {
   color: #eb7c19;
 }
-/* line 234, ../src/stylesheets/_main.scss */
+/* line 248, ../src/stylesheets/_main.scss */
 .stories li.chore i {
   color: #434343;
 }
-/* line 238, ../src/stylesheets/_main.scss */
+/* line 252, ../src/stylesheets/_main.scss */
 .stories li.bug i {
   color: #921414;
-}
-/* line 242, ../src/stylesheets/_main.scss */
-.stories li i {
-  margin-right: 5px;
 }
 
 /*!

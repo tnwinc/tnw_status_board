@@ -117,6 +117,7 @@ $item-picker-height: 30px;
 
   &.expanded a.toggle-expansion {
     border-bottom-right-radius: 0;
+    border-bottom-left-radius: 3px;
     line-height: $item-picker-height - 3;
   }
 
@@ -124,13 +125,17 @@ $item-picker-height: 30px;
     background: $action-color;
     border-radius: 3px;
     margin: 0;
+    overflow: hidden;
     position: absolute;
     width: $item-picker-width;
+    height: $item-picker-height;
+  }
+
+  &.expanded ul {
+    height: auto;
   }
 
   li {
-    display: none;
-
     a {
       box-sizing: border-box;
       color: #FFF;
@@ -144,22 +149,16 @@ $item-picker-height: 30px;
       white-space: nowrap;
       width: $item-picker-width;
 
-      &:first-of-type {
-        border-radius: 3px 3px 0 0;
-      }
-
-      &:last-of-type {
-        border-radius: 0 0 3px 3px;
-      }
-
       &:hover {
         background: darken($action-color, 10%);
       }
     }
 
-    &.current {
-      display: block;
+    &:last-of-type a {
+      border-radius: 0 0 3px 3px;
+    }
 
+    &.current {
       a {
         cursor: default;
         width: $item-picker-width - $item-picker-height;
@@ -169,10 +168,6 @@ $item-picker-height: 30px;
         }
       }
     }
-  }
-
-  &.expanded li {
-    display: block;
   }
 }
 
@@ -227,6 +222,25 @@ $item-picker-height: 30px;
       }
     }
 
+    i {
+      float: left;
+      margin-top: 5px;
+    }
+
+    span {
+      color: #787878;
+      float: left;
+      font-size: .9em;
+      margin-top: 2px;
+      margin-left: 5px;
+      text-align: center;
+      width: 22px;
+    }
+
+    p {
+      margin: 0 0 0 45px;
+    }
+
     &.feature i {
       color: $action-color;
     }
@@ -237,10 +251,6 @@ $item-picker-height: 30px;
 
     &.bug i {
       color: #921414;
-    }
-
-    i {
-      margin-right: 5px;
     }
   }
 }
