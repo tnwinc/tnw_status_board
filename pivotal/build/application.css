@@ -78,26 +78,25 @@ body {
 
 /* line 10, ../src/stylesheets/_base.scss */
 h1, h2, h3, h4, h5, h6 {
-  font-weight: bold;
   margin: 10px 0;
 }
 
-/* line 15, ../src/stylesheets/_base.scss */
+/* line 14, ../src/stylesheets/_base.scss */
 h1 {
   font-size: 1.5em;
 }
 
-/* line 19, ../src/stylesheets/_base.scss */
+/* line 18, ../src/stylesheets/_base.scss */
 h2 {
   font-size: 1.3em;
 }
 
-/* line 23, ../src/stylesheets/_base.scss */
+/* line 22, ../src/stylesheets/_base.scss */
 h3 {
   font-size: 1.1em;
 }
 
-/* line 30, ../src/stylesheets/_base.scss */
+/* line 29, ../src/stylesheets/_base.scss */
 p,
 ul,
 ol,
@@ -106,18 +105,18 @@ form {
   margin: 10px 0;
 }
 
-/* line 37, ../src/stylesheets/_base.scss */
+/* line 36, ../src/stylesheets/_base.scss */
 a:link, a:visited {
   color: #eb7c19;
   text-decoration: none;
 }
-/* line 44, ../src/stylesheets/_base.scss */
+/* line 43, ../src/stylesheets/_base.scss */
 a:hover, a:focus, a:active {
   color: #c06311;
   text-decoration: underline;
 }
 
-/* line 50, ../src/stylesheets/_base.scss */
+/* line 49, ../src/stylesheets/_base.scss */
 input {
   border: solid 1px #c7c7c7;
   border-radius: 3px;
@@ -125,7 +124,7 @@ input {
   padding: 5px 10px;
 }
 
-/* line 57, ../src/stylesheets/_base.scss */
+/* line 56, ../src/stylesheets/_base.scss */
 button {
   background: #eb7c19;
   border: none;
@@ -135,7 +134,7 @@ button {
   cursor: pointer;
   padding: 6px 11px;
 }
-/* line 67, ../src/stylesheets/_base.scss */
+/* line 66, ../src/stylesheets/_base.scss */
 button:hover, button:focus {
   background: #c06311;
 }
@@ -154,18 +153,18 @@ button:hover, button:focus {
 /* line 4, ../src/stylesheets/_main.scss */
 body {
   background: #f8f8f8;
+  color: #333;
 }
 
-/* line 8, ../src/stylesheets/_main.scss */
+/* line 9, ../src/stylesheets/_main.scss */
 .login-container {
   margin: 50px auto 0;
   width: 530px;
 }
-/* line 12, ../src/stylesheets/_main.scss */
+/* line 13, ../src/stylesheets/_main.scss */
 .login-container h2 {
   background: #5283af;
   color: #FFF;
-  font-weight: normal;
   margin: 0;
   padding: 12px;
 }
@@ -198,23 +197,22 @@ body {
 .projects-container h2 {
   background: #5283af;
   color: #FFF;
-  font-weight: normal;
   margin: 0;
   padding: 12px;
 }
-/* line 52, ../src/stylesheets/_main.scss */
+/* line 51, ../src/stylesheets/_main.scss */
 .projects-container ul {
   background: #e3e3e3;
   margin: 0;
   padding: 7px;
 }
-/* line 58, ../src/stylesheets/_main.scss */
+/* line 57, ../src/stylesheets/_main.scss */
 .projects-container ul li {
   float: left;
   width: 244px;
   margin: 7px 7px;
 }
-/* line 63, ../src/stylesheets/_main.scss */
+/* line 62, ../src/stylesheets/_main.scss */
 .projects-container ul li a {
   background: #eb7c19;
   border-radius: 3px;
@@ -224,18 +222,18 @@ body {
   padding: 10px;
   text-decoration: none;
 }
-/* line 73, ../src/stylesheets/_main.scss */
+/* line 72, ../src/stylesheets/_main.scss */
 .projects-container ul li a:hover, .projects-container ul li a:focus {
   background: #c06311;
 }
 
-/* line 82, ../src/stylesheets/_main.scss */
+/* line 81, ../src/stylesheets/_main.scss */
 .project-container header {
   background: #5283af;
   padding: 10px;
 }
 
-/* line 92, ../src/stylesheets/_main.scss */
+/* line 91, ../src/stylesheets/_main.scss */
 .item-picker {
   background: #eb7c19;
   border-radius: 3px;
@@ -245,7 +243,7 @@ body {
   height: 30px;
   z-index: 10;
 }
-/* line 101, ../src/stylesheets/_main.scss */
+/* line 100, ../src/stylesheets/_main.scss */
 .item-picker a.toggle-expansion {
   border-top-right-radius: 3px;
   border-bottom-right-radius: 3px;
@@ -259,16 +257,16 @@ body {
   height: 30px;
   line-height: 30px;
 }
-/* line 114, ../src/stylesheets/_main.scss */
+/* line 113, ../src/stylesheets/_main.scss */
 .item-picker a.toggle-expansion:hover {
   background: #c06311;
 }
-/* line 119, ../src/stylesheets/_main.scss */
+/* line 118, ../src/stylesheets/_main.scss */
 .item-picker.expanded a.toggle-expansion {
   border-bottom-right-radius: 0;
   line-height: 27px;
 }
-/* line 124, ../src/stylesheets/_main.scss */
+/* line 123, ../src/stylesheets/_main.scss */
 .item-picker ul {
   background: #eb7c19;
   border-radius: 3px;
@@ -276,11 +274,11 @@ body {
   position: absolute;
   width: 200px;
 }
-/* line 132, ../src/stylesheets/_main.scss */
+/* line 131, ../src/stylesheets/_main.scss */
 .item-picker li {
   display: none;
 }
-/* line 135, ../src/stylesheets/_main.scss */
+/* line 134, ../src/stylesheets/_main.scss */
 .item-picker li a {
   box-sizing: border-box;
   color: #FFF;
@@ -294,34 +292,105 @@ body {
   white-space: nowrap;
   width: 200px;
 }
-/* line 148, ../src/stylesheets/_main.scss */
+/* line 147, ../src/stylesheets/_main.scss */
 .item-picker li a:first-of-type {
   border-radius: 3px 3px 0 0;
 }
-/* line 152, ../src/stylesheets/_main.scss */
+/* line 151, ../src/stylesheets/_main.scss */
 .item-picker li a:last-of-type {
   border-radius: 0 0 3px 3px;
 }
-/* line 156, ../src/stylesheets/_main.scss */
+/* line 155, ../src/stylesheets/_main.scss */
 .item-picker li a:hover {
   background: #c06311;
 }
-/* line 161, ../src/stylesheets/_main.scss */
+/* line 160, ../src/stylesheets/_main.scss */
 .item-picker li.current {
   display: block;
 }
-/* line 164, ../src/stylesheets/_main.scss */
+/* line 163, ../src/stylesheets/_main.scss */
 .item-picker li.current a {
   cursor: default;
   width: 170px;
 }
-/* line 168, ../src/stylesheets/_main.scss */
+/* line 167, ../src/stylesheets/_main.scss */
 .item-picker li.current a:hover {
   background: #eb7c19;
 }
-/* line 175, ../src/stylesheets/_main.scss */
+/* line 174, ../src/stylesheets/_main.scss */
 .item-picker.expanded li {
   display: block;
+}
+
+/* line 184, ../src/stylesheets/_main.scss */
+.iterations {
+  margin: 20px;
+}
+/* line 187, ../src/stylesheets/_main.scss */
+.iterations h3 {
+  background: #959595;
+  border-bottom: solid 1px #7c7c7c;
+  color: #FFF;
+  font-size: 1em;
+  margin: 0;
+  padding: 5px 10px;
+}
+
+/* line 196, ../src/stylesheets/_main.scss */
+.stories {
+  margin: 0;
+}
+/* line 199, ../src/stylesheets/_main.scss */
+.stories li {
+  background: #e3e3e3;
+  border-bottom: solid 1px #cacaca;
+  padding: 5px 10px;
+}
+/* line 203, ../src/stylesheets/_main.scss */
+.stories li.unscheduled {
+  background: #bfcee9;
+  border-bottom: solid 1px #99b1dc;
+}
+/* line 209, ../src/stylesheets/_main.scss */
+.stories li.started, .stories li.finished, .stories li.delivered {
+  background: #e6e4aa;
+  border-bottom: solid 1px #dad783;
+}
+/* line 213, ../src/stylesheets/_main.scss */
+.stories li.accepted {
+  background: #c9dfa5;
+  border-bottom: solid 1px #b2d27f;
+}
+/* line 217, ../src/stylesheets/_main.scss */
+.stories li.rejected {
+  background: #e7b4b4;
+  border-bottom: solid 1px #db8d8d;
+}
+/* line 221, ../src/stylesheets/_main.scss */
+.stories li.release {
+  background: #5283af;
+  border-bottom: solid 1px #41698d;
+  color: #DBE9F7;
+}
+/* line 225, ../src/stylesheets/_main.scss */
+.stories li.release i {
+  color: #FFF;
+}
+/* line 230, ../src/stylesheets/_main.scss */
+.stories li.feature i {
+  color: #eb7c19;
+}
+/* line 234, ../src/stylesheets/_main.scss */
+.stories li.chore i {
+  color: #434343;
+}
+/* line 238, ../src/stylesheets/_main.scss */
+.stories li.bug i {
+  color: #921414;
+}
+/* line 242, ../src/stylesheets/_main.scss */
+.stories li i {
+  margin-right: 5px;
 }
 
 /*!

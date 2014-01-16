@@ -3,6 +3,7 @@
 
 body {
   background: #f8f8f8;
+  color: #333;
 }
 
 .login-container {
@@ -12,7 +13,6 @@ body {
   h2 {
     background: $primary-color;
     color: #FFF;
-    font-weight: normal;
     margin: 0;
     padding: 12px;
   }
@@ -44,7 +44,6 @@ body {
   h2 {
     background: $primary-color;
     color: #FFF;
-    font-weight: normal;
     margin: 0;
     padding: 12px;
   }
@@ -174,5 +173,74 @@ $item-picker-height: 30px;
 
   &.expanded li {
     display: block;
+  }
+}
+
+@mixin bezeled($color) {
+    background: $color;
+    border-bottom: solid 1px darken($color, 10%);
+}
+
+.iterations {
+  margin: 20px;
+
+  h3 {
+    @include bezeled(#959595);
+    color: #FFF;
+    font-size: 1em;
+    margin: 0;
+    padding: 5px 10px;
+  }
+}
+
+.stories {
+  margin: 0;
+
+  li {
+    @include bezeled(#e3e3e3);
+    padding: 5px 10px;
+
+    &.unscheduled {
+      @include bezeled(#BFCEE9);
+    }
+
+    &.started,
+    &.finished,
+    &.delivered {
+      @include bezeled(#E6E4AA);
+    }
+
+    &.accepted {
+      @include bezeled(#C9DFA5);
+    }
+
+    &.rejected {
+      @include bezeled(#E7B4B4);
+    }
+
+    &.release {
+      @include bezeled($primary-color);
+      color: #DBE9F7;
+
+      i {
+        color: #FFF;
+      }
+    }
+
+    &.feature i {
+      color: $action-color;
+    }
+
+    &.chore i {
+      color: #434343;
+    }
+
+    &.bug i {
+      color: #921414;
+    }
+
+    i {
+      margin-right: 5px;
+    }
   }
 }

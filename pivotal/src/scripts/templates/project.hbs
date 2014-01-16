@@ -4,13 +4,16 @@
     {{item-picker items=projects currentItemId=id onSelect="didSelectProject"}}
   </header>
 
-  <section>
+  <section class="iterations">
     {{#each iterations}}
       <article>
-        <h3>{{start}}</h3>
-        <ul>
+        <h3>{{date start}} - {{date finish}}</h3>
+        <ul class="stories">
           {{#each stories}}
-            <li>{{name}}</li>
+            <li {{bind-attr class="current_state story_type"}}>
+              {{story_icon story_type}}
+              {{name}}
+            </li>
           {{/each}}
         </ul>
       </article>

@@ -35,17 +35,18 @@
         scope: scope
       }).then(function(iterations) {
         return _.map(iterations, function(iteration) {
-          var curatedIteration;
-          curatedIteration = _.pick(iteration, 'start', 'finish');
-          curatedIteration.stories = _.map(iteration.stories, function(story) {
-            var curatedStory;
-            curatedStory = _.pick(story, 'id', 'name', 'current_state', 'story_type');
-            curatedStory.labels = _.map(story.labels, function(label) {
-              return _.pick(label, 'id', 'name');
-            });
-            return curatedStory;
-          });
-          return curatedIteration;
+          return {
+            start: new Date(iteration.start),
+            finish: new Date(iteration.finish),
+            stories: _.map(iteration.stories, function(story) {
+              var curatedStory;
+              curatedStory = _.pick(story, 'id', 'name', 'current_state', 'story_type');
+              curatedStory.labels = _.map(story.labels, function(label) {
+                return _.pick(label, 'id', 'name');
+              });
+              return curatedStory;
+            })
+          };
         });
       });
     },
@@ -136,6 +137,33 @@
         }
       }
     }
+  });
+
+}).call(this);
+
+(function() {
+  Ember.Handlebars.helper('date', function(date) {
+    return moment(date).format('MMM D');
+  });
+
+}).call(this);
+
+(function() {
+  Ember.Handlebars.helper('story_icon', function(storyType) {
+    var className;
+    className = (function() {
+      switch (storyType) {
+        case 'feature':
+          return 'fa-star';
+        case 'chore':
+          return 'fa-cog';
+        case 'bug':
+          return 'fa-bug';
+        case 'release':
+          return 'fa-flag-checkered';
+      }
+    })();
+    return new Ember.Handlebars.SafeString("<i class='fa " + className + "'></i>");
   });
 
 }).call(this);
