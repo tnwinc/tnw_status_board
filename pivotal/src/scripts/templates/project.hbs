@@ -6,18 +6,7 @@
 
   <section class="iterations">
     {{#each iterations}}
-      <article>
-        <h3>{{date start}} - {{date finish}}</h3>
-        <ul class="stories">
-          {{#each stories}}
-            <li {{bind-attr class="current_state story_type"}}>
-              {{story_icon story_type}}
-              <span>{{estimate}}</span>
-              <p>{{name}}</p>
-            </li>
-          {{/each}}
-        </ul>
-      </article>
+      {{partial 'iteration'}}
     {{/each}}
   </section>
 

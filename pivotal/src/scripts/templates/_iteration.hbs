@@ -1,0 +1,15 @@
+<article {{bind-attr class="expanded"}}>
+  <header>
+    <h3>{{date start}} - {{date finish}}</h3>
+    {{#if hasStories}}
+      <a href="#" class="toggle-expansion" {{action 'toggleExpansion' this}}>
+        {{expando_icon expanded}}
+      </a>
+    {{/if}}
+  </header>
+  <ul class="stories">
+    {{#each stories}}
+      {{partial 'story'}}
+    {{/each}}
+  </ul>
+</article>

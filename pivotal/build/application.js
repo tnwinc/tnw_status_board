@@ -95,9 +95,18 @@
 
 (function() {
   App.ProjectController = Ember.ObjectController.extend({
+    attributeIterations: (function() {
+      return _.each(this.get('iterations'), function(iteration) {
+        iteration.set('expanded', true);
+        return iteration.set('hasStories', iteration.get('stories.length'));
+      });
+    }).observes('iterations'),
     actions: {
       didSelectProject: function(project) {
         return this.transitionToRoute('project', project.get('id'));
+      },
+      toggleExpansion: function(iteration) {
+        iteration.toggleProperty('expanded');
       }
     }
   });
@@ -144,6 +153,15 @@
 (function() {
   Ember.Handlebars.helper('date', function(date) {
     return moment(date).format('MMM D');
+  });
+
+}).call(this);
+
+(function() {
+  Ember.Handlebars.helper('expando_icon', function(expanded) {
+    var className;
+    className = expanded ? "fa-caret-up" : "fa-caret-down";
+    return new Ember.Handlebars.SafeString("<i class='fa " + className + "'></i>");
   });
 
 }).call(this);

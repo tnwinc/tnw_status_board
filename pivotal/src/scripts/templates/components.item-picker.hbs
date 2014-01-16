@@ -9,10 +9,6 @@
     {{/each}}
   </ul>
   <a href="#" class="toggle-expansion" {{action 'toggleExpansion' bubbles=false}}>
-    {{#if expanded}}
-      <i class="fa fa-caret-up"></i>
-    {{else}}
-      <i class="fa fa-caret-down"></i>
-    {{/if}}
+    {{expando_icon expanded}}
   </a>
 </div>

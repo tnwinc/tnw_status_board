@@ -77,12 +77,10 @@ body {
   }
 }
 
-.project-container {
-  header {
-    @extend .clearfix;
-    background: $primary-color;
-    padding: 10px;
-  }
+.project-container > header {
+  @extend .clearfix;
+  background: $primary-color;
+  padding: 10px;
 }
 
 $item-picker-width: 200px;
@@ -179,6 +177,10 @@ $item-picker-height: 30px;
 .iterations {
   margin: 20px;
 
+  header {
+    position: relative;
+  }
+
   h3 {
     @include bezeled(#959595);
     color: #FFF;
@@ -186,10 +188,41 @@ $item-picker-height: 30px;
     margin: 0;
     padding: 5px 10px;
   }
+
+  a.toggle-expansion {
+    color: #FFF;
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 30px;
+    text-align: center;
+
+    &:hover,
+    &:focus {
+      background: #828282;
+    }
+
+    i {
+      margin-top: -10px;
+      position: absolute;
+      top: 50%;
+      right: 0;
+      width: 30px;
+      height: 20px;
+      line-height: 20px;
+    }
+  }
 }
 
 .stories {
+  display: none;
   margin: 0;
+
+  .expanded & {
+    display: block;
+  }
 
   li {
     @include bezeled(#e3e3e3);
