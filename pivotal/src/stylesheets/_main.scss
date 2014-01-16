@@ -188,7 +188,7 @@ $item-picker-height: 30px;
 
       &:hover,
       &:focus {
-        background: rgba(0,0,0,0.1);
+        background: rgba(0,0,0,0.2);
       }
     }
 
@@ -197,7 +197,7 @@ $item-picker-height: 30px;
 
       &:hover,
       &:focus {
-        background: darken($action-color, 20%);
+        background: darken($action-color, 10%);
       }
     }
 
@@ -222,13 +222,11 @@ $item-picker-height: 30px;
 
 .scopes {
   @extend .clearfix;
-  padding: 10px;
 }
 
 .scope {
   box-sizing: border-box;
   float: left;
-  padding: 10px;
 
   .scopes-count-1 & {
     float: none;
@@ -236,10 +234,14 @@ $item-picker-height: 30px;
 
   .scopes-count-2 & {
     width: 50%;
-  }
 
-  .scope-count-3 & {
-    width: 33%;
+    &:first-of-type {
+      padding-right: 5px;
+    }
+
+    &:last-of-type {
+      padding-left: 5px;
+    }
   }
 
   & > header {
@@ -355,7 +357,7 @@ $item-picker-height: 30px;
       margin-top: 5px;
     }
 
-    span {
+    .estimate {
       color: #787878;
       float: left;
       font-size: .9em;
@@ -366,7 +368,7 @@ $item-picker-height: 30px;
     }
 
     p {
-      margin: 0 0 0 45px;
+      margin: 0 140px 0 45px;
     }
 
     &.feature i {
@@ -379,6 +381,68 @@ $item-picker-height: 30px;
 
     &.bug i {
       color: #921414;
+    }
+
+    .state {
+      color: #787878;
+      float: right;
+      font-size: .9em;
+      margin-top: 3px;
+    }
+
+    .state-meter {
+      border: solid 1px rgba(0,0,0,0.2);
+      border-radius: 3px;
+      display: block;
+      float: right;
+      margin-top: 3px;
+      margin-left: 5px;
+      width: 50px;
+      height: 16px;
+    }
+
+    .state-meter-progress {
+      background-image: repeating-linear-gradient(-45deg,
+                                                  transparent,
+                                                  transparent 5px,
+                                                  rgba(255,255,255,.3) 5px,
+                                                  rgba(255,255,255,.3) 10px);
+      display: block;
+      width: 0;
+      height: 16px;
+    }
+
+    &.unscheduled,
+    &.unstarted {
+      .state,
+      .state-meter {
+        display: none;
+      }
+    }
+
+    &.started .state-meter-progress {
+      background-color: #C78719;
+      width: 25%;
+    }
+
+    &.finished .state-meter-progress {
+      background-color: #0F516B;
+      width: 50%;
+    }
+
+    &.delivered .state-meter-progress {
+      background-color: #5C1379;
+      width: 75%;
+    }
+
+    &.accepted .state-meter-progress {
+      background-color: #346B0F;
+      width: 100%;
+    }
+
+    &.rejected .state-meter-progress {
+      background-color: #811C1C;
+      width: 50%;
     }
   }
 }

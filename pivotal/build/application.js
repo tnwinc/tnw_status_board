@@ -275,6 +275,17 @@
 }).call(this);
 
 (function() {
+  Ember.Handlebars.helper('story_state', function(state) {
+    var el;
+    if (state) {
+      el = "<span class=\"state-meter\">\n  <span class=\"state-meter-progress\"></span>\n</span>\n<span class=\"state\">" + state + "</span>";
+      return new Ember.Handlebars.SafeString(el);
+    }
+  });
+
+}).call(this);
+
+(function() {
   App.Route = Ember.Route.extend({
     beforeModel: function(transition) {
       if (!App.pivotal.isAuthenticated()) {
