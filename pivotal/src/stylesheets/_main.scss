@@ -110,16 +110,16 @@ body {
   padding: 10px;
 }
 
-$item-picker-width: 200px;
-$item-picker-height: 30px;
+$single-select-width: 200px;
+$single-select-height: 30px;
 
-.item-picker {
+.single-select {
   background: $action-color;
   border-radius: 3px;
   float: left;
   position: relative;
-  width: $item-picker-width;
-  height: $item-picker-height;
+  width: $single-select-width;
+  height: $single-select-height;
   z-index: 10;
 
   a.toggle-expansion {
@@ -131,9 +131,9 @@ $item-picker-height: 30px;
     top: 0;
     right: 0;
     text-align: center;
-    width: $item-picker-height;
-    height: $item-picker-height;
-    line-height: $item-picker-height;
+    width: $single-select-height;
+    height: $single-select-height;
+    line-height: $single-select-height;
 
     &:hover {
       background: darken($action-color, 10%);
@@ -143,7 +143,7 @@ $item-picker-height: 30px;
   &.expanded a.toggle-expansion {
     border-bottom-right-radius: 0;
     border-bottom-left-radius: 3px;
-    line-height: $item-picker-height - 3;
+    line-height: $single-select-height - 3;
   }
 
   ul {
@@ -152,8 +152,8 @@ $item-picker-height: 30px;
     margin: 0;
     overflow: hidden;
     position: absolute;
-    width: $item-picker-width;
-    height: $item-picker-height;
+    width: $single-select-width;
+    height: $single-select-height;
   }
 
   &.expanded ul {
@@ -165,14 +165,14 @@ $item-picker-height: 30px;
       box-sizing: border-box;
       color: #FFF;
       display: block;
-      height: $item-picker-height;
-      line-height: $item-picker-height;
+      height: $single-select-height;
+      line-height: $single-select-height;
       overflow: hidden;
       padding: 0 6px;
       text-decoration: none;
       text-overflow: ellipsis;
       white-space: nowrap;
-      width: $item-picker-width;
+      width: $single-select-width;
 
       &:hover {
         background: darken($action-color, 10%);
@@ -186,7 +186,7 @@ $item-picker-height: 30px;
     &.current {
       a {
         cursor: default;
-        width: $item-picker-width - $item-picker-height;
+        width: $single-select-width - $single-select-height;
 
         &:hover {
           background: $action-color;
@@ -196,7 +196,7 @@ $item-picker-height: 30px;
   }
 }
 
-.multi-picker {
+.multi-select {
   margin: 0 0 0 20px;
   float: left;
 
@@ -208,8 +208,8 @@ $item-picker-height: 30px;
       border-radius: 3px;
       color: #FFF;
       display: block;
-      height: $item-picker-height;
-      line-height: $item-picker-height;
+      height: $single-select-height;
+      line-height: $single-select-height;
       padding: 0 10px;
       text-decoration: none;
 

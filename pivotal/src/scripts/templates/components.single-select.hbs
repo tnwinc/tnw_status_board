@@ -1,0 +1,12 @@
+<ul>
+  {{#each curatedItems}}
+    <li {{bind-attr class="current"}}>
+      <a href="#" {{action 'selectItem' this bubbles=false}} {{bind-attr title=label}}>
+        {{label}}
+      </a>
+    </li>
+  {{/each}}
+</ul>
+<a href="#" class="toggle-expansion" {{action 'toggleExpansion' bubbles=false}}>
+  {{expando_icon expanded}}
+</a>

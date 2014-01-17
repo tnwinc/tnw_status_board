@@ -1,4 +1,7 @@
-App.ItemPickerComponent = Ember.Component.extend
+App.SingleSelectComponent = Ember.Component.extend
+
+  classNames: ['single-select']
+  classNameBindings: ['expanded']
 
   expanded: false
 

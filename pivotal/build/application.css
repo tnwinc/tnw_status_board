@@ -301,7 +301,7 @@ body {
 }
 
 /* line 116, ../src/stylesheets/_main.scss */
-.item-picker {
+.single-select {
   background: #eb7c19;
   border-radius: 3px;
   float: left;
@@ -311,7 +311,7 @@ body {
   z-index: 10;
 }
 /* line 125, ../src/stylesheets/_main.scss */
-.item-picker a.toggle-expansion {
+.single-select a.toggle-expansion {
   border-top-right-radius: 3px;
   border-bottom-right-radius: 3px;
   color: #FFF;
@@ -325,17 +325,17 @@ body {
   line-height: 30px;
 }
 /* line 138, ../src/stylesheets/_main.scss */
-.item-picker a.toggle-expansion:hover {
+.single-select a.toggle-expansion:hover {
   background: #c06311;
 }
 /* line 143, ../src/stylesheets/_main.scss */
-.item-picker.expanded a.toggle-expansion {
+.single-select.expanded a.toggle-expansion {
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 3px;
   line-height: 27px;
 }
 /* line 149, ../src/stylesheets/_main.scss */
-.item-picker ul {
+.single-select ul {
   background: #eb7c19;
   border-radius: 3px;
   margin: 0;
@@ -345,11 +345,11 @@ body {
   height: 30px;
 }
 /* line 159, ../src/stylesheets/_main.scss */
-.item-picker.expanded ul {
+.single-select.expanded ul {
   height: auto;
 }
 /* line 164, ../src/stylesheets/_main.scss */
-.item-picker li a {
+.single-select li a {
   box-sizing: border-box;
   color: #FFF;
   display: block;
@@ -363,35 +363,35 @@ body {
   width: 200px;
 }
 /* line 177, ../src/stylesheets/_main.scss */
-.item-picker li a:hover {
+.single-select li a:hover {
   background: #c06311;
 }
 /* line 182, ../src/stylesheets/_main.scss */
-.item-picker li:last-of-type a {
+.single-select li:last-of-type a {
   border-radius: 0 0 3px 3px;
 }
 /* line 187, ../src/stylesheets/_main.scss */
-.item-picker li.current a {
+.single-select li.current a {
   cursor: default;
   width: 170px;
 }
 /* line 191, ../src/stylesheets/_main.scss */
-.item-picker li.current a:hover {
+.single-select li.current a:hover {
   background: #eb7c19;
 }
 
 /* line 199, ../src/stylesheets/_main.scss */
-.multi-picker {
+.multi-select {
   margin: 0 0 0 20px;
   float: left;
 }
 /* line 203, ../src/stylesheets/_main.scss */
-.multi-picker li {
+.multi-select li {
   display: inline-block;
   margin-right: 10px;
 }
 /* line 207, ../src/stylesheets/_main.scss */
-.multi-picker li a {
+.multi-select li a {
   border-radius: 3px;
   color: #FFF;
   display: block;
@@ -401,15 +401,15 @@ body {
   text-decoration: none;
 }
 /* line 217, ../src/stylesheets/_main.scss */
-.multi-picker li a:hover, .multi-picker li a:focus {
+.multi-select li a:hover, .multi-select li a:focus {
   background: rgba(0, 0, 0, 0.2);
 }
 /* line 222, ../src/stylesheets/_main.scss */
-.multi-picker li.selected a {
+.multi-select li.selected a {
   background: #eb7c19;
 }
 /* line 226, ../src/stylesheets/_main.scss */
-.multi-picker li.selected a:hover, .multi-picker li.selected a:focus {
+.multi-select li.selected a:hover, .multi-select li.selected a:focus {
   background: #c06311;
 }
 

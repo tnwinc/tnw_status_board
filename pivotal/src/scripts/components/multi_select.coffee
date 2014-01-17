@@ -1,8 +1,8 @@
-App.MultiPickerComponent = Ember.Component.extend
+App.MultiSelectComponent = Ember.Component.extend
 
   tagName: 'ul'
 
-  classNames: ['multi-picker']
+  classNames: ['multi-select']
 
   actions:
 

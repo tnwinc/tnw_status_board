@@ -183,70 +183,7 @@ function program7(depth0,data) {
   return buffer;
   
 });
-Ember.TEMPLATES["components/item-picker"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
-this.compilerInfo = [4,'>= 1.0.0'];
-helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
-  var buffer = '', stack1, stack2, hashContexts, hashTypes, options, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression, self=this;
-
-function program1(depth0,data) {
-  
-  var buffer = '', stack1, hashContexts, hashTypes, options;
-  data.buffer.push("\n      <li ");
-  hashContexts = {'class': depth0};
-  hashTypes = {'class': "STRING"};
-  options = {hash:{
-    'class': ("current")
-  },contexts:[],types:[],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
-  data.buffer.push(escapeExpression(((stack1 = helpers['bind-attr'] || (depth0 && depth0['bind-attr'])),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "bind-attr", options))));
-  data.buffer.push(">\n        <a href=\"#\" ");
-  hashContexts = {'bubbles': depth0};
-  hashTypes = {'bubbles': "BOOLEAN"};
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "selectItem", "", {hash:{
-    'bubbles': (false)
-  },contexts:[depth0,depth0],types:["STRING","ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
-  data.buffer.push(" ");
-  hashContexts = {'title': depth0};
-  hashTypes = {'title': "ID"};
-  options = {hash:{
-    'title': ("label")
-  },contexts:[],types:[],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
-  data.buffer.push(escapeExpression(((stack1 = helpers['bind-attr'] || (depth0 && depth0['bind-attr'])),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "bind-attr", options))));
-  data.buffer.push(">\n          ");
-  hashTypes = {};
-  hashContexts = {};
-  data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "label", {hash:{},contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
-  data.buffer.push("\n        </a>\n      </li>\n    ");
-  return buffer;
-  }
-
-  data.buffer.push("<div ");
-  hashContexts = {'class': depth0};
-  hashTypes = {'class': "STRING"};
-  options = {hash:{
-    'class': ("expanded :item-picker")
-  },contexts:[],types:[],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
-  data.buffer.push(escapeExpression(((stack1 = helpers['bind-attr'] || (depth0 && depth0['bind-attr'])),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "bind-attr", options))));
-  data.buffer.push(">\n  <ul>\n    ");
-  hashTypes = {};
-  hashContexts = {};
-  stack2 = helpers.each.call(depth0, "curatedItems", {hash:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data});
-  if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
-  data.buffer.push("\n  </ul>\n  <a href=\"#\" class=\"toggle-expansion\" ");
-  hashContexts = {'bubbles': depth0};
-  hashTypes = {'bubbles': "BOOLEAN"};
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "toggleExpansion", {hash:{
-    'bubbles': (false)
-  },contexts:[depth0],types:["STRING"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
-  data.buffer.push(">\n    ");
-  hashTypes = {};
-  hashContexts = {};
-  options = {hash:{},contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
-  data.buffer.push(escapeExpression(((stack1 = helpers.expando_icon || (depth0 && depth0.expando_icon)),stack1 ? stack1.call(depth0, "expanded", options) : helperMissing.call(depth0, "expando_icon", "expanded", options))));
-  data.buffer.push("\n  </a>\n</div>\n");
-  return buffer;
-  
-});
-Ember.TEMPLATES["components/multi-picker"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+Ember.TEMPLATES["components/multi-select"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   var buffer = '', stack1, hashTypes, hashContexts, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression, self=this;
@@ -278,6 +215,62 @@ function program1(depth0,data) {
   stack1 = helpers.each.call(depth0, "items", {hash:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n");
+  return buffer;
+  
+});
+Ember.TEMPLATES["components/single-select"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
+  var buffer = '', stack1, hashTypes, hashContexts, options, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression, self=this;
+
+function program1(depth0,data) {
+  
+  var buffer = '', stack1, hashContexts, hashTypes, options;
+  data.buffer.push("\n    <li ");
+  hashContexts = {'class': depth0};
+  hashTypes = {'class': "STRING"};
+  options = {hash:{
+    'class': ("current")
+  },contexts:[],types:[],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
+  data.buffer.push(escapeExpression(((stack1 = helpers['bind-attr'] || (depth0 && depth0['bind-attr'])),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "bind-attr", options))));
+  data.buffer.push(">\n      <a href=\"#\" ");
+  hashContexts = {'bubbles': depth0};
+  hashTypes = {'bubbles': "BOOLEAN"};
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "selectItem", "", {hash:{
+    'bubbles': (false)
+  },contexts:[depth0,depth0],types:["STRING","ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
+  data.buffer.push(" ");
+  hashContexts = {'title': depth0};
+  hashTypes = {'title': "ID"};
+  options = {hash:{
+    'title': ("label")
+  },contexts:[],types:[],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
+  data.buffer.push(escapeExpression(((stack1 = helpers['bind-attr'] || (depth0 && depth0['bind-attr'])),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "bind-attr", options))));
+  data.buffer.push(">\n        ");
+  hashTypes = {};
+  hashContexts = {};
+  data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "label", {hash:{},contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
+  data.buffer.push("\n      </a>\n    </li>\n  ");
+  return buffer;
+  }
+
+  data.buffer.push("<ul>\n  ");
+  hashTypes = {};
+  hashContexts = {};
+  stack1 = helpers.each.call(depth0, "curatedItems", {hash:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n</ul>\n<a href=\"#\" class=\"toggle-expansion\" ");
+  hashContexts = {'bubbles': depth0};
+  hashTypes = {'bubbles': "BOOLEAN"};
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "toggleExpansion", {hash:{
+    'bubbles': (false)
+  },contexts:[depth0],types:["STRING"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
+  data.buffer.push(">\n  ");
+  hashTypes = {};
+  hashContexts = {};
+  options = {hash:{},contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
+  data.buffer.push(escapeExpression(((stack1 = helpers.expando_icon || (depth0 && depth0.expando_icon)),stack1 ? stack1.call(depth0, "expanded", options) : helperMissing.call(depth0, "expando_icon", "expanded", options))));
+  data.buffer.push("\n</a>\n");
   return buffer;
   
 });
@@ -320,7 +313,7 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
     'currentItemId': ("id"),
     'onSelect': ("didSelectProject")
   },contexts:[],types:[],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
-  data.buffer.push(escapeExpression(((stack1 = helpers['item-picker'] || (depth0 && depth0['item-picker'])),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "item-picker", options))));
+  data.buffer.push(escapeExpression(((stack1 = helpers['single-select'] || (depth0 && depth0['single-select'])),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "single-select", options))));
   data.buffer.push("\n\n    ");
   hashContexts = {'items': depth0,'onSelect': depth0,'onUnselect': depth0};
   hashTypes = {'items': "ID",'onSelect': "STRING",'onUnselect': "STRING"};
@@ -329,7 +322,7 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
     'onSelect': ("didSelectScope"),
     'onUnselect': ("didUnselectScope")
   },contexts:[],types:[],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
-  data.buffer.push(escapeExpression(((stack1 = helpers['multi-picker'] || (depth0 && depth0['multi-picker'])),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "multi-picker", options))));
+  data.buffer.push(escapeExpression(((stack1 = helpers['multi-select'] || (depth0 && depth0['multi-select'])),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "multi-select", options))));
   data.buffer.push("\n  </header>\n\n  ");
   hashTypes = {};
   hashContexts = {};

@@ -229,7 +229,32 @@
 }).call(this);
 
 (function() {
-  App.ItemPickerComponent = Ember.Component.extend({
+  App.MultiSelectComponent = Ember.Component.extend({
+    tagName: 'ul',
+    classNames: ['multi-select'],
+    actions: {
+      selectItem: function(item) {
+        var numSelected;
+        if (item.selected) {
+          numSelected = _.where(this.get('items'), {
+            selected: true
+          }).length;
+          if (numSelected > 1) {
+            return this.sendAction('onUnselect', item);
+          }
+        } else {
+          return this.sendAction('onSelect', item);
+        }
+      }
+    }
+  });
+
+}).call(this);
+
+(function() {
+  App.SingleSelectComponent = Ember.Component.extend({
+    classNames: ['single-select'],
+    classNameBindings: ['expanded'],
     expanded: false,
     didInsertElement: function() {
       var _this = this;
@@ -257,29 +282,6 @@
       selectItem: function(item) {
         this.set('expanded', false);
         if (!item.get('current')) {
-          return this.sendAction('onSelect', item);
-        }
-      }
-    }
-  });
-
-}).call(this);
-
-(function() {
-  App.MultiPickerComponent = Ember.Component.extend({
-    tagName: 'ul',
-    classNames: ['multi-picker'],
-    actions: {
-      selectItem: function(item) {
-        var numSelected;
-        if (item.selected) {
-          numSelected = _.where(this.get('items'), {
-            selected: true
-          }).length;
-          if (numSelected > 1) {
-            return this.sendAction('onUnselect', item);
-          }
-        } else {
           return this.sendAction('onSelect', item);
         }
       }
