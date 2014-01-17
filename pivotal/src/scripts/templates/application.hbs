@@ -5,3 +5,11 @@
 {{/if}}
 
 {{outlet}}
+
+<a href="#" class="toggle-fullscreen" {{action 'toggleFullscreen'}}>
+  {{#if fullscreen}}
+    <i class="fa fa-compress"></i>
+  {{else}}
+    <i class="fa fa-expand"></i>
+  {{/if}}
+</a>

@@ -73,6 +73,16 @@
 
 (function() {
   App.ApplicationController = Ember.Controller.extend({
+    init: function() {
+      this._super();
+      this.set('fullscreen', true);
+      return Ember.$('body').addClass('fullscreen');
+    },
+    handleFullscreen: (function() {
+      var action;
+      action = this.get('fullscreen') ? 'addClass' : 'removeClass';
+      return Ember.$('body')[action]('fullscreen');
+    }).observes('fullscreen'),
     actions: {
       showBanner: function(message, type) {
         return this.set('banner', {
@@ -82,6 +92,9 @@
       },
       hideBanner: function() {
         return this.set('banner', null);
+      },
+      toggleFullscreen: function() {
+        this.toggleProperty('fullscreen');
       }
     }
   });

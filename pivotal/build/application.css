@@ -485,9 +485,9 @@ body {
 .iteration h4 {
   background: #333;
   border-bottom: solid 1px #545454;
-  color: #FFF;
+  color: #d3d3d3;
   margin: 0;
-  padding: 5px 10px;
+  padding: 5px 10px 5px 40px;
 }
 /* line 319, ../src/stylesheets/_main.scss */
 .iteration a.toggle-expansion {
@@ -495,8 +495,8 @@ body {
   display: block;
   position: absolute;
   top: 0;
-  right: 0;
   bottom: 0;
+  left: 0;
   width: 30px;
 }
 /* line 329, ../src/stylesheets/_main.scss */
@@ -645,6 +645,42 @@ body {
 /* line 466, ../src/stylesheets/_main.scss */
 .stories li.release .state,
 .stories li.release .state-meter {
+  display: none;
+}
+
+/* line 473, ../src/stylesheets/_main.scss */
+a.toggle-fullscreen {
+  color: rgba(255, 255, 255, 0.5);
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  text-align: center;
+  width: 28px;
+  height: 28px;
+  line-height: 28px;
+}
+/* line 474, ../src/stylesheets/_main.scss */
+a.toggle-fullscreen:before {
+  border-top: solid 25px rgba(255, 255, 255, 0.3);
+  border-right: solid 25px rgba(255, 255, 255, 0.3);
+  border-bottom: solid 25px transparent;
+  border-left: solid 25px transparent;
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 0;
+  height: 0;
+}
+/* line 498, ../src/stylesheets/_main.scss */
+a.toggle-fullscreen:hover, a.toggle-fullscreen:focus {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* line 505, ../src/stylesheets/_main.scss */
+.fullscreen .project-container > header,
+.fullscreen .scope > header {
   display: none;
 }
 
