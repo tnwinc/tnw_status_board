@@ -2,6 +2,9 @@ unacceptedStoryTypes = ['started', 'finished', 'delivered', 'rejected']
 
 App.ScopesRoute = App.Route.extend
 
+  deactivate: ->
+    @controllerFor('application').send 'hideBanner'
+
   model: ->
     projectId = @modelFor('project').id
     App.pivotal.getIterations(projectId, 'current_backlog').then (iterations)->
