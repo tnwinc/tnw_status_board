@@ -1,0 +1,11 @@
+@mixin centered-icon($width) {
+  margin-top: -10px;
+  position: absolute;
+  top: 50%;
+  right: 0;
+  text-align: center;
+  width: $width;
+  height: 20px;
+  line-height: 20px;
+}
+

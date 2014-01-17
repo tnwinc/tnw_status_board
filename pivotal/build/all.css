@@ -69,34 +69,47 @@ legend {
 }
 
 /* line 3, ../src/stylesheets/_base.scss */
+.clearfix:before, .settings fieldset:before, .projects-container ul:before, .project-container > header:before, .scopes:before, .clearfix:after, .settings fieldset:after, .projects-container ul:after, .project-container > header:after, .scopes:after {
+  content: "";
+  display: table;
+}
+
+/* line 4, ../src/stylesheets/_base.scss */
+.clearfix:after, .settings fieldset:after, .projects-container ul:after, .project-container > header:after, .scopes:after {
+  clear: both;
+}
+
+/* line 6, ../src/stylesheets/_base.scss */
 body {
+  background: #f8f8f8;
+  color: #333;
   font-family: 'Helvetica Neue', Arial, sans-serif;
   font-size: 16px;
   width: 100%;
   height: 100%;
 }
 
-/* line 10, ../src/stylesheets/_base.scss */
+/* line 15, ../src/stylesheets/_base.scss */
 h1, h2, h3, h4, h5, h6 {
   margin: 10px 0;
 }
 
-/* line 14, ../src/stylesheets/_base.scss */
+/* line 19, ../src/stylesheets/_base.scss */
 h1 {
   font-size: 1.5em;
 }
 
-/* line 18, ../src/stylesheets/_base.scss */
+/* line 23, ../src/stylesheets/_base.scss */
 h2 {
   font-size: 1.3em;
 }
 
-/* line 22, ../src/stylesheets/_base.scss */
+/* line 27, ../src/stylesheets/_base.scss */
 h3 {
   font-size: 1.1em;
 }
 
-/* line 29, ../src/stylesheets/_base.scss */
+/* line 34, ../src/stylesheets/_base.scss */
 p,
 ul,
 ol,
@@ -105,18 +118,18 @@ form {
   margin: 10px 0;
 }
 
-/* line 36, ../src/stylesheets/_base.scss */
+/* line 41, ../src/stylesheets/_base.scss */
 a:link, a:visited {
   color: #eb7c19;
   text-decoration: none;
 }
-/* line 43, ../src/stylesheets/_base.scss */
+/* line 48, ../src/stylesheets/_base.scss */
 a:hover, a:focus, a:active {
   color: #c06311;
   text-decoration: underline;
 }
 
-/* line 49, ../src/stylesheets/_base.scss */
+/* line 54, ../src/stylesheets/_base.scss */
 input {
   border: solid 1px #c7c7c7;
   border-radius: 3px;
@@ -124,7 +137,7 @@ input {
   padding: 5px 10px;
 }
 
-/* line 56, ../src/stylesheets/_base.scss */
+/* line 61, ../src/stylesheets/_base.scss */
 button {
   background: #eb7c19;
   border: none;
@@ -134,152 +147,64 @@ button {
   cursor: pointer;
   padding: 6px 11px;
 }
-/* line 66, ../src/stylesheets/_base.scss */
+/* line 71, ../src/stylesheets/_base.scss */
 button:hover, button:focus {
   background: #c06311;
 }
 
-/* line 1, ../src/stylesheets/_main.scss */
-.clearfix:before, .projects-container ul:before, .project-container > header:before, .scopes:before, .settings fieldset:before, .clearfix:after, .projects-container ul:after, .project-container > header:after, .scopes:after, .settings fieldset:after {
-  content: "";
-  display: table;
-}
-
-/* line 2, ../src/stylesheets/_main.scss */
-.clearfix:after, .projects-container ul:after, .project-container > header:after, .scopes:after, .settings fieldset:after {
-  clear: both;
-}
-
-/* line 4, ../src/stylesheets/_main.scss */
-body {
-  background: #f8f8f8;
-  color: #333;
-}
-
-/* line 9, ../src/stylesheets/_main.scss */
-.login-container {
-  margin: 30px auto 0;
-  width: 530px;
-}
-/* line 13, ../src/stylesheets/_main.scss */
-.login-container h2 {
-  background: #5283af;
-  color: #FFF;
-  margin: 0;
-  padding: 12px;
-}
-/* line 20, ../src/stylesheets/_main.scss */
-.login-container form {
-  background: #e3e3e3;
-  margin: 0;
-  padding: 30px;
-}
-/* line 25, ../src/stylesheets/_main.scss */
-.login-container form input {
-  display: block;
-  float: left;
-  margin-right: 10px;
-  padding: 12px;
-  width: 309px;
-}
-/* line 33, ../src/stylesheets/_main.scss */
-.login-container form button {
-  display: block;
-  padding: 13px;
-}
-
-/* line 40, ../src/stylesheets/_main.scss */
-.projects-container {
-  margin: 30px auto 0;
-  width: 530px;
-}
-/* line 44, ../src/stylesheets/_main.scss */
-.projects-container h2 {
-  background: #5283af;
-  color: #FFF;
-  margin: 0;
-  padding: 12px;
-}
-/* line 51, ../src/stylesheets/_main.scss */
-.projects-container ul {
-  background: #e3e3e3;
-  margin: 0;
-  padding: 7px;
-}
-/* line 57, ../src/stylesheets/_main.scss */
-.projects-container ul li {
-  float: left;
-  width: 244px;
-  margin: 7px 7px;
-}
-/* line 62, ../src/stylesheets/_main.scss */
-.projects-container ul li a {
-  background: #eb7c19;
-  border-radius: 3px;
-  color: #FFF;
-  display: block;
-  font-size: 1.2em;
-  padding: 10px;
-  text-decoration: none;
-}
-/* line 72, ../src/stylesheets/_main.scss */
-.projects-container ul li a:hover, .projects-container ul li a:focus {
-  background: #c06311;
-}
-
 @-webkit-keyframes flashwarning {
-  /* line 81, ../src/stylesheets/_main.scss */
+  /* line 2, ../src/stylesheets/_application.scss */
   0% {
     background-color: #B61818;
   }
 
-  /* line 82, ../src/stylesheets/_main.scss */
+  /* line 3, ../src/stylesheets/_application.scss */
   0.5% {
     background-color: #F10E0E;
   }
 
-  /* line 83, ../src/stylesheets/_main.scss */
+  /* line 4, ../src/stylesheets/_application.scss */
   1% {
     background-color: #B61818;
   }
 
-  /* line 84, ../src/stylesheets/_main.scss */
+  /* line 5, ../src/stylesheets/_application.scss */
   1.5% {
     background-color: #F10E0E;
   }
 
-  /* line 85, ../src/stylesheets/_main.scss */
+  /* line 6, ../src/stylesheets/_application.scss */
   2% {
     background-color: #B61818;
   }
 
-  /* line 86, ../src/stylesheets/_main.scss */
+  /* line 7, ../src/stylesheets/_application.scss */
   2.5% {
     background-color: #F10E0E;
   }
 
-  /* line 87, ../src/stylesheets/_main.scss */
+  /* line 8, ../src/stylesheets/_application.scss */
   3% {
     background-color: #B61818;
   }
 
-  /* line 88, ../src/stylesheets/_main.scss */
+  /* line 9, ../src/stylesheets/_application.scss */
   3.5% {
     background-color: #F10E0E;
   }
 
-  /* line 89, ../src/stylesheets/_main.scss */
+  /* line 10, ../src/stylesheets/_application.scss */
   4% {
     background-color: #B61818;
   }
 
-  /* line 90, ../src/stylesheets/_main.scss */
+  /* line 11, ../src/stylesheets/_application.scss */
   100% {
     background-color: #B61818;
   }
 }
 
-/* line 93, ../src/stylesheets/_main.scss */
+/* line 14, ../src/stylesheets/_application.scss */
 .banner {
   background-color: #545454;
   color: #FFF;
@@ -287,363 +212,14 @@ body {
   padding: 15px;
   text-align: center;
 }
-/* line 100, ../src/stylesheets/_main.scss */
+/* line 21, ../src/stylesheets/_application.scss */
 .banner.warning {
   background: #B61818;
   -webkit-animation: flashwarning 300s infinite;
   animation: flashwarning 300s infinite;
 }
 
-/* line 107, ../src/stylesheets/_main.scss */
-.project-container > header {
-  background: #5283af;
-  padding: 10px;
-}
-
-/* line 116, ../src/stylesheets/_main.scss */
-.single-select {
-  background: #eb7c19;
-  border-radius: 3px;
-  float: left;
-  position: relative;
-  width: 200px;
-  height: 30px;
-  z-index: 10;
-}
-/* line 125, ../src/stylesheets/_main.scss */
-.single-select a.toggle-expansion {
-  border-top-right-radius: 3px;
-  border-bottom-right-radius: 3px;
-  color: #FFF;
-  display: block;
-  position: absolute;
-  top: 0;
-  right: 0;
-  text-align: center;
-  width: 30px;
-  height: 30px;
-  line-height: 30px;
-}
-/* line 138, ../src/stylesheets/_main.scss */
-.single-select a.toggle-expansion:hover {
-  background: #c06311;
-}
-/* line 143, ../src/stylesheets/_main.scss */
-.single-select.expanded a.toggle-expansion {
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: 3px;
-  line-height: 27px;
-}
-/* line 149, ../src/stylesheets/_main.scss */
-.single-select ul {
-  background: #eb7c19;
-  border-radius: 3px;
-  margin: 0;
-  overflow: hidden;
-  position: absolute;
-  width: 200px;
-  height: 30px;
-}
-/* line 159, ../src/stylesheets/_main.scss */
-.single-select.expanded ul {
-  height: auto;
-}
-/* line 164, ../src/stylesheets/_main.scss */
-.single-select li a {
-  box-sizing: border-box;
-  color: #FFF;
-  display: block;
-  height: 30px;
-  line-height: 30px;
-  overflow: hidden;
-  padding: 0 6px;
-  text-decoration: none;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  width: 200px;
-}
-/* line 177, ../src/stylesheets/_main.scss */
-.single-select li a:hover {
-  background: #c06311;
-}
-/* line 182, ../src/stylesheets/_main.scss */
-.single-select li:last-of-type a {
-  border-radius: 0 0 3px 3px;
-}
-/* line 187, ../src/stylesheets/_main.scss */
-.single-select li.current a {
-  cursor: default;
-  width: 170px;
-}
-/* line 191, ../src/stylesheets/_main.scss */
-.single-select li.current a:hover {
-  background: #eb7c19;
-}
-
-/* line 199, ../src/stylesheets/_main.scss */
-.multi-select {
-  margin: 0 0 0 20px;
-  float: left;
-}
-/* line 203, ../src/stylesheets/_main.scss */
-.multi-select li {
-  display: inline-block;
-  margin-right: 10px;
-}
-/* line 207, ../src/stylesheets/_main.scss */
-.multi-select li a {
-  border-radius: 3px;
-  color: #FFF;
-  display: block;
-  height: 30px;
-  line-height: 30px;
-  padding: 0 10px;
-  text-decoration: none;
-}
-/* line 217, ../src/stylesheets/_main.scss */
-.multi-select li a:hover, .multi-select li a:focus {
-  background: rgba(0, 0, 0, 0.2);
-}
-/* line 222, ../src/stylesheets/_main.scss */
-.multi-select li.selected a {
-  background: #eb7c19;
-}
-/* line 226, ../src/stylesheets/_main.scss */
-.multi-select li.selected a:hover, .multi-select li.selected a:focus {
-  background: #c06311;
-}
-
-/* line 249, ../src/stylesheets/_main.scss */
-.scope {
-  box-sizing: border-box;
-  float: left;
-}
-/* line 253, ../src/stylesheets/_main.scss */
-.scopes-count-1 .scope {
-  float: none;
-}
-/* line 257, ../src/stylesheets/_main.scss */
-.scopes-count-2 .scope {
-  width: 50%;
-}
-/* line 260, ../src/stylesheets/_main.scss */
-.scopes-count-2 .scope:first-of-type {
-  padding-right: 5px;
-}
-/* line 264, ../src/stylesheets/_main.scss */
-.scopes-count-2 .scope:last-of-type {
-  padding-left: 5px;
-}
-/* line 269, ../src/stylesheets/_main.scss */
-.scope > header {
-  background: #314f6a;
-  padding: 8px 10px;
-  position: relative;
-}
-/* line 274, ../src/stylesheets/_main.scss */
-.scope > header h3 {
-  color: #FFF;
-  font-size: 1em;
-  margin: 0;
-  text-transform: uppercase;
-}
-/* line 281, ../src/stylesheets/_main.scss */
-.scope > header a {
-  color: #d3d3d3;
-  display: block;
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  width: 30px;
-}
-/* line 290, ../src/stylesheets/_main.scss */
-.scope > header a.expand-all {
-  right: 30px;
-}
-/* line 295, ../src/stylesheets/_main.scss */
-.scope > header a:hover, .scope > header a:focus {
-  background: rgba(255, 255, 255, 0.1);
-}
-/* line 299, ../src/stylesheets/_main.scss */
-.scope > header a i {
-  margin-top: -10px;
-  position: absolute;
-  top: 50%;
-  right: 0;
-  text-align: center;
-  width: 30px;
-  height: 20px;
-  line-height: 20px;
-}
-
-/* line 307, ../src/stylesheets/_main.scss */
-.iteration header {
-  position: relative;
-}
-/* line 311, ../src/stylesheets/_main.scss */
-.iteration h4 {
-  background: #333;
-  border-bottom: solid 1px #545454;
-  color: #d3d3d3;
-  margin: 0;
-  padding: 5px 10px 5px 40px;
-}
-/* line 319, ../src/stylesheets/_main.scss */
-.iteration a.toggle-expansion {
-  color: #FFF;
-  display: block;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  width: 30px;
-}
-/* line 329, ../src/stylesheets/_main.scss */
-.iteration a.toggle-expansion:hover, .iteration a.toggle-expansion:focus {
-  background: rgba(255, 255, 255, 0.1);
-}
-/* line 333, ../src/stylesheets/_main.scss */
-.iteration a.toggle-expansion i {
-  margin-top: -10px;
-  position: absolute;
-  top: 50%;
-  right: 0;
-  text-align: center;
-  width: 30px;
-  height: 20px;
-  line-height: 20px;
-}
-
-/* line 339, ../src/stylesheets/_main.scss */
-.stories {
-  display: none;
-  margin: 0;
-}
-/* line 343, ../src/stylesheets/_main.scss */
-.expanded .stories {
-  display: block;
-}
-/* line 347, ../src/stylesheets/_main.scss */
-.stories li {
-  background: #FFF;
-  border-bottom: solid 1px #e3e3e3;
-  padding: 5px;
-  position: relative;
-}
-/* line 353, ../src/stylesheets/_main.scss */
-.stories li p {
-  margin: 0 30px 0 120px;
-}
-/* line 357, ../src/stylesheets/_main.scss */
-.stories li .state {
-  color: #787878;
-  float: left;
-  font-size: .9em;
-  margin-top: 3px;
-  margin-left: 45px;
-}
-/* line 365, ../src/stylesheets/_main.scss */
-.stories li .state-meter {
-  background-image: repeating-linear-gradient(-65deg, transparent, transparent 5px, rgba(255, 255, 255, 0.3) 5px, rgba(255, 255, 255, 0.3) 10px);
-  border-radius: 0 3px 3px 0;
-  display: block;
-  position: absolute;
-  top: 5px;
-  left: 0;
-  width: 0;
-  height: 24px;
-}
-/* line 381, ../src/stylesheets/_main.scss */
-.stories li.unscheduled, .stories li.unstarted {
-  background: #e3e3e3;
-  border-color: #c7c7c7;
-}
-/* line 386, ../src/stylesheets/_main.scss */
-.stories li.unscheduled .state,
-.stories li.unscheduled .state-meter, .stories li.unstarted .state,
-.stories li.unstarted .state-meter {
-  display: none;
-}
-/* line 392, ../src/stylesheets/_main.scss */
-.stories li.started .state-meter {
-  background-color: #c78719;
-  width: 10px;
-}
-/* line 392, ../src/stylesheets/_main.scss */
-.stories li.finished .state-meter {
-  background-color: #0f516b;
-  width: 20px;
-}
-/* line 392, ../src/stylesheets/_main.scss */
-.stories li.delivered .state-meter {
-  background-color: #5c1379;
-  width: 30px;
-}
-/* line 392, ../src/stylesheets/_main.scss */
-.stories li.rejected .state-meter {
-  background-color: #811c1c;
-  width: 20px;
-}
-/* line 392, ../src/stylesheets/_main.scss */
-.stories li.accepted .state-meter {
-  background-color: #346b0f;
-  width: 40px;
-}
-/* line 418, ../src/stylesheets/_main.scss */
-.stories li i {
-  float: right;
-  font-size: 1.2em;
-  margin-top: 2px;
-  margin-right: 2px;
-}
-/* line 425, ../src/stylesheets/_main.scss */
-.stories li .estimate {
-  color: #FFF;
-  font-size: .8em;
-  position: absolute;
-  top: 8px;
-  right: 6px;
-  text-align: center;
-  width: 22px;
-}
-/* line 435, ../src/stylesheets/_main.scss */
-.stories li.feature i {
-  color: #eb7c19;
-  font-size: 1.7em;
-  margin-top: -1px;
-  margin-right: 0;
-}
-/* line 442, ../src/stylesheets/_main.scss */
-.stories li.chore i {
-  color: #434343;
-}
-/* line 446, ../src/stylesheets/_main.scss */
-.stories li.bug i {
-  color: #921414;
-}
-/* line 450, ../src/stylesheets/_main.scss */
-.stories li.release {
-  background: #5283af;
-  border-color: #41698d;
-  color: #FFF;
-}
-/* line 455, ../src/stylesheets/_main.scss */
-.stories li.release p {
-  margin: 0 10px 0 35px;
-}
-/* line 459, ../src/stylesheets/_main.scss */
-.stories li.release i {
-  float: left;
-  margin-left: 2px;
-}
-/* line 465, ../src/stylesheets/_main.scss */
-.stories li.release .state,
-.stories li.release .state-meter {
-  display: none;
-}
-
-/* line 472, ../src/stylesheets/_main.scss */
+/* line 28, ../src/stylesheets/_application.scss */
 a.open-settings {
   background: #eb7c19;
   border-radius: 3px;
@@ -657,12 +233,12 @@ a.open-settings {
   height: 30px;
   line-height: 30px;
 }
-/* line 486, ../src/stylesheets/_main.scss */
+/* line 42, ../src/stylesheets/_application.scss */
 a.open-settings:hover, a.open-settings:focus {
   background: #c06311;
 }
 
-/* line 491, ../src/stylesheets/_main.scss */
+/* line 47, ../src/stylesheets/_application.scss */
 .settings {
   background: #FFF;
   border: solid 5px #5283af;
@@ -673,23 +249,23 @@ a.open-settings:hover, a.open-settings:focus {
   top: 8px;
   right: 48px;
 }
-/* line 505, ../src/stylesheets/_main.scss */
+/* line 61, ../src/stylesheets/_application.scss */
 .settings label {
   color: #757575;
   margin-right: 5px;
   text-align: right;
 }
-/* line 511, ../src/stylesheets/_main.scss */
+/* line 67, ../src/stylesheets/_application.scss */
 .settings input {
   width: 20px;
 }
-/* line 515, ../src/stylesheets/_main.scss */
+/* line 71, ../src/stylesheets/_application.scss */
 .settings button {
   float: right;
   margin-top: 20px;
 }
 
-/* line 521, ../src/stylesheets/_main.scss */
+/* line 77, ../src/stylesheets/_application.scss */
 a.toggle-fullscreen {
   color: rgba(255, 255, 255, 0.5);
   display: block;
@@ -701,7 +277,7 @@ a.toggle-fullscreen {
   height: 28px;
   line-height: 28px;
 }
-/* line 522, ../src/stylesheets/_main.scss */
+/* line 78, ../src/stylesheets/_application.scss */
 a.toggle-fullscreen:before {
   border-top: solid 25px rgba(255, 255, 255, 0.3);
   border-right: solid 25px rgba(255, 255, 255, 0.3);
@@ -714,16 +290,436 @@ a.toggle-fullscreen:before {
   width: 0;
   height: 0;
 }
-/* line 546, ../src/stylesheets/_main.scss */
+/* line 102, ../src/stylesheets/_application.scss */
 a.toggle-fullscreen:hover, a.toggle-fullscreen:focus {
   color: rgba(255, 255, 255, 0.8);
 }
 
-/* line 554, ../src/stylesheets/_main.scss */
+/* line 110, ../src/stylesheets/_application.scss */
 .fullscreen .project-container > header,
 .fullscreen .scope > header,
 .fullscreen a.open-settings {
   display: none;
+}
+
+/* line 1, ../src/stylesheets/_login.scss */
+.login-container {
+  margin: 30px auto 0;
+  width: 530px;
+}
+/* line 5, ../src/stylesheets/_login.scss */
+.login-container h2 {
+  background: #5283af;
+  color: #FFF;
+  margin: 0;
+  padding: 12px;
+}
+/* line 12, ../src/stylesheets/_login.scss */
+.login-container form {
+  background: #e3e3e3;
+  margin: 0;
+  padding: 30px;
+}
+/* line 17, ../src/stylesheets/_login.scss */
+.login-container form input {
+  display: block;
+  float: left;
+  margin-right: 10px;
+  padding: 12px;
+  width: 309px;
+}
+/* line 25, ../src/stylesheets/_login.scss */
+.login-container form button {
+  display: block;
+  padding: 13px;
+}
+
+/* line 1, ../src/stylesheets/_projects.scss */
+.projects-container {
+  margin: 30px auto 0;
+  width: 530px;
+}
+/* line 5, ../src/stylesheets/_projects.scss */
+.projects-container h2 {
+  background: #5283af;
+  color: #FFF;
+  margin: 0;
+  padding: 12px;
+}
+/* line 12, ../src/stylesheets/_projects.scss */
+.projects-container ul {
+  background: #e3e3e3;
+  margin: 0;
+  padding: 7px;
+}
+/* line 18, ../src/stylesheets/_projects.scss */
+.projects-container ul li {
+  float: left;
+  width: 244px;
+  margin: 7px 7px;
+}
+/* line 23, ../src/stylesheets/_projects.scss */
+.projects-container ul li a {
+  background: #eb7c19;
+  border-radius: 3px;
+  color: #FFF;
+  display: block;
+  font-size: 1.2em;
+  padding: 10px;
+  text-decoration: none;
+}
+/* line 33, ../src/stylesheets/_projects.scss */
+.projects-container ul li a:hover, .projects-container ul li a:focus {
+  background: #c06311;
+}
+
+/* line 41, ../src/stylesheets/_projects.scss */
+.project-container > header {
+  background: #5283af;
+  padding: 10px;
+}
+
+/* line 5, ../src/stylesheets/_scopes.scss */
+.scope {
+  box-sizing: border-box;
+  float: left;
+}
+/* line 9, ../src/stylesheets/_scopes.scss */
+.scopes-count-1 .scope {
+  float: none;
+}
+/* line 13, ../src/stylesheets/_scopes.scss */
+.scopes-count-2 .scope {
+  width: 50%;
+}
+/* line 16, ../src/stylesheets/_scopes.scss */
+.scopes-count-2 .scope:first-of-type {
+  padding-right: 5px;
+}
+/* line 20, ../src/stylesheets/_scopes.scss */
+.scopes-count-2 .scope:last-of-type {
+  padding-left: 5px;
+}
+/* line 25, ../src/stylesheets/_scopes.scss */
+.scope > header {
+  background: #314f6a;
+  padding: 8px 10px;
+  position: relative;
+}
+/* line 30, ../src/stylesheets/_scopes.scss */
+.scope > header h3 {
+  color: #FFF;
+  font-size: 1em;
+  margin: 0;
+  text-transform: uppercase;
+}
+/* line 37, ../src/stylesheets/_scopes.scss */
+.scope > header a {
+  color: #d3d3d3;
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 30px;
+}
+/* line 46, ../src/stylesheets/_scopes.scss */
+.scope > header a.expand-all {
+  right: 30px;
+}
+/* line 51, ../src/stylesheets/_scopes.scss */
+.scope > header a:hover, .scope > header a:focus {
+  background: rgba(255, 255, 255, 0.1);
+}
+/* line 55, ../src/stylesheets/_scopes.scss */
+.scope > header a i {
+  margin-top: -10px;
+  position: absolute;
+  top: 50%;
+  right: 0;
+  text-align: center;
+  width: 30px;
+  height: 20px;
+  line-height: 20px;
+}
+
+/* line 2, ../src/stylesheets/_iterations.scss */
+.iteration header {
+  position: relative;
+}
+/* line 6, ../src/stylesheets/_iterations.scss */
+.iteration h4 {
+  background: #333;
+  border-bottom: solid 1px #545454;
+  color: #d3d3d3;
+  margin: 0;
+  padding: 5px 10px 5px 40px;
+}
+/* line 14, ../src/stylesheets/_iterations.scss */
+.iteration a.toggle-expansion {
+  color: #FFF;
+  display: block;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 30px;
+}
+/* line 24, ../src/stylesheets/_iterations.scss */
+.iteration a.toggle-expansion:hover, .iteration a.toggle-expansion:focus {
+  background: rgba(255, 255, 255, 0.1);
+}
+/* line 28, ../src/stylesheets/_iterations.scss */
+.iteration a.toggle-expansion i {
+  margin-top: -10px;
+  position: absolute;
+  top: 50%;
+  right: 0;
+  text-align: center;
+  width: 30px;
+  height: 20px;
+  line-height: 20px;
+}
+
+/* line 1, ../src/stylesheets/_stories.scss */
+.stories {
+  display: none;
+  margin: 0;
+}
+/* line 5, ../src/stylesheets/_stories.scss */
+.expanded .stories {
+  display: block;
+}
+/* line 9, ../src/stylesheets/_stories.scss */
+.stories li {
+  background: #FFF;
+  border-bottom: solid 1px #e3e3e3;
+  padding: 5px;
+  position: relative;
+}
+/* line 15, ../src/stylesheets/_stories.scss */
+.stories li p {
+  margin: 0 30px 0 120px;
+}
+/* line 19, ../src/stylesheets/_stories.scss */
+.stories li .state {
+  color: #787878;
+  float: left;
+  font-size: .9em;
+  margin-top: 3px;
+  margin-left: 45px;
+}
+/* line 27, ../src/stylesheets/_stories.scss */
+.stories li .state-meter {
+  background-image: repeating-linear-gradient(-65deg, transparent, transparent 5px, rgba(255, 255, 255, 0.3) 5px, rgba(255, 255, 255, 0.3) 10px);
+  border-radius: 0 3px 3px 0;
+  display: block;
+  position: absolute;
+  top: 5px;
+  left: 0;
+  width: 0;
+  height: 24px;
+}
+/* line 43, ../src/stylesheets/_stories.scss */
+.stories li.unscheduled, .stories li.unstarted {
+  background: #e3e3e3;
+  border-color: #c7c7c7;
+}
+/* line 48, ../src/stylesheets/_stories.scss */
+.stories li.unscheduled .state,
+.stories li.unscheduled .state-meter, .stories li.unstarted .state,
+.stories li.unstarted .state-meter {
+  display: none;
+}
+/* line 54, ../src/stylesheets/_stories.scss */
+.stories li.started .state-meter {
+  background-color: #c78719;
+  width: 10px;
+}
+/* line 54, ../src/stylesheets/_stories.scss */
+.stories li.finished .state-meter {
+  background-color: #0f516b;
+  width: 20px;
+}
+/* line 54, ../src/stylesheets/_stories.scss */
+.stories li.delivered .state-meter {
+  background-color: #5c1379;
+  width: 30px;
+}
+/* line 54, ../src/stylesheets/_stories.scss */
+.stories li.rejected .state-meter {
+  background-color: #811c1c;
+  width: 20px;
+}
+/* line 54, ../src/stylesheets/_stories.scss */
+.stories li.accepted .state-meter {
+  background-color: #346b0f;
+  width: 40px;
+}
+/* line 80, ../src/stylesheets/_stories.scss */
+.stories li i {
+  float: right;
+  font-size: 1.2em;
+  margin-top: 2px;
+  margin-right: 2px;
+}
+/* line 87, ../src/stylesheets/_stories.scss */
+.stories li .estimate {
+  color: #FFF;
+  font-size: .8em;
+  position: absolute;
+  top: 8px;
+  right: 6px;
+  text-align: center;
+  width: 22px;
+}
+/* line 97, ../src/stylesheets/_stories.scss */
+.stories li.feature i {
+  color: #eb7c19;
+  font-size: 1.7em;
+  margin-top: -1px;
+  margin-right: 0;
+}
+/* line 104, ../src/stylesheets/_stories.scss */
+.stories li.chore i {
+  color: #434343;
+}
+/* line 108, ../src/stylesheets/_stories.scss */
+.stories li.bug i {
+  color: #921414;
+}
+/* line 112, ../src/stylesheets/_stories.scss */
+.stories li.release {
+  background: #5283af;
+  border-color: #41698d;
+  color: #FFF;
+}
+/* line 117, ../src/stylesheets/_stories.scss */
+.stories li.release p {
+  margin: 0 10px 0 35px;
+}
+/* line 121, ../src/stylesheets/_stories.scss */
+.stories li.release i {
+  float: left;
+  margin-left: 2px;
+}
+/* line 127, ../src/stylesheets/_stories.scss */
+.stories li.release .state,
+.stories li.release .state-meter {
+  display: none;
+}
+
+/* line 4, ../src/stylesheets/_single_select.scss */
+.single-select {
+  background: #eb7c19;
+  border-radius: 3px;
+  float: left;
+  position: relative;
+  width: 200px;
+  height: 30px;
+  z-index: 10;
+}
+/* line 13, ../src/stylesheets/_single_select.scss */
+.single-select a.toggle-expansion {
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+  color: #FFF;
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  text-align: center;
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+}
+/* line 26, ../src/stylesheets/_single_select.scss */
+.single-select a.toggle-expansion:hover {
+  background: #c06311;
+}
+/* line 31, ../src/stylesheets/_single_select.scss */
+.single-select.expanded a.toggle-expansion {
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 3px;
+  line-height: 27px;
+}
+/* line 37, ../src/stylesheets/_single_select.scss */
+.single-select ul {
+  background: #eb7c19;
+  border-radius: 3px;
+  margin: 0;
+  overflow: hidden;
+  position: absolute;
+  width: 200px;
+  height: 30px;
+}
+/* line 47, ../src/stylesheets/_single_select.scss */
+.single-select.expanded ul {
+  height: auto;
+}
+/* line 52, ../src/stylesheets/_single_select.scss */
+.single-select li a {
+  box-sizing: border-box;
+  color: #FFF;
+  display: block;
+  height: 30px;
+  line-height: 30px;
+  overflow: hidden;
+  padding: 0 6px;
+  text-decoration: none;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 200px;
+}
+/* line 65, ../src/stylesheets/_single_select.scss */
+.single-select li a:hover {
+  background: #c06311;
+}
+/* line 70, ../src/stylesheets/_single_select.scss */
+.single-select li:last-of-type a {
+  border-radius: 0 0 3px 3px;
+}
+/* line 75, ../src/stylesheets/_single_select.scss */
+.single-select li.current a {
+  cursor: default;
+  width: 170px;
+}
+/* line 79, ../src/stylesheets/_single_select.scss */
+.single-select li.current a:hover {
+  background: #eb7c19;
+}
+
+/* line 3, ../src/stylesheets/_multi_select.scss */
+.multi-select {
+  margin: 0 0 0 20px;
+  float: left;
+}
+/* line 7, ../src/stylesheets/_multi_select.scss */
+.multi-select li {
+  display: inline-block;
+  margin-right: 10px;
+}
+/* line 11, ../src/stylesheets/_multi_select.scss */
+.multi-select li a {
+  border-radius: 3px;
+  color: #FFF;
+  display: block;
+  height: 30px;
+  line-height: 30px;
+  padding: 0 10px;
+  text-decoration: none;
+}
+/* line 21, ../src/stylesheets/_multi_select.scss */
+.multi-select li a:hover, .multi-select li a:focus {
+  background: rgba(0, 0, 0, 0.2);
+}
+/* line 26, ../src/stylesheets/_multi_select.scss */
+.multi-select li.selected a {
+  background: #eb7c19;
+}
+/* line 30, ../src/stylesheets/_multi_select.scss */
+.multi-select li.selected a:hover, .multi-select li.selected a:focus {
+  background: #c06311;
 }
 
 /*!

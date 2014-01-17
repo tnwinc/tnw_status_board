@@ -24,7 +24,7 @@ gulp.task 'coffee', ->
 
   gulp.src(coffeeFiles)
     .pipe(coffee().on('error', gutil.log))
-    .pipe(concat('application.js'))
+    .pipe(concat('all.js'))
     .pipe(gulp.dest('./build/'))
 
 gulp.task 'precompile', ->

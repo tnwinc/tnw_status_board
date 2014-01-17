@@ -1,0 +1,30 @@
+.login-container {
+  margin: 30px auto 0;
+  width: 530px;
+
+  h2 {
+    background: $primary-color;
+    color: #FFF;
+    margin: 0;
+    padding: 12px;
+  }
+
+  form {
+    background: #e3e3e3;
+    margin: 0;
+    padding: 30px;
+
+    input {
+      display: block;
+      float: left;
+      margin-right: 10px;
+      padding: 12px;
+      width: 309px;
+    }
+
+    button {
+      display: block;
+      padding: 13px;
+    }
+  }
+}
