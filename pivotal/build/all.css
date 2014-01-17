@@ -69,13 +69,13 @@ legend {
 }
 
 /* line 3, ../src/stylesheets/_base.scss */
-.clearfix:before, .settings fieldset:before, .projects-container ul:before, .project-container > header:before, .scopes:before, .clearfix:after, .settings fieldset:after, .projects-container ul:after, .project-container > header:after, .scopes:after {
+.clearfix:before, .settings fieldset:before, .login-container form:before, .projects-container ul:before, .project-container > header:before, .scopes:before, .clearfix:after, .settings fieldset:after, .login-container form:after, .projects-container ul:after, .project-container > header:after, .scopes:after {
   content: "";
   display: table;
 }
 
 /* line 4, ../src/stylesheets/_base.scss */
-.clearfix:after, .settings fieldset:after, .projects-container ul:after, .project-container > header:after, .scopes:after {
+.clearfix:after, .settings fieldset:after, .login-container form:after, .projects-container ul:after, .project-container > header:after, .scopes:after {
   clear: both;
 }
 
@@ -84,7 +84,7 @@ body {
   background: #f8f8f8;
   color: #333;
   font-family: 'Helvetica Neue', Arial, sans-serif;
-  font-size: 16px;
+  font-size: 26px;
   width: 100%;
   height: 100%;
 }
@@ -229,9 +229,9 @@ a.open-settings {
   top: 10px;
   right: 50px;
   text-align: center;
-  width: 30px;
-  height: 30px;
-  line-height: 30px;
+  width: 2em;
+  height: 2em;
+  line-height: 2em;
 }
 /* line 42, ../src/stylesheets/_application.scss */
 a.open-settings:hover, a.open-settings:focus {
@@ -248,27 +248,29 @@ a.open-settings:hover, a.open-settings:focus {
   position: absolute;
   top: 8px;
   right: 48px;
+  z-index: 10;
 }
-/* line 61, ../src/stylesheets/_application.scss */
+/* line 62, ../src/stylesheets/_application.scss */
 .settings label {
   color: #757575;
   margin-right: 5px;
   text-align: right;
 }
-/* line 67, ../src/stylesheets/_application.scss */
+/* line 68, ../src/stylesheets/_application.scss */
 .settings input {
   width: 20px;
 }
-/* line 71, ../src/stylesheets/_application.scss */
+/* line 72, ../src/stylesheets/_application.scss */
 .settings button {
   float: right;
   margin-top: 20px;
 }
 
-/* line 77, ../src/stylesheets/_application.scss */
+/* line 78, ../src/stylesheets/_application.scss */
 a.toggle-fullscreen {
   color: rgba(255, 255, 255, 0.5);
   display: block;
+  font-size: 16px;
   position: absolute;
   top: 0;
   right: 0;
@@ -277,7 +279,7 @@ a.toggle-fullscreen {
   height: 28px;
   line-height: 28px;
 }
-/* line 78, ../src/stylesheets/_application.scss */
+/* line 79, ../src/stylesheets/_application.scss */
 a.toggle-fullscreen:before {
   border-top: solid 25px rgba(255, 255, 255, 0.3);
   border-right: solid 25px rgba(255, 255, 255, 0.3);
@@ -290,12 +292,12 @@ a.toggle-fullscreen:before {
   width: 0;
   height: 0;
 }
-/* line 102, ../src/stylesheets/_application.scss */
+/* line 104, ../src/stylesheets/_application.scss */
 a.toggle-fullscreen:hover, a.toggle-fullscreen:focus {
   color: rgba(255, 255, 255, 0.8);
 }
 
-/* line 110, ../src/stylesheets/_application.scss */
+/* line 112, ../src/stylesheets/_application.scss */
 .fullscreen .project-container > header,
 .fullscreen .scope > header,
 .fullscreen a.open-settings {
@@ -305,7 +307,7 @@ a.toggle-fullscreen:hover, a.toggle-fullscreen:focus {
 /* line 1, ../src/stylesheets/_login.scss */
 .login-container {
   margin: 30px auto 0;
-  width: 530px;
+  width: 32em;
 }
 /* line 5, ../src/stylesheets/_login.scss */
 .login-container h2 {
@@ -318,26 +320,30 @@ a.toggle-fullscreen:hover, a.toggle-fullscreen:focus {
 .login-container form {
   background: #e3e3e3;
   margin: 0;
-  padding: 30px;
+  padding: 2em;
 }
-/* line 17, ../src/stylesheets/_login.scss */
+/* line 18, ../src/stylesheets/_login.scss */
 .login-container form input {
+  box-sizing: border-box;
   display: block;
   float: left;
-  margin-right: 10px;
-  padding: 12px;
-  width: 309px;
+  padding: .8em;
+  width: 19em;
 }
-/* line 25, ../src/stylesheets/_login.scss */
+/* line 26, ../src/stylesheets/_login.scss */
 .login-container form button {
+  box-sizing: border-box;
   display: block;
-  padding: 13px;
+  float: right;
+  padding: .8em 0;
+  text-align: center;
+  width: 8em;
 }
 
 /* line 1, ../src/stylesheets/_projects.scss */
 .projects-container {
   margin: 30px auto 0;
-  width: 530px;
+  width: 32em;
 }
 /* line 5, ../src/stylesheets/_projects.scss */
 .projects-container h2 {
@@ -350,13 +356,13 @@ a.toggle-fullscreen:hover, a.toggle-fullscreen:focus {
 .projects-container ul {
   background: #e3e3e3;
   margin: 0;
-  padding: 7px;
+  padding: .5em;
 }
 /* line 18, ../src/stylesheets/_projects.scss */
 .projects-container ul li {
   float: left;
-  width: 244px;
-  margin: 7px 7px;
+  width: 14.5em;
+  margin: .5em .5em;
 }
 /* line 23, ../src/stylesheets/_projects.scss */
 .projects-container ul li a {
@@ -365,7 +371,7 @@ a.toggle-fullscreen:hover, a.toggle-fullscreen:focus {
   color: #FFF;
   display: block;
   font-size: 1.2em;
-  padding: 10px;
+  padding: .5em;
   text-decoration: none;
 }
 /* line 33, ../src/stylesheets/_projects.scss */
@@ -421,11 +427,11 @@ a.toggle-fullscreen:hover, a.toggle-fullscreen:focus {
   top: 0;
   right: 0;
   bottom: 0;
-  width: 30px;
+  width: 2em;
 }
 /* line 46, ../src/stylesheets/_scopes.scss */
 .scope > header a.expand-all {
-  right: 30px;
+  right: 2em;
 }
 /* line 51, ../src/stylesheets/_scopes.scss */
 .scope > header a:hover, .scope > header a:focus {
@@ -438,7 +444,7 @@ a.toggle-fullscreen:hover, a.toggle-fullscreen:focus {
   top: 50%;
   right: 0;
   text-align: center;
-  width: 30px;
+  width: 2em;
   height: 20px;
   line-height: 20px;
 }
@@ -453,7 +459,7 @@ a.toggle-fullscreen:hover, a.toggle-fullscreen:focus {
   border-bottom: solid 1px #545454;
   color: #d3d3d3;
   margin: 0;
-  padding: 5px 10px 5px 40px;
+  padding: 5px 10px 5px 2.5em;
 }
 /* line 14, ../src/stylesheets/_iterations.scss */
 .iteration a.toggle-expansion {
@@ -463,7 +469,7 @@ a.toggle-fullscreen:hover, a.toggle-fullscreen:focus {
   top: 0;
   bottom: 0;
   left: 0;
-  width: 30px;
+  width: 2em;
 }
 /* line 24, ../src/stylesheets/_iterations.scss */
 .iteration a.toggle-expansion:hover, .iteration a.toggle-expansion:focus {
@@ -476,7 +482,7 @@ a.toggle-fullscreen:hover, a.toggle-fullscreen:focus {
   top: 50%;
   right: 0;
   text-align: center;
-  width: 30px;
+  width: 2em;
   height: 20px;
   line-height: 20px;
 }
@@ -499,7 +505,7 @@ a.toggle-fullscreen:hover, a.toggle-fullscreen:focus {
 }
 /* line 15, ../src/stylesheets/_stories.scss */
 .stories li p {
-  margin: 0 30px 0 120px;
+  margin: 0 2em 0 7em;
 }
 /* line 19, ../src/stylesheets/_stories.scss */
 .stories li .state {
@@ -518,7 +524,7 @@ a.toggle-fullscreen:hover, a.toggle-fullscreen:focus {
   top: 5px;
   left: 0;
   width: 0;
-  height: 24px;
+  height: 1.5em;
 }
 /* line 43, ../src/stylesheets/_stories.scss */
 .stories li.unscheduled, .stories li.unstarted {
@@ -560,50 +566,54 @@ a.toggle-fullscreen:hover, a.toggle-fullscreen:focus {
 .stories li i {
   float: right;
   font-size: 1.2em;
-  margin-top: 2px;
-  margin-right: 2px;
+  margin-top: 0.125em;
+  margin-right: 0.125em;
+  position: relative;
 }
-/* line 87, ../src/stylesheets/_stories.scss */
-.stories li .estimate {
-  color: #FFF;
-  font-size: .8em;
-  position: absolute;
-  top: 8px;
-  right: 6px;
-  text-align: center;
-  width: 22px;
-}
-/* line 97, ../src/stylesheets/_stories.scss */
+/* line 88, ../src/stylesheets/_stories.scss */
 .stories li.feature i {
   color: #eb7c19;
   font-size: 1.7em;
-  margin-top: -1px;
+  margin-top: 0;
   margin-right: 0;
+  text-align: center;
 }
-/* line 104, ../src/stylesheets/_stories.scss */
+/* line 96, ../src/stylesheets/_stories.scss */
+.stories li .estimate {
+  color: #FFF;
+  font-size: .5em;
+  line-height: 1.9em;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  text-align: center;
+}
+/* line 108, ../src/stylesheets/_stories.scss */
 .stories li.chore i {
   color: #434343;
 }
-/* line 108, ../src/stylesheets/_stories.scss */
+/* line 112, ../src/stylesheets/_stories.scss */
 .stories li.bug i {
   color: #921414;
 }
-/* line 112, ../src/stylesheets/_stories.scss */
+/* line 116, ../src/stylesheets/_stories.scss */
 .stories li.release {
   background: #5283af;
   border-color: #41698d;
   color: #FFF;
 }
-/* line 117, ../src/stylesheets/_stories.scss */
-.stories li.release p {
-  margin: 0 10px 0 35px;
-}
 /* line 121, ../src/stylesheets/_stories.scss */
+.stories li.release p {
+  margin: 0 .75em 0 2em;
+}
+/* line 125, ../src/stylesheets/_stories.scss */
 .stories li.release i {
   float: left;
   margin-left: 2px;
 }
-/* line 127, ../src/stylesheets/_stories.scss */
+/* line 131, ../src/stylesheets/_stories.scss */
 .stories li.release .state,
 .stories li.release .state-meter {
   display: none;
@@ -615,9 +625,9 @@ a.toggle-fullscreen:hover, a.toggle-fullscreen:focus {
   border-radius: 3px;
   float: left;
   position: relative;
-  width: 200px;
-  height: 30px;
-  z-index: 10;
+  width: 11em;
+  height: 2em;
+  z-index: 5;
 }
 /* line 13, ../src/stylesheets/_single_select.scss */
 .single-select a.toggle-expansion {
@@ -629,9 +639,9 @@ a.toggle-fullscreen:hover, a.toggle-fullscreen:focus {
   top: 0;
   right: 0;
   text-align: center;
-  width: 30px;
-  height: 30px;
-  line-height: 30px;
+  width: 2em;
+  height: 2em;
+  line-height: 2em;
 }
 /* line 26, ../src/stylesheets/_single_select.scss */
 .single-select a.toggle-expansion:hover {
@@ -641,7 +651,7 @@ a.toggle-fullscreen:hover, a.toggle-fullscreen:focus {
 .single-select.expanded a.toggle-expansion {
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 3px;
-  line-height: 27px;
+  line-height: 2em;
 }
 /* line 37, ../src/stylesheets/_single_select.scss */
 .single-select ul {
@@ -650,8 +660,8 @@ a.toggle-fullscreen:hover, a.toggle-fullscreen:focus {
   margin: 0;
   overflow: hidden;
   position: absolute;
-  width: 200px;
-  height: 30px;
+  width: 11em;
+  height: 2em;
 }
 /* line 47, ../src/stylesheets/_single_select.scss */
 .single-select.expanded ul {
@@ -662,14 +672,14 @@ a.toggle-fullscreen:hover, a.toggle-fullscreen:focus {
   box-sizing: border-box;
   color: #FFF;
   display: block;
-  height: 30px;
-  line-height: 30px;
+  height: 2em;
+  line-height: 2em;
   overflow: hidden;
   padding: 0 6px;
   text-decoration: none;
   text-overflow: ellipsis;
   white-space: nowrap;
-  width: 200px;
+  width: 11em;
 }
 /* line 65, ../src/stylesheets/_single_select.scss */
 .single-select li a:hover {
@@ -682,7 +692,7 @@ a.toggle-fullscreen:hover, a.toggle-fullscreen:focus {
 /* line 75, ../src/stylesheets/_single_select.scss */
 .single-select li.current a {
   cursor: default;
-  width: 170px;
+  width: 9em;
 }
 /* line 79, ../src/stylesheets/_single_select.scss */
 .single-select li.current a:hover {
@@ -704,8 +714,8 @@ a.toggle-fullscreen:hover, a.toggle-fullscreen:focus {
   border-radius: 3px;
   color: #FFF;
   display: block;
-  height: 30px;
-  line-height: 30px;
+  height: 2em;
+  line-height: 2em;
   padding: 0 10px;
   text-decoration: none;
 }

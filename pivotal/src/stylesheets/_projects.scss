@@ -1,6 +1,6 @@
 .projects-container {
   margin: 30px auto 0;
-  width: 530px;
+  width: 32em;
 
   h2 {
     background: $primary-color;
@@ -13,12 +13,12 @@
     @extend .clearfix;
     background: #e3e3e3;
     margin: 0;
-    padding: 7px;
+    padding: .5em;
 
     li {
       float: left;
-      width: 244px;
-      margin: 7px 7px;
+      width: 14.5em;
+      margin: .5em .5em;
 
       a {
         background: $action-color;
@@ -26,7 +26,7 @@
         color: #FFF;
         display: block;
         font-size: 1.2em;
-        padding: 10px;
+        padding: .5em;
         text-decoration: none;
 
         &:hover,

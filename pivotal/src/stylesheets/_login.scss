@@ -1,6 +1,6 @@
 .login-container {
   margin: 30px auto 0;
-  width: 530px;
+  width: 32em;
 
   h2 {
     background: $primary-color;
@@ -10,21 +10,26 @@
   }
 
   form {
+    @extend .clearfix;
     background: #e3e3e3;
     margin: 0;
-    padding: 30px;
+    padding: 2em;
 
     input {
+      box-sizing: border-box;
       display: block;
       float: left;
-      margin-right: 10px;
-      padding: 12px;
-      width: 309px;
+      padding: .8em;
+      width: 19em;
     }
 
     button {
+      box-sizing: border-box;
       display: block;
-      padding: 13px;
+      float: right;
+      padding: .8em 0;
+      text-align: center;
+      width: 8em;
     }
   }
 }

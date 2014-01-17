@@ -307,7 +307,7 @@
 }).call(this);
 
 (function() {
-  Ember.Handlebars.helper('story_icon', function(storyType) {
+  Ember.Handlebars.helper('story_icon', function(storyType, estimate) {
     var className;
     className = (function() {
       switch (storyType) {
@@ -321,7 +321,8 @@
           return 'fa-flag-checkered';
       }
     })();
-    return new Ember.Handlebars.SafeString("<i class='fa " + className + "'></i>");
+    estimate = estimate ? "<span class='estimate'>" + estimate + "</span>" : '';
+    return new Ember.Handlebars.SafeString("<i class='fa " + className + "'>" + estimate + "</i>");
   });
 
 }).call(this);

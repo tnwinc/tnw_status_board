@@ -1,5 +1,5 @@
-$single-select-width: 200px;
-$single-select-height: 30px;
+$single-select-width: 11em;
+$single-select-height: 2em;
 
 .single-select {
   background: $action-color;
@@ -8,7 +8,7 @@ $single-select-height: 30px;
   position: relative;
   width: $single-select-width;
   height: $single-select-height;
-  z-index: 10;
+  z-index: 5;
 
   a.toggle-expansion {
     border-top-right-radius: 3px;
@@ -31,7 +31,7 @@ $single-select-height: 30px;
   &.expanded a.toggle-expansion {
     border-bottom-right-radius: 0;
     border-bottom-left-radius: 3px;
-    line-height: $single-select-height - 3;
+    line-height: $single-select-height;
   }
 
   ul {

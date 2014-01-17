@@ -34,9 +34,9 @@ a.open-settings {
   top: 10px;
   right: 50px;
   text-align: center;
-  width: 30px;
-  height: 30px;
-  line-height: 30px;
+  width: 2em;
+  height: 2em;
+  line-height: 2em;
 
   &:hover,
   &:focus {
@@ -53,6 +53,7 @@ a.open-settings {
   position: absolute;
   top: 8px;
   right: 48px;
+  z-index: 10;
 
   fieldset {
     @extend .clearfix;
@@ -90,6 +91,7 @@ a.toggle-fullscreen {
 
   color: rgba(255,255,255,0.5);
   display: block;
+  font-size: 16px;
   position: absolute;
   top: 0;
   right: 0;
