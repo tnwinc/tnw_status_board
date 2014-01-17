@@ -239,34 +239,6 @@ a.open-settings:hover, a.open-settings:focus {
 }
 
 /* line 47, ../src/stylesheets/_application.scss */
-.settings {
-  background: #FFF;
-  border: solid 5px #5283af;
-  border-radius: 3px;
-  margin: 0;
-  padding: 15px;
-  position: absolute;
-  top: 8px;
-  right: 48px;
-  z-index: 10;
-}
-/* line 62, ../src/stylesheets/_application.scss */
-.settings label {
-  color: #757575;
-  margin-right: 5px;
-  text-align: right;
-}
-/* line 68, ../src/stylesheets/_application.scss */
-.settings input {
-  width: 3em;
-}
-/* line 72, ../src/stylesheets/_application.scss */
-.settings button {
-  float: right;
-  margin-top: 20px;
-}
-
-/* line 78, ../src/stylesheets/_application.scss */
 a.toggle-fullscreen {
   color: rgba(255, 255, 255, 0.5);
   display: block;
@@ -279,7 +251,7 @@ a.toggle-fullscreen {
   height: 28px;
   line-height: 28px;
 }
-/* line 79, ../src/stylesheets/_application.scss */
+/* line 48, ../src/stylesheets/_application.scss */
 a.toggle-fullscreen:before {
   border-top: solid 25px rgba(255, 255, 255, 0.3);
   border-right: solid 25px rgba(255, 255, 255, 0.3);
@@ -292,16 +264,45 @@ a.toggle-fullscreen:before {
   width: 0;
   height: 0;
 }
-/* line 104, ../src/stylesheets/_application.scss */
+/* line 73, ../src/stylesheets/_application.scss */
 a.toggle-fullscreen:hover, a.toggle-fullscreen:focus {
   color: rgba(255, 255, 255, 0.8);
 }
 
-/* line 112, ../src/stylesheets/_application.scss */
+/* line 81, ../src/stylesheets/_application.scss */
 .fullscreen .project-container > header,
 .fullscreen .scope > header,
 .fullscreen a.open-settings {
   display: none;
+}
+
+/* line 1, ../src/stylesheets/_settings.scss */
+.settings {
+  background: #FFF;
+  border: solid 5px #5283af;
+  border-radius: 3px;
+  font-size: 20px;
+  margin: 0;
+  padding: 15px;
+  position: absolute;
+  top: 8px;
+  right: 48px;
+  z-index: 10;
+}
+/* line 17, ../src/stylesheets/_settings.scss */
+.settings label {
+  color: #757575;
+  margin-right: 5px;
+  text-align: right;
+}
+/* line 23, ../src/stylesheets/_settings.scss */
+.settings input {
+  width: 3em;
+}
+/* line 27, ../src/stylesheets/_settings.scss */
+.settings button {
+  float: right;
+  margin-top: 20px;
 }
 
 /* line 1, ../src/stylesheets/_login.scss */

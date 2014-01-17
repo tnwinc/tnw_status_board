@@ -5,19 +5,11 @@ App.ApplicationController = Ember.Controller.extend Ember.Evented,
   init: ->
     @_super()
 
+    baseFontSize = App.settings.getValue 'baseFontSize', 16
+    @send 'updateBaseFontSize', baseFontSize
+
     @set 'fullscreen', true
     $body.addClass 'fullscreen'
-
-    baseFontSize = localStorage.baseFontSize
-    unless baseFontSize
-      localStorage.baseFontSize = baseFontSize = JSON.stringify 16
-    @set 'baseFontSize', JSON.parse baseFontSize
-    $body.css 'font-size', "#{baseFontSize}px"
-
-    inProgressMax = localStorage.inProgressMax
-    unless inProgressMax
-      localStorage.inProgressMax = inProgressMax = JSON.stringify 5
-    @set 'inProgressMax', JSON.parse inProgressMax
 
   handleFullscreen: (->
     action = if @get 'fullscreen' then 'addClass' else 'removeClass'
@@ -39,19 +31,9 @@ App.ApplicationController = Ember.Controller.extend Ember.Evented,
     openSettings: ->
       @set 'settingsOpen', true
 
-    saveSettings: ->
-      inProgressMax = Number @get('inProgressMax')
-      if _.isNaN inProgressMax
-        inProgressMax = 5
-        @set 'inProgressMax', 5
-      localStorage.inProgressMax = JSON.stringify inProgressMax
-
-      baseFontSize = Number @get('baseFontSize')
-      if _.isNaN baseFontSize
-        baseFontSize = 16
-        @set 'inProgressMax', 16
-      localStorage.baseFontSize = JSON.stringify baseFontSize
-      $body.css 'font-size', "#{baseFontSize}px"
-
+    closeSettings: ->
       @set 'settingsOpen', false
       @trigger 'settingsUpdated'
+
+    updateBaseFontSize: (baseFontSize)->
+      $body.css 'font-size', "#{baseFontSize}px"

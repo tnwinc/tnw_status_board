@@ -1,0 +1,32 @@
+.settings {
+  background: #FFF;
+  border: solid 5px $primary-color;
+  border-radius: 3px;
+  font-size: 20px;
+  margin: 0;
+  padding: 15px;
+  position: absolute;
+  top: 8px;
+  right: 48px;
+  z-index: 10;
+
+  fieldset {
+    @extend .clearfix;
+  }
+
+  label {
+    color: #757575;
+    margin-right: 5px;
+    text-align: right;
+  }
+
+  input {
+    width: 3em;
+  }
+
+  button {
+    float: right;
+    margin-top: 20px;
+  }
+}
+

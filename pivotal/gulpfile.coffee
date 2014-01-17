@@ -6,8 +6,7 @@ compass = require 'gulp-compass'
 handlebars = require './gulp/gulp-ember-handlebars'
 
 coffeeFiles = [
-  'data/pivotal'
-  'data/store'
+  'data/*'
   'models/*'
   'controllers/*'
   'views/*'

@@ -118,32 +118,13 @@ function program1(depth0,data) {
 
 function program3(depth0,data) {
   
-  var buffer = '', stack1, hashContexts, hashTypes, options;
-  data.buffer.push("\n  <form class=\"settings\" ");
-  hashContexts = {'on': depth0};
-  hashTypes = {'on': "STRING"};
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "saveSettings", {hash:{
-    'on': ("submit")
-  },contexts:[depth0],types:["STRING"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
-  data.buffer.push(">\n    <fieldset>\n      <label for=\"in-progress-max\">Max. stories in progress before warning</label>\n      ");
-  hashContexts = {'value': depth0,'for': depth0,'type': depth0};
-  hashTypes = {'value': "ID",'for': "STRING",'type': "STRING"};
-  options = {hash:{
-    'value': ("inProgressMax"),
-    'for': ("in-progress-max"),
-    'type': ("number")
-  },contexts:[],types:[],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
-  data.buffer.push(escapeExpression(((stack1 = helpers.input || (depth0 && depth0.input)),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "input", options))));
-  data.buffer.push("\n    </fieldset>\n\n    <fieldset>\n      <label for=\"base-font-size\">Base font size (px)</label>\n      ");
-  hashContexts = {'value': depth0,'for': depth0,'type': depth0};
-  hashTypes = {'value': "ID",'for': "STRING",'type': "STRING"};
-  options = {hash:{
-    'value': ("baseFontSize"),
-    'for': ("base-font-size"),
-    'type': ("number")
-  },contexts:[],types:[],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
-  data.buffer.push(escapeExpression(((stack1 = helpers.input || (depth0 && depth0.input)),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "input", options))));
-  data.buffer.push("\n    </fieldset>\n\n    <button type=\"submit\">Save</button>\n  </form>\n");
+  var buffer = '', stack1, hashTypes, hashContexts, options;
+  data.buffer.push("\n  ");
+  hashTypes = {};
+  hashContexts = {};
+  options = {hash:{},contexts:[depth0],types:["STRING"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
+  data.buffer.push(escapeExpression(((stack1 = helpers.render || (depth0 && depth0.render)),stack1 ? stack1.call(depth0, "settings", options) : helperMissing.call(depth0, "render", "settings", options))));
+  data.buffer.push("\n");
   return buffer;
   }
 
@@ -442,6 +423,40 @@ function program1(depth0,data) {
   stack2 = helpers.each.call(depth0, {hash:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[],types:[],hashContexts:hashContexts,hashTypes:hashTypes,data:data});
   if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
   data.buffer.push("\n</section>\n");
+  return buffer;
+  
+});
+Ember.TEMPLATES["settings"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
+  var buffer = '', stack1, hashContexts, hashTypes, options, escapeExpression=this.escapeExpression, helperMissing=helpers.helperMissing;
+
+
+  data.buffer.push("<form class=\"settings\" ");
+  hashContexts = {'on': depth0};
+  hashTypes = {'on': "STRING"};
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "saveSettings", {hash:{
+    'on': ("submit")
+  },contexts:[depth0],types:["STRING"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
+  data.buffer.push(">\n  <fieldset>\n    <label for=\"in-progress-max\">Max. stories in progress before warning</label>\n    ");
+  hashContexts = {'value': depth0,'for': depth0,'type': depth0};
+  hashTypes = {'value': "ID",'for': "STRING",'type': "STRING"};
+  options = {hash:{
+    'value': ("inProgressMax"),
+    'for': ("in-progress-max"),
+    'type': ("number")
+  },contexts:[],types:[],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
+  data.buffer.push(escapeExpression(((stack1 = helpers.input || (depth0 && depth0.input)),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "input", options))));
+  data.buffer.push("\n  </fieldset>\n\n  <fieldset>\n    <label for=\"base-font-size\">Base font size (px)</label>\n    ");
+  hashContexts = {'value': depth0,'for': depth0,'type': depth0};
+  hashTypes = {'value': "ID",'for': "STRING",'type': "STRING"};
+  options = {hash:{
+    'value': ("baseFontSize"),
+    'for': ("base-font-size"),
+    'type': ("number")
+  },contexts:[],types:[],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
+  data.buffer.push(escapeExpression(((stack1 = helpers.input || (depth0 && depth0.input)),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "input", options))));
+  data.buffer.push("\n  </fieldset>\n\n  <button type=\"submit\">Save</button>\n</form>\n");
   return buffer;
   
 });

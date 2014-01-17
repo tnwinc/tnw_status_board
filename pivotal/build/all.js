@@ -67,7 +67,28 @@
 }).call(this);
 
 (function() {
+  var Settings;
 
+  Settings = Ember.Object.extend({
+    getValue: function(key, defaultValue) {
+      var value;
+      value = localStorage[key];
+      if (!value) {
+        localStorage[key] = value = JSON.stringify(defaultValue);
+      }
+      return JSON.parse(value);
+    },
+    updateNumber: function(key, value, defaultValue) {
+      value = Number(value);
+      if (_.isNaN(value)) {
+        value = 5;
+      }
+      localStorage[key] = JSON.stringify(value);
+      return value;
+    }
+  });
+
+  App.settings = Settings.create();
 
 }).call(this);
 
@@ -78,21 +99,12 @@
 
   App.ApplicationController = Ember.Controller.extend(Ember.Evented, {
     init: function() {
-      var baseFontSize, inProgressMax;
+      var baseFontSize;
       this._super();
+      baseFontSize = App.settings.getValue('baseFontSize', 16);
+      this.send('updateBaseFontSize', baseFontSize);
       this.set('fullscreen', true);
-      $body.addClass('fullscreen');
-      baseFontSize = localStorage.baseFontSize;
-      if (!baseFontSize) {
-        localStorage.baseFontSize = baseFontSize = JSON.stringify(16);
-      }
-      this.set('baseFontSize', JSON.parse(baseFontSize));
-      $body.css('font-size', "" + baseFontSize + "px");
-      inProgressMax = localStorage.inProgressMax;
-      if (!inProgressMax) {
-        localStorage.inProgressMax = inProgressMax = JSON.stringify(5);
-      }
-      return this.set('inProgressMax', JSON.parse(inProgressMax));
+      return $body.addClass('fullscreen');
     },
     handleFullscreen: (function() {
       var action;
@@ -115,23 +127,12 @@
       openSettings: function() {
         return this.set('settingsOpen', true);
       },
-      saveSettings: function() {
-        var baseFontSize, inProgressMax;
-        inProgressMax = Number(this.get('inProgressMax'));
-        if (_.isNaN(inProgressMax)) {
-          inProgressMax = 5;
-          this.set('inProgressMax', 5);
-        }
-        localStorage.inProgressMax = JSON.stringify(inProgressMax);
-        baseFontSize = Number(this.get('baseFontSize'));
-        if (_.isNaN(baseFontSize)) {
-          baseFontSize = 16;
-          this.set('inProgressMax', 16);
-        }
-        localStorage.baseFontSize = JSON.stringify(baseFontSize);
-        $body.css('font-size', "" + baseFontSize + "px");
+      closeSettings: function() {
         this.set('settingsOpen', false);
         return this.trigger('settingsUpdated');
+      },
+      updateBaseFontSize: function(baseFontSize) {
+        return $body.css('font-size', "" + baseFontSize + "px");
       }
     }
   });
@@ -239,6 +240,35 @@
       },
       toggleExpansion: function(iteration) {
         iteration.toggleProperty('expanded');
+      }
+    }
+  });
+
+}).call(this);
+
+(function() {
+  App.SettingsController = Ember.Controller.extend({
+    needs: 'application',
+    init: function() {
+      var baseFontSize, inProgressMax;
+      this._super();
+      baseFontSize = App.settings.getValue('baseFontSize', 16);
+      this.set('baseFontSize', baseFontSize);
+      this.get('controllers.application').send('updateBaseFontSize', baseFontSize);
+      inProgressMax = App.settings.getValue('inProgressMax', 5);
+      return this.set('inProgressMax', inProgressMax);
+    },
+    updateBaseFontSize: (function() {
+      return this.get('controllers.application').send('updateBaseFontSize', this.get('baseFontSize'));
+    }).observes('baseFontSize'),
+    actions: {
+      saveSettings: function() {
+        var applicationController, baseFontSize;
+        App.settings.updateNumber('inProgressMax', this.get('inProgressMax'), 5);
+        baseFontSize = App.settings.updateNumber('baseFontSize', this.get('baseFontSize'), 16);
+        applicationController = this.get('controllers.application');
+        applicationController.send('updateBaseFontSize', baseFontSize);
+        return applicationController.send('closeSettings');
       }
     }
   });

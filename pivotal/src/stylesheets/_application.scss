@@ -44,37 +44,6 @@ a.open-settings {
   }
 }
 
-.settings {
-  background: #FFF;
-  border: solid 5px $primary-color;
-  border-radius: 3px;
-  margin: 0;
-  padding: 15px;
-  position: absolute;
-  top: 8px;
-  right: 48px;
-  z-index: 10;
-
-  fieldset {
-    @extend .clearfix;
-  }
-
-  label {
-    color: #757575;
-    margin-right: 5px;
-    text-align: right;
-  }
-
-  input {
-    width: 3em;
-  }
-
-  button {
-    float: right;
-    margin-top: 20px;
-  }
-}
-
 a.toggle-fullscreen {
   &:before {
     border-top: solid 25px rgba(255,255,255,0.3);
