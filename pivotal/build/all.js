@@ -72,12 +72,22 @@
 }).call(this);
 
 (function() {
+  var $body;
+
+  $body = Ember.$('body');
+
   App.ApplicationController = Ember.Controller.extend(Ember.Evented, {
     init: function() {
-      var inProgressMax;
+      var baseFontSize, inProgressMax;
       this._super();
       this.set('fullscreen', true);
-      Ember.$('body').addClass('fullscreen');
+      $body.addClass('fullscreen');
+      baseFontSize = localStorage.baseFontSize;
+      if (!baseFontSize) {
+        localStorage.baseFontSize = baseFontSize = JSON.stringify(16);
+      }
+      this.set('baseFontSize', JSON.parse(baseFontSize));
+      $body.css('font-size', "" + baseFontSize + "px");
       inProgressMax = localStorage.inProgressMax;
       if (!inProgressMax) {
         localStorage.inProgressMax = inProgressMax = JSON.stringify(5);
@@ -106,13 +116,20 @@
         return this.set('settingsOpen', true);
       },
       saveSettings: function() {
-        var inProgressMax;
+        var baseFontSize, inProgressMax;
         inProgressMax = Number(this.get('inProgressMax'));
         if (_.isNaN(inProgressMax)) {
           inProgressMax = 5;
           this.set('inProgressMax', 5);
         }
         localStorage.inProgressMax = JSON.stringify(inProgressMax);
+        baseFontSize = Number(this.get('baseFontSize'));
+        if (_.isNaN(baseFontSize)) {
+          baseFontSize = 16;
+          this.set('inProgressMax', 16);
+        }
+        localStorage.baseFontSize = JSON.stringify(baseFontSize);
+        $body.css('font-size', "" + baseFontSize + "px");
         this.set('settingsOpen', false);
         return this.trigger('settingsUpdated');
       }
