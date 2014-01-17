@@ -1,4 +1,4 @@
-App.ApplicationController = Ember.Controller.extend
+App.ApplicationController = Ember.Controller.extend Ember.Evented,
 
   init: ->
     @_super()
@@ -37,3 +37,4 @@ App.ApplicationController = Ember.Controller.extend
         @set 'inProgressMax', 5
       localStorage.inProgressMax = JSON.stringify inProgressMax
       @set 'settingsOpen', false
+      @trigger 'settingsUpdated'

@@ -72,7 +72,7 @@
 }).call(this);
 
 (function() {
-  App.ApplicationController = Ember.Controller.extend({
+  App.ApplicationController = Ember.Controller.extend(Ember.Evented, {
     init: function() {
       var inProgressMax;
       this._super();
@@ -113,7 +113,8 @@
           this.set('inProgressMax', 5);
         }
         localStorage.inProgressMax = JSON.stringify(inProgressMax);
-        return this.set('settingsOpen', false);
+        this.set('settingsOpen', false);
+        return this.trigger('settingsUpdated');
       }
     }
   });
@@ -421,13 +422,16 @@
 }).call(this);
 
 (function() {
-  var unacceptedStoryTypes;
+  var inProgressStoryTypes;
 
-  unacceptedStoryTypes = ['started', 'finished', 'delivered', 'rejected'];
+  inProgressStoryTypes = ['started', 'finished', 'delivered', 'rejected'];
 
   App.ScopesRoute = App.Route.extend({
     deactivate: function() {
-      return this.controllerFor('application').send('hideBanner');
+      var applicationController;
+      applicationController = this.controllerFor('application');
+      applicationController.send('hideBanner');
+      return applicationController.off('settingsUpdated');
     },
     model: function() {
       var projectId;
@@ -450,18 +454,23 @@
       controller.set('model', model);
       return _.each(model, function(scope) {
         return _.each(scope.get('iterations'), function(iteration, index) {
+          var stories;
           if (index === 0) {
-            _this.checkStories(iteration.get('stories'));
+            stories = iteration.get('stories');
+            _this.checkInProgressStories(stories);
+            _this.controllerFor('application').on('settingsUpdated', function() {
+              return _this.checkInProgressStories(stories);
+            });
           }
           iteration.set('expanded', true);
           return iteration.set('hasStories', iteration.get('stories.length'));
         });
       });
     },
-    checkStories: function(stories) {
+    checkInProgressStories: function(stories) {
       var applicationController, inProgressMax, storiesInProgress;
       storiesInProgress = _.filter(stories, function(story) {
-        return _.contains(unacceptedStoryTypes, story.current_state);
+        return _.contains(inProgressStoryTypes, story.current_state);
       });
       inProgressMax = JSON.parse(localStorage.inProgressMax);
       applicationController = this.controllerFor('application');

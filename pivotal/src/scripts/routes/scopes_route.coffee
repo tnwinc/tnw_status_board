@@ -1,9 +1,11 @@
-unacceptedStoryTypes = ['started', 'finished', 'delivered', 'rejected']
+inProgressStoryTypes = ['started', 'finished', 'delivered', 'rejected']
 
 App.ScopesRoute = App.Route.extend
 
   deactivate: ->
-    @controllerFor('application').send 'hideBanner'
+    applicationController = @controllerFor 'application'
+    applicationController.send 'hideBanner'
+    applicationController.off 'settingsUpdated'
 
   model: ->
     projectId = @modelFor('project').id
@@ -22,13 +24,16 @@ App.ScopesRoute = App.Route.extend
     _.each model, (scope)=>
       _.each scope.get('iterations'), (iteration, index)=>
         if index is 0
-          @checkStories iteration.get('stories')
+          stories = iteration.get 'stories'
+          @checkInProgressStories stories
+          @controllerFor('application').on 'settingsUpdated', =>
+            @checkInProgressStories stories
         iteration.set 'expanded', true
         iteration.set 'hasStories', iteration.get('stories.length')
 
-  checkStories: (stories)->
+  checkInProgressStories: (stories)->
     storiesInProgress = _.filter stories, (story)->
-      _.contains unacceptedStoryTypes, story.current_state
+      _.contains inProgressStoryTypes, story.current_state
     inProgressMax = JSON.parse localStorage.inProgressMax
     applicationController = @controllerFor 'application'
     if storiesInProgress.length > inProgressMax
