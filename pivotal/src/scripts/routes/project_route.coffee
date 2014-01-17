@@ -1,3 +1,12 @@
+scopes = [
+  label: 'Done'
+  type: 'done'
+,
+  label: 'Backlog'
+  type: 'current_backlog'
+  selected: true
+]
+
 App.ProjectRoute = App.Route.extend
 
   model: (params)->
@@ -5,17 +14,9 @@ App.ProjectRoute = App.Route.extend
 
   setupController: (controller, model)->
     @_super()
+    localStorage.projectId = JSON.stringify model.id
+
     controller.set 'model', model
-
-    scopes = [
-      label: 'Done'
-      type: 'done'
-    ,
-      label: 'Backlog'
-      type: 'current_backlog'
-      selected: true
-    ]
-
     controller.set 'scopes', _.map scopes, (scope)-> Ember.Object.create scope
 
     App.pivotal.getProjects().then (projects)=>

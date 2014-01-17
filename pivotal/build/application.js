@@ -346,25 +346,28 @@
 }).call(this);
 
 (function() {
+  var scopes;
+
+  scopes = [
+    {
+      label: 'Done',
+      type: 'done'
+    }, {
+      label: 'Backlog',
+      type: 'current_backlog',
+      selected: true
+    }
+  ];
+
   App.ProjectRoute = App.Route.extend({
     model: function(params) {
       return App.pivotal.getProject(params.project_id);
     },
     setupController: function(controller, model) {
-      var scopes,
-        _this = this;
+      var _this = this;
       this._super();
+      localStorage.projectId = JSON.stringify(model.id);
       controller.set('model', model);
-      scopes = [
-        {
-          label: 'Done',
-          type: 'done'
-        }, {
-          label: 'Backlog',
-          type: 'current_backlog',
-          selected: true
-        }
-      ];
       controller.set('scopes', _.map(scopes, function(scope) {
         return Ember.Object.create(scope);
       }));
@@ -386,6 +389,13 @@
   App.ProjectsRoute = App.Route.extend({
     model: function() {
       return App.pivotal.getProjects();
+    },
+    redirect: function() {
+      var projectId;
+      projectId = localStorage.projectId;
+      if (projectId) {
+        return this.transitionTo('project', JSON.parse(projectId));
+      }
     }
   });
 
