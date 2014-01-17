@@ -3,7 +3,7 @@ gutil = require 'gulp-util'
 concat = require 'gulp-concat'
 coffee = require 'gulp-coffee'
 compass = require 'gulp-compass'
-precompile = require './gulp/gulp-ember-handlebars'
+handlebars = require './gulp/gulp-ember-handlebars'
 
 coffeeFiles = [
   'data/pivotal'
@@ -27,9 +27,9 @@ gulp.task 'coffee', ->
     .pipe(concat('all.js'))
     .pipe(gulp.dest('./build/'))
 
-gulp.task 'precompile', ->
+gulp.task 'handlebars', ->
   gulp.src('./src/scripts/templates/*.hbs')
-    .pipe(precompile())
+    .pipe(handlebars())
     .pipe(concat('templates.js'))
     .pipe(gulp.dest('./build/'))
 
@@ -43,7 +43,7 @@ gulp.task 'default', ->
     gulp.run 'coffee'
 
   gulp.watch './src/scripts/templates/*.hbs', ->
-    gulp.run 'precompile'
+    gulp.run 'handlebars'
 
   gulp.watch './src/stylesheets/*.scss', ->
     gulp.run 'compass'
