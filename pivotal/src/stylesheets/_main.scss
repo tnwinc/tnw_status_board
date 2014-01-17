@@ -368,13 +368,13 @@ $item-picker-height: 30px;
                                                   transparent 5px,
                                                   rgba(255,255,255,.3) 5px,
                                                   rgba(255,255,255,.3) 10px);
-      border-bottom: solid 1px;
+      border-radius: 0 3px 3px 0;
       display: block;
       position: absolute;
-      top: 0;
-      bottom: -1px;
+      top: 5px;
       left: 0;
       width: 0;
+      height: 24px;
     }
 
     &.unscheduled,
@@ -390,7 +390,6 @@ $item-picker-height: 30px;
 
     @mixin statemeter ($color, $width) {
       .state-meter {
-        border-color: darken($color, 10%);
         background-color: $color;
         width: $width;
       }

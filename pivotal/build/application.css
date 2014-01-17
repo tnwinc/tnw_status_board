@@ -546,13 +546,13 @@ body {
 /* line 365, ../src/stylesheets/_main.scss */
 .stories li .state-meter {
   background-image: repeating-linear-gradient(-65deg, transparent, transparent 5px, rgba(255, 255, 255, 0.3) 5px, rgba(255, 255, 255, 0.3) 10px);
-  border-bottom: solid 1px;
+  border-radius: 0 3px 3px 0;
   display: block;
   position: absolute;
-  top: 0;
-  bottom: -1px;
+  top: 5px;
   left: 0;
   width: 0;
+  height: 24px;
 }
 /* line 381, ../src/stylesheets/_main.scss */
 .stories li.unscheduled, .stories li.unstarted {
@@ -567,42 +567,37 @@ body {
 }
 /* line 392, ../src/stylesheets/_main.scss */
 .stories li.started .state-meter {
-  border-color: #9a6813;
   background-color: #c78719;
   width: 10px;
 }
 /* line 392, ../src/stylesheets/_main.scss */
 .stories li.finished .state-meter {
-  border-color: #092f3e;
   background-color: #0f516b;
   width: 20px;
 }
 /* line 392, ../src/stylesheets/_main.scss */
 .stories li.delivered .state-meter {
-  border-color: #3a0c4d;
   background-color: #5c1379;
   width: 30px;
 }
 /* line 392, ../src/stylesheets/_main.scss */
 .stories li.rejected .state-meter {
-  border-color: #571313;
   background-color: #811c1c;
   width: 20px;
 }
 /* line 392, ../src/stylesheets/_main.scss */
 .stories li.accepted .state-meter {
-  border-color: #1e3e09;
   background-color: #346b0f;
   width: 40px;
 }
-/* line 419, ../src/stylesheets/_main.scss */
+/* line 418, ../src/stylesheets/_main.scss */
 .stories li i {
   float: right;
   font-size: 1.2em;
   margin-top: 2px;
   margin-right: 2px;
 }
-/* line 426, ../src/stylesheets/_main.scss */
+/* line 425, ../src/stylesheets/_main.scss */
 .stories li .estimate {
   color: #FFF;
   font-size: .8em;
@@ -612,43 +607,43 @@ body {
   text-align: center;
   width: 22px;
 }
-/* line 436, ../src/stylesheets/_main.scss */
+/* line 435, ../src/stylesheets/_main.scss */
 .stories li.feature i {
   color: #eb7c19;
   font-size: 1.7em;
   margin-top: -1px;
   margin-right: 0;
 }
-/* line 443, ../src/stylesheets/_main.scss */
+/* line 442, ../src/stylesheets/_main.scss */
 .stories li.chore i {
   color: #434343;
 }
-/* line 447, ../src/stylesheets/_main.scss */
+/* line 446, ../src/stylesheets/_main.scss */
 .stories li.bug i {
   color: #921414;
 }
-/* line 451, ../src/stylesheets/_main.scss */
+/* line 450, ../src/stylesheets/_main.scss */
 .stories li.release {
   background: #5283af;
   border-color: #41698d;
   color: #FFF;
 }
-/* line 456, ../src/stylesheets/_main.scss */
+/* line 455, ../src/stylesheets/_main.scss */
 .stories li.release p {
   margin: 0 10px 0 35px;
 }
-/* line 460, ../src/stylesheets/_main.scss */
+/* line 459, ../src/stylesheets/_main.scss */
 .stories li.release i {
   float: left;
   margin-left: 2px;
 }
-/* line 466, ../src/stylesheets/_main.scss */
+/* line 465, ../src/stylesheets/_main.scss */
 .stories li.release .state,
 .stories li.release .state-meter {
   display: none;
 }
 
-/* line 473, ../src/stylesheets/_main.scss */
+/* line 472, ../src/stylesheets/_main.scss */
 a.open-settings {
   background: #eb7c19;
   border-radius: 3px;
@@ -662,12 +657,12 @@ a.open-settings {
   height: 30px;
   line-height: 30px;
 }
-/* line 487, ../src/stylesheets/_main.scss */
+/* line 486, ../src/stylesheets/_main.scss */
 a.open-settings:hover, a.open-settings:focus {
   background: #c06311;
 }
 
-/* line 492, ../src/stylesheets/_main.scss */
+/* line 491, ../src/stylesheets/_main.scss */
 .settings {
   background: #FFF;
   border: solid 5px #5283af;
@@ -678,23 +673,23 @@ a.open-settings:hover, a.open-settings:focus {
   top: 8px;
   right: 48px;
 }
-/* line 506, ../src/stylesheets/_main.scss */
+/* line 505, ../src/stylesheets/_main.scss */
 .settings label {
   color: #757575;
   margin-right: 5px;
   text-align: right;
 }
-/* line 512, ../src/stylesheets/_main.scss */
+/* line 511, ../src/stylesheets/_main.scss */
 .settings input {
   width: 20px;
 }
-/* line 516, ../src/stylesheets/_main.scss */
+/* line 515, ../src/stylesheets/_main.scss */
 .settings button {
   float: right;
   margin-top: 20px;
 }
 
-/* line 522, ../src/stylesheets/_main.scss */
+/* line 521, ../src/stylesheets/_main.scss */
 a.toggle-fullscreen {
   color: rgba(255, 255, 255, 0.5);
   display: block;
@@ -706,7 +701,7 @@ a.toggle-fullscreen {
   height: 28px;
   line-height: 28px;
 }
-/* line 523, ../src/stylesheets/_main.scss */
+/* line 522, ../src/stylesheets/_main.scss */
 a.toggle-fullscreen:before {
   border-top: solid 25px rgba(255, 255, 255, 0.3);
   border-right: solid 25px rgba(255, 255, 255, 0.3);
@@ -719,12 +714,12 @@ a.toggle-fullscreen:before {
   width: 0;
   height: 0;
 }
-/* line 547, ../src/stylesheets/_main.scss */
+/* line 546, ../src/stylesheets/_main.scss */
 a.toggle-fullscreen:hover, a.toggle-fullscreen:focus {
   color: rgba(255, 255, 255, 0.8);
 }
 
-/* line 555, ../src/stylesheets/_main.scss */
+/* line 554, ../src/stylesheets/_main.scss */
 .fullscreen .project-container > header,
 .fullscreen .scope > header,
 .fullscreen a.open-settings {
