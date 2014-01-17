@@ -7,7 +7,7 @@ body {
 }
 
 .login-container {
-  margin: 50px auto 0;
+  margin: 30px auto 0;
   width: 530px;
 
   h2 {
@@ -38,7 +38,7 @@ body {
 }
 
 .projects-container {
-  margin: 50px auto 0;
+  margin: 30px auto 0;
   width: 530px;
 
   h2 {
@@ -231,11 +231,6 @@ $item-picker-height: 30px;
   }
 }
 
-@mixin bezeled($color) {
-    background: $color;
-    border-bottom: solid 1px darken($color, 10%);
-}
-
 @mixin centered-icon($width) {
   margin-top: -10px;
   position: absolute;
@@ -272,7 +267,7 @@ $item-picker-height: 30px;
   }
 
   & > header {
-    background: #333;
+    background: darken($primary-color, 20%);
     padding: 8px 10px;
     position: relative;
 
@@ -314,7 +309,8 @@ $item-picker-height: 30px;
   }
 
   h4 {
-    @include bezeled(#959595);
+    background: #333;
+    border-bottom: solid 1px #545454;
     color: #FFF;
     margin: 0;
     padding: 5px 10px;
@@ -331,7 +327,7 @@ $item-picker-height: 30px;
 
     &:hover,
     &:focus {
-      background: #828282;
+      background: rgba(255,255,255,0.1);
     }
 
     i {
@@ -349,57 +345,99 @@ $item-picker-height: 30px;
   }
 
   li {
-    @include bezeled(#e3e3e3);
-    padding: 5px 10px;
+    background: #FFF;
+    border-bottom: solid 1px #e3e3e3;
+    padding: 5px;
+    position: relative;
 
-    &.unscheduled {
-      @include bezeled(#BFCEE9);
+    p {
+      margin: 0 30px 0 120px;
     }
 
-    &.started,
-    &.finished,
-    &.delivered {
-      @include bezeled(#E6E4AA);
-    }
-
-    &.accepted {
-      @include bezeled(#C9DFA5);
-    }
-
-    &.rejected {
-      @include bezeled(#E7B4B4);
-    }
-
-    &.release {
-      @include bezeled($primary-color);
-      color: #DBE9F7;
-
-      i {
-        color: #FFF;
-      }
-    }
-
-    i {
-      float: left;
-      margin-top: 5px;
-    }
-
-    .estimate {
+    .state {
       color: #787878;
       float: left;
       font-size: .9em;
+      margin-top: 3px;
+      margin-left: 45px;
+    }
+
+    .state-meter {
+      background-image: repeating-linear-gradient(-65deg,
+                                                  transparent,
+                                                  transparent 5px,
+                                                  rgba(255,255,255,.3) 5px,
+                                                  rgba(255,255,255,.3) 10px);
+      border-bottom: solid 1px;
+      display: block;
+      position: absolute;
+      top: 0;
+      bottom: -1px;
+      left: 0;
+      width: 0;
+    }
+
+    &.unscheduled,
+    &.unstarted {
+      background: #e3e3e3;
+      border-color: #c7c7c7;
+
+      .state,
+      .state-meter {
+        display: none;
+      }
+    }
+
+    @mixin statemeter ($color, $width) {
+      .state-meter {
+        border-color: darken($color, 10%);
+        background-color: $color;
+        width: $width;
+      }
+    }
+
+    &.started {
+      @include statemeter(#C78719, 10px);
+    }
+
+    &.finished {
+      @include statemeter(#0F516B, 20px);
+    }
+
+    &.delivered {
+      @include statemeter(#5C1379, 30px);
+    }
+
+    &.rejected {
+      @include statemeter(#811C1C, 20px);
+    }
+
+    &.accepted {
+      @include statemeter(#346B0F, 40px);
+    }
+
+    i {
+      float: right;
+      font-size: 1.2em;
       margin-top: 2px;
-      margin-left: 5px;
+      margin-right: 2px;
+    }
+
+    .estimate {
+      color: #FFF;
+      font-size: .8em;
+      position: absolute;
+      top: 8px;
+      right: 6px;
       text-align: center;
       width: 22px;
     }
 
-    p {
-      margin: 0 140px 0 45px;
-    }
-
     &.feature i {
       color: $action-color;
+      font-size: 1.7em;
+      margin-top: -1px;
+      margin-right: 0;
     }
 
     &.chore i {
@@ -410,66 +448,24 @@ $item-picker-height: 30px;
       color: #921414;
     }
 
-    .state {
-      color: #787878;
-      float: right;
-      font-size: .9em;
-      margin-top: 3px;
-    }
+    &.release {
+      background: $primary-color;
+      border-color: darken($primary-color, 10%);
+      color: #FFF;
 
-    .state-meter {
-      border: solid 1px rgba(0,0,0,0.2);
-      border-radius: 3px;
-      display: block;
-      float: right;
-      margin-top: 3px;
-      margin-left: 5px;
-      width: 50px;
-      height: 16px;
-    }
+      p {
+        margin: 0 10px 0 35px;
+      }
 
-    .state-meter-progress {
-      background-image: repeating-linear-gradient(-45deg,
-                                                  transparent,
-                                                  transparent 5px,
-                                                  rgba(255,255,255,.3) 5px,
-                                                  rgba(255,255,255,.3) 10px);
-      display: block;
-      width: 0;
-      height: 16px;
-    }
+      i {
+        float: left;
+        margin-left: 2px;
+      }
 
-    &.unscheduled,
-    &.unstarted {
       .state,
       .state-meter {
         display: none;
       }
-    }
-
-    &.started .state-meter-progress {
-      background-color: #C78719;
-      width: 25%;
-    }
-
-    &.finished .state-meter-progress {
-      background-color: #0F516B;
-      width: 50%;
-    }
-
-    &.delivered .state-meter-progress {
-      background-color: #5C1379;
-      width: 75%;
-    }
-
-    &.accepted .state-meter-progress {
-      background-color: #346B0F;
-      width: 100%;
-    }
-
-    &.rejected .state-meter-progress {
-      background-color: #811C1C;
-      width: 50%;
     }
   }
 }

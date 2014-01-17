@@ -277,9 +277,9 @@
     className = (function() {
       switch (storyType) {
         case 'feature':
-          return 'fa-star';
+          return 'fa-certificate';
         case 'chore':
-          return 'fa-cog';
+          return 'fa-wrench';
         case 'bug':
           return 'fa-bug';
         case 'release':
@@ -295,7 +295,7 @@
   Ember.Handlebars.helper('story_state', function(state) {
     var el;
     if (state) {
-      el = "<span class=\"state-meter\">\n  <span class=\"state-meter-progress\"></span>\n</span>\n<span class=\"state\">" + state + "</span>";
+      el = "<span class=\"state-meter\"></span>\n<span class=\"state\">" + state + "</span>";
       return new Ember.Handlebars.SafeString(el);
     }
   });
