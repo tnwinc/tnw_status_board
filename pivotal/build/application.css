@@ -140,13 +140,13 @@ button:hover, button:focus {
 }
 
 /* line 1, ../src/stylesheets/_main.scss */
-.clearfix:before, .projects-container ul:before, .project-container > header:before, .scopes:before, .clearfix:after, .projects-container ul:after, .project-container > header:after, .scopes:after {
+.clearfix:before, .projects-container ul:before, .project-container > header:before, .scopes:before, .settings fieldset:before, .clearfix:after, .projects-container ul:after, .project-container > header:after, .scopes:after, .settings fieldset:after {
   content: "";
   display: table;
 }
 
 /* line 2, ../src/stylesheets/_main.scss */
-.clearfix:after, .projects-container ul:after, .project-container > header:after, .scopes:after {
+.clearfix:after, .projects-container ul:after, .project-container > header:after, .scopes:after, .settings fieldset:after {
   clear: both;
 }
 
@@ -649,6 +649,52 @@ body {
 }
 
 /* line 473, ../src/stylesheets/_main.scss */
+a.open-settings {
+  background: #eb7c19;
+  border-radius: 3px;
+  display: block;
+  color: #FFF;
+  position: absolute;
+  top: 10px;
+  right: 50px;
+  text-align: center;
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+}
+/* line 487, ../src/stylesheets/_main.scss */
+a.open-settings:hover, a.open-settings:focus {
+  background: #c06311;
+}
+
+/* line 492, ../src/stylesheets/_main.scss */
+.settings {
+  background: #FFF;
+  border: solid 5px #5283af;
+  border-radius: 3px;
+  margin: 0;
+  padding: 15px;
+  position: absolute;
+  top: 8px;
+  right: 48px;
+}
+/* line 506, ../src/stylesheets/_main.scss */
+.settings label {
+  color: #757575;
+  margin-right: 5px;
+  text-align: right;
+}
+/* line 512, ../src/stylesheets/_main.scss */
+.settings input {
+  width: 20px;
+}
+/* line 516, ../src/stylesheets/_main.scss */
+.settings button {
+  float: right;
+  margin-top: 20px;
+}
+
+/* line 522, ../src/stylesheets/_main.scss */
 a.toggle-fullscreen {
   color: rgba(255, 255, 255, 0.5);
   display: block;
@@ -660,7 +706,7 @@ a.toggle-fullscreen {
   height: 28px;
   line-height: 28px;
 }
-/* line 474, ../src/stylesheets/_main.scss */
+/* line 523, ../src/stylesheets/_main.scss */
 a.toggle-fullscreen:before {
   border-top: solid 25px rgba(255, 255, 255, 0.3);
   border-right: solid 25px rgba(255, 255, 255, 0.3);
@@ -673,14 +719,15 @@ a.toggle-fullscreen:before {
   width: 0;
   height: 0;
 }
-/* line 498, ../src/stylesheets/_main.scss */
+/* line 547, ../src/stylesheets/_main.scss */
 a.toggle-fullscreen:hover, a.toggle-fullscreen:focus {
   color: rgba(255, 255, 255, 0.8);
 }
 
-/* line 505, ../src/stylesheets/_main.scss */
+/* line 555, ../src/stylesheets/_main.scss */
 .fullscreen .project-container > header,
-.fullscreen .scope > header {
+.fullscreen .scope > header,
+.fullscreen a.open-settings {
   display: none;
 }
 

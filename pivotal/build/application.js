@@ -74,9 +74,15 @@
 (function() {
   App.ApplicationController = Ember.Controller.extend({
     init: function() {
+      var inProgressMax;
       this._super();
       this.set('fullscreen', true);
-      return Ember.$('body').addClass('fullscreen');
+      Ember.$('body').addClass('fullscreen');
+      inProgressMax = localStorage.inProgressMax;
+      if (!inProgressMax) {
+        localStorage.inProgressMax = inProgressMax = JSON.stringify(5);
+      }
+      return this.set('inProgressMax', JSON.parse(inProgressMax));
     },
     handleFullscreen: (function() {
       var action;
@@ -95,6 +101,19 @@
       },
       toggleFullscreen: function() {
         this.toggleProperty('fullscreen');
+      },
+      openSettings: function() {
+        return this.set('settingsOpen', true);
+      },
+      saveSettings: function() {
+        var inProgressMax;
+        inProgressMax = Number(this.get('inProgressMax'));
+        if (_.isNaN(inProgressMax)) {
+          inProgressMax = 5;
+          this.set('inProgressMax', 5);
+        }
+        localStorage.inProgressMax = JSON.stringify(inProgressMax);
+        return this.set('settingsOpen', false);
       }
     }
   });
@@ -440,13 +459,14 @@
       });
     },
     checkStories: function(stories) {
-      var applicationController, unacceptedStories;
-      unacceptedStories = _.filter(stories, function(story) {
+      var applicationController, inProgressMax, storiesInProgress;
+      storiesInProgress = _.filter(stories, function(story) {
         return _.contains(unacceptedStoryTypes, story.current_state);
       });
+      inProgressMax = JSON.parse(localStorage.inProgressMax);
       applicationController = this.controllerFor('application');
-      if (unacceptedStories.length > 5) {
-        return applicationController.send('showBanner', 'Your team has over 5 unaccepted stories in progress', 'warning');
+      if (storiesInProgress.length > inProgressMax) {
+        return applicationController.send('showBanner', "There are over " + inProgressMax + " stories in progress", 'warning');
       } else {
         return applicationController.send('hideBanner');
       }

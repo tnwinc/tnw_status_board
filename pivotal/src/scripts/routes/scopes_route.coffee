@@ -27,10 +27,11 @@ App.ScopesRoute = App.Route.extend
         iteration.set 'hasStories', iteration.get('stories.length')
 
   checkStories: (stories)->
-    unacceptedStories = _.filter stories, (story)->
+    storiesInProgress = _.filter stories, (story)->
       _.contains unacceptedStoryTypes, story.current_state
+    inProgressMax = JSON.parse localStorage.inProgressMax
     applicationController = @controllerFor 'application'
-    if unacceptedStories.length > 5
-      applicationController.send 'showBanner', 'Your team has over 5 unaccepted stories in progress', 'warning'
+    if storiesInProgress.length > inProgressMax
+      applicationController.send 'showBanner', "There are over #{inProgressMax} stories in progress", 'warning'
     else
       applicationController.send 'hideBanner'

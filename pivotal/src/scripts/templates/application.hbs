@@ -6,6 +6,21 @@
 
 {{outlet}}
 
+<a href="#" class="open-settings" {{action 'openSettings'}}>
+  <i class="fa fa-cogs"></i>
+</a>
+
+{{#if settingsOpen}}
+  <form class="settings" {{action 'saveSettings' on="submit"}}>
+    <fieldset>
+      <label for="in-progress-max">Max. stories in progress before warning</label>
+      {{input value=inProgressMax for="in-progress-max"}}
+    </fieldset>
+
+    <button type="submit">Save</button>
+  </form>
+{{/if}}
+
 <a href="#" class="toggle-fullscreen" {{action 'toggleFullscreen'}}>
   {{#if fullscreen}}
     <i class="fa fa-compress"></i>

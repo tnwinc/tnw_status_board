@@ -122,11 +122,32 @@ function program1(depth0,data) {
 
 function program3(depth0,data) {
   
+  var buffer = '', stack1, hashContexts, hashTypes, options;
+  data.buffer.push("\n  <form class=\"settings\" ");
+  hashContexts = {'on': depth0};
+  hashTypes = {'on': "STRING"};
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "saveSettings", {hash:{
+    'on': ("submit")
+  },contexts:[depth0],types:["STRING"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
+  data.buffer.push(">\n    <fieldset>\n      <label for=\"in-progress-max\">Max. stories in progress before warning</label>\n      ");
+  hashContexts = {'value': depth0,'for': depth0};
+  hashTypes = {'value': "ID",'for': "STRING"};
+  options = {hash:{
+    'value': ("inProgressMax"),
+    'for': ("in-progress-max")
+  },contexts:[],types:[],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
+  data.buffer.push(escapeExpression(((stack1 = helpers.input || (depth0 && depth0.input)),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "input", options))));
+  data.buffer.push("\n    </fieldset>\n\n    <button type=\"submit\">Save</button>\n  </form>\n");
+  return buffer;
+  }
+
+function program5(depth0,data) {
+  
   
   data.buffer.push("\n    <i class=\"fa fa-compress\"></i>\n  ");
   }
 
-function program5(depth0,data) {
+function program7(depth0,data) {
   
   
   data.buffer.push("\n    <i class=\"fa fa-expand\"></i>\n  ");
@@ -140,6 +161,15 @@ function program5(depth0,data) {
   hashTypes = {};
   hashContexts = {};
   data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "outlet", {hash:{},contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
+  data.buffer.push("\n\n<a href=\"#\" class=\"open-settings\" ");
+  hashTypes = {};
+  hashContexts = {};
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "openSettings", {hash:{},contexts:[depth0],types:["STRING"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
+  data.buffer.push(">\n  <i class=\"fa fa-cogs\"></i>\n</a>\n\n");
+  hashTypes = {};
+  hashContexts = {};
+  stack1 = helpers['if'].call(depth0, "settingsOpen", {hash:{},inverse:self.noop,fn:self.program(3, program3, data),contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n\n<a href=\"#\" class=\"toggle-fullscreen\" ");
   hashTypes = {};
   hashContexts = {};
@@ -147,7 +177,7 @@ function program5(depth0,data) {
   data.buffer.push(">\n  ");
   hashTypes = {};
   hashContexts = {};
-  stack1 = helpers['if'].call(depth0, "fullscreen", {hash:{},inverse:self.program(5, program5, data),fn:self.program(3, program3, data),contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data});
+  stack1 = helpers['if'].call(depth0, "fullscreen", {hash:{},inverse:self.program(7, program7, data),fn:self.program(5, program5, data),contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n</a>\n");
   return buffer;
