@@ -1,5 +1,6 @@
 gulp = require 'gulp'
 gutil = require 'gulp-util'
+plumber = require 'gulp-plumber'
 concat = require 'gulp-concat'
 coffee = require 'gulp-coffee'
 compass = require 'gulp-compass'
@@ -28,7 +29,8 @@ gulp.task 'coffee', ->
 
 gulp.task 'handlebars', ->
   gulp.src('./src/scripts/templates/*.hbs')
-    .pipe(handlebars())
+    .pipe(handlebars().on('error', gutil.log))
+    .pipe(plumber())
     .pipe(concat('templates.js'))
     .pipe(gulp.dest('./build/'))
 

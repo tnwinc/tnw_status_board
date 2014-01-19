@@ -4,9 +4,10 @@
   "dependencies": {
     "gulp": "*",
     "gulp-util": "*",
+    "gulp-plumber": "*",
     "gulp-concat": "*",
     "ember-precompile": "*",
-    "event-stream": "*",
+    "through2": "*",
     "gulp-compass": "*",
     "gulp-coffee": "*",
     "coffee-script": "*"
