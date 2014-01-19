@@ -19,18 +19,20 @@ coffeeFiles = [
 
 gulp.task 'coffee', ->
   gulp.src('./src/scripts/app.coffee')
+    .pipe(plumber())
     .pipe(coffee().on('error', gutil.log))
     .pipe(gulp.dest('./build/'))
 
   gulp.src(coffeeFiles)
+    .pipe(plumber())
     .pipe(coffee().on('error', gutil.log))
     .pipe(concat('all.js'))
     .pipe(gulp.dest('./build/'))
 
 gulp.task 'handlebars', ->
   gulp.src('./src/scripts/templates/*.hbs')
-    .pipe(handlebars().on('error', gutil.log))
     .pipe(plumber())
+    .pipe(handlebars().on('error', gutil.log))
     .pipe(concat('templates.js'))
     .pipe(gulp.dest('./build/'))
 
