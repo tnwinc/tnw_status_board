@@ -1,5 +1,10 @@
 <li {{bind-attr class="current_state story_type"}}>
   {{story_icon story_type estimate}}
   {{story_state current_state}}
+  <ul class="labels">
+    {{#each labels}}
+      <li class="label">{{this}}</li>
+    {{/each}}
+  </ul>
   {{markdown name}}
 </li>

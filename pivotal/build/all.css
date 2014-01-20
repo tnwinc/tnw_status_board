@@ -479,6 +479,22 @@ a.toggle-fullscreen:hover, a.toggle-fullscreen:focus {
   margin: 0 2em 0 7em;
 }
 /* line 19, ../src/stylesheets/_stories.scss */
+.stories li .labels {
+  float: right;
+  margin: 0.125em 0.25em;
+}
+/* line 23, ../src/stylesheets/_stories.scss */
+.stories li .labels li {
+  background: #41698d;
+  border: none;
+  border-radius: 3px;
+  color: #FFF;
+  float: right;
+  font-size: .7em;
+  margin-right: 3px;
+  padding: 3px 8px;
+}
+/* line 35, ../src/stylesheets/_stories.scss */
 .stories li .state {
   color: #787878;
   float: left;
@@ -486,7 +502,7 @@ a.toggle-fullscreen:hover, a.toggle-fullscreen:focus {
   margin-top: 3px;
   margin-left: 45px;
 }
-/* line 27, ../src/stylesheets/_stories.scss */
+/* line 43, ../src/stylesheets/_stories.scss */
 .stories li .state-meter {
   background-image: repeating-linear-gradient(-65deg, transparent, transparent 5px, rgba(255, 255, 255, 0.3) 5px, rgba(255, 255, 255, 0.3) 10px);
   border-radius: 0 3px 3px 0;
@@ -497,63 +513,61 @@ a.toggle-fullscreen:hover, a.toggle-fullscreen:focus {
   width: 0;
   height: 1.5em;
 }
-/* line 43, ../src/stylesheets/_stories.scss */
+/* line 59, ../src/stylesheets/_stories.scss */
 .stories li.unscheduled, .stories li.unstarted {
   background: #e3e3e3;
   border-color: #c7c7c7;
 }
-/* line 47, ../src/stylesheets/_stories.scss */
+/* line 63, ../src/stylesheets/_stories.scss */
 .stories li.unscheduled p, .stories li.unstarted p {
   margin-left: .5em;
 }
-/* line 52, ../src/stylesheets/_stories.scss */
+/* line 68, ../src/stylesheets/_stories.scss */
 .stories li.unscheduled .state,
 .stories li.unscheduled .state-meter, .stories li.unstarted .state,
 .stories li.unstarted .state-meter {
   display: none;
 }
-/* line 58, ../src/stylesheets/_stories.scss */
+/* line 74, ../src/stylesheets/_stories.scss */
 .stories li.started .state-meter {
   background-color: #c78719;
   width: 10px;
 }
-/* line 58, ../src/stylesheets/_stories.scss */
+/* line 74, ../src/stylesheets/_stories.scss */
 .stories li.finished .state-meter {
   background-color: #0f516b;
   width: 20px;
 }
-/* line 58, ../src/stylesheets/_stories.scss */
+/* line 74, ../src/stylesheets/_stories.scss */
 .stories li.delivered .state-meter {
   background-color: #5c1379;
   width: 30px;
 }
-/* line 58, ../src/stylesheets/_stories.scss */
+/* line 74, ../src/stylesheets/_stories.scss */
 .stories li.rejected .state-meter {
   background-color: #811c1c;
   width: 20px;
 }
-/* line 58, ../src/stylesheets/_stories.scss */
+/* line 74, ../src/stylesheets/_stories.scss */
 .stories li.accepted .state-meter {
   background-color: #346b0f;
   width: 40px;
 }
-/* line 84, ../src/stylesheets/_stories.scss */
+/* line 100, ../src/stylesheets/_stories.scss */
 .stories li i {
   float: right;
   font-size: 1.2em;
-  margin-top: 0.125em;
-  margin-right: 0.125em;
+  margin: 0.125em;
   position: relative;
 }
-/* line 92, ../src/stylesheets/_stories.scss */
+/* line 107, ../src/stylesheets/_stories.scss */
 .stories li.feature i {
   color: #eb7c19;
   font-size: 1.7em;
-  margin-top: 0;
-  margin-right: 0;
+  margin: 0;
   text-align: center;
 }
-/* line 100, ../src/stylesheets/_stories.scss */
+/* line 114, ../src/stylesheets/_stories.scss */
 .stories li .estimate {
   color: #FFF;
   font-size: .5em;
@@ -565,30 +579,30 @@ a.toggle-fullscreen:hover, a.toggle-fullscreen:focus {
   left: 0;
   text-align: center;
 }
-/* line 112, ../src/stylesheets/_stories.scss */
+/* line 126, ../src/stylesheets/_stories.scss */
 .stories li.chore i {
-  color: #434343;
+  color: #939393;
 }
-/* line 116, ../src/stylesheets/_stories.scss */
+/* line 130, ../src/stylesheets/_stories.scss */
 .stories li.bug i {
   color: #921414;
 }
-/* line 120, ../src/stylesheets/_stories.scss */
+/* line 134, ../src/stylesheets/_stories.scss */
 .stories li.release {
   background: #5283af;
   border-color: #41698d;
   color: #FFF;
 }
-/* line 125, ../src/stylesheets/_stories.scss */
+/* line 139, ../src/stylesheets/_stories.scss */
 .stories li.release p {
   margin: 0 .75em 0 2em;
 }
-/* line 129, ../src/stylesheets/_stories.scss */
+/* line 143, ../src/stylesheets/_stories.scss */
 .stories li.release i {
   float: left;
   margin-left: 2px;
 }
-/* line 135, ../src/stylesheets/_stories.scss */
+/* line 149, ../src/stylesheets/_stories.scss */
 .stories li.release .state,
 .stories li.release .state-meter {
   display: none;

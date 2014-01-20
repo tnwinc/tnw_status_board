@@ -16,6 +16,22 @@
       margin: 0 2em 0 7em;
     }
 
+    .labels {
+      float: right;
+      margin: 0.125em 0.25em;
+
+      li {
+        background: darken($primary-color, 10%);
+        border: none;
+        border-radius: 3px;
+        color: #FFF;
+        float: right;
+        font-size: .7em;
+        margin-right: 3px;
+        padding: 3px 8px;
+      }
+    }
+
     .state {
       color: #787878;
       float: left;
@@ -84,16 +100,14 @@
     i {
       float: right;
       font-size: 1.2em;
-      margin-top: 0.125em;
-      margin-right: 0.125em;
+      margin: 0.125em;
       position: relative;
     }
 
     &.feature i {
       color: $action-color;
       font-size: 1.7em;
-      margin-top: 0;
-      margin-right: 0;
+      margin: 0;
       text-align: center;
     }
 
@@ -110,7 +124,7 @@
     }
 
     &.chore i {
-      color: #434343;
+      color: #939393;
     }
 
     &.bug i {
