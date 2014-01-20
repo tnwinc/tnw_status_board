@@ -109,7 +109,12 @@ h3 {
   font-size: 1.1em;
 }
 
-/* line 34, ../src/stylesheets/_base.scss */
+/* line 31, ../src/stylesheets/_base.scss */
+em {
+  font-weight: bold;
+}
+
+/* line 38, ../src/stylesheets/_base.scss */
 p,
 ul,
 ol,
@@ -118,18 +123,18 @@ form {
   margin: 10px 0;
 }
 
-/* line 41, ../src/stylesheets/_base.scss */
+/* line 45, ../src/stylesheets/_base.scss */
 a:link, a:visited {
   color: #eb7c19;
   text-decoration: none;
 }
-/* line 48, ../src/stylesheets/_base.scss */
+/* line 52, ../src/stylesheets/_base.scss */
 a:hover, a:focus, a:active {
   color: #c06311;
   text-decoration: underline;
 }
 
-/* line 54, ../src/stylesheets/_base.scss */
+/* line 58, ../src/stylesheets/_base.scss */
 input {
   border: solid 1px #c7c7c7;
   border-radius: 3px;
@@ -137,7 +142,7 @@ input {
   padding: 5px 10px;
 }
 
-/* line 61, ../src/stylesheets/_base.scss */
+/* line 65, ../src/stylesheets/_base.scss */
 button {
   background: #eb7c19;
   border: none;
@@ -147,7 +152,7 @@ button {
   cursor: pointer;
   padding: 6px 11px;
 }
-/* line 71, ../src/stylesheets/_base.scss */
+/* line 75, ../src/stylesheets/_base.scss */
 button:hover, button:focus {
   background: #c06311;
 }

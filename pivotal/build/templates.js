@@ -85,11 +85,12 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   hashContexts = {};
   options = {hash:{},contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
   data.buffer.push(escapeExpression(((stack1 = helpers.story_state || (depth0 && depth0.story_state)),stack1 ? stack1.call(depth0, "current_state", options) : helperMissing.call(depth0, "story_state", "current_state", options))));
-  data.buffer.push("\n  <p>");
+  data.buffer.push("\n  ");
   hashTypes = {};
   hashContexts = {};
-  data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "name", {hash:{},contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
-  data.buffer.push("</p>\n</li>\n");
+  options = {hash:{},contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
+  data.buffer.push(escapeExpression(((stack1 = helpers.markdown || (depth0 && depth0.markdown)),stack1 ? stack1.call(depth0, "name", options) : helperMissing.call(depth0, "markdown", "name", options))));
+  data.buffer.push("\n</li>\n");
   return buffer;
   
 });

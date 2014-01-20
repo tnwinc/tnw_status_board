@@ -371,6 +371,13 @@
 }).call(this);
 
 (function() {
+  Ember.Handlebars.helper('markdown', function(str) {
+    return new Ember.Handlebars.SafeString(markdown.toHTML(str));
+  });
+
+}).call(this);
+
+(function() {
   Ember.Handlebars.helper('story_icon', function(storyType, estimate) {
     var className;
     className = (function() {
