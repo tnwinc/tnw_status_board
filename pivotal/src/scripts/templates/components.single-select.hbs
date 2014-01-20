@@ -2,7 +2,7 @@
   {{#each curatedItems}}
     <li {{bind-attr class="current"}}>
       <a href="#" {{action 'selectItem' this bubbles=false}} {{bind-attr title=label}}>
-        {{label}}
+        {{name}}
       </a>
     </li>
   {{/each}}

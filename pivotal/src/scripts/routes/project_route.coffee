@@ -1,9 +1,13 @@
 scopes = [
-  label: 'Done'
-  type: 'done'
+  id: 'done'
+  order: 0
+  name: 'Done'
+  conditions:
+    offset: -10
 ,
-  label: 'Backlog'
-  type: 'current_backlog'
+  id: 'current_backlog'
+  order: 1
+  name: 'Backlog'
   selected: true
 ]
 
@@ -17,11 +21,10 @@ App.ProjectRoute = App.Route.extend
     localStorage.projectId = JSON.stringify model.id
 
     controller.set 'model', model
-    controller.set 'scopes', _.map scopes, (scope)-> Ember.Object.create scope
+    controller.set 'scopes', _.map scopes, (scope)->
+      Ember.Object.create scope
 
     App.pivotal.getProjects().then (projects)=>
       controller.set 'projects', _.map projects, (project)->
-        Ember.Object.create
-          id: project.id
-          label: project.name
+        Ember.Object.create project
       @transitionTo 'scopes'

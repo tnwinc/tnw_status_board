@@ -22,8 +22,8 @@ Pivotal = Ember.Object.extend
     @queryPivotal("projects/#{id}").then (project)->
       _.pick project, 'id', 'name'
 
-  getIterations: (projectId, scope)->
-    @queryPivotal("projects/#{projectId}/iterations", scope: scope).then (iterations)->
+  getIterations: (projectId, conditions = {})->
+    @queryPivotal("projects/#{projectId}/iterations", conditions).then (iterations)->
       _.map iterations, (iteration)->
         start: new Date(iteration.start)
         finish: new Date(iteration.finish)

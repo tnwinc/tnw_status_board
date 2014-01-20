@@ -30,10 +30,11 @@
         return _.pick(project, 'id', 'name');
       });
     },
-    getIterations: function(projectId, scope) {
-      return this.queryPivotal("projects/" + projectId + "/iterations", {
-        scope: scope
-      }).then(function(iterations) {
+    getIterations: function(projectId, conditions) {
+      if (conditions == null) {
+        conditions = {};
+      }
+      return this.queryPivotal("projects/" + projectId + "/iterations", conditions).then(function(iterations) {
         return _.map(iterations, function(iteration) {
           return {
             start: new Date(iteration.start),
@@ -200,33 +201,49 @@
 }).call(this);
 
 (function() {
-  var scopeOrder;
+  var inProgressStoryTypes;
 
-  scopeOrder = ['done', 'current_backlog'];
+  inProgressStoryTypes = ['started', 'finished', 'delivered', 'rejected'];
 
   App.ScopesController = Ember.ArrayController.extend({
-    needs: 'project',
+    needs: ['application', 'project'],
     sortProperties: ['order'],
     count: (function() {
       return "scopes-count-" + (this.get('model.length'));
     }).property('model.length'),
+    checkInProgressStories: function(stories) {
+      var applicationController, inProgressMax, storiesInProgress;
+      storiesInProgress = _.filter(stories, function(story) {
+        return _.contains(inProgressStoryTypes, story.current_state);
+      });
+      inProgressMax = JSON.parse(localStorage.inProgressMax);
+      applicationController = this.get('controllers.application');
+      if (storiesInProgress.length > inProgressMax) {
+        return applicationController.send('showBanner', "There are over " + inProgressMax + " stories in progress", 'warning');
+      } else {
+        return applicationController.send('hideBanner');
+      }
+    },
     actions: {
       addScope: function(scope) {
-        var projectId, type,
+        var conditions, projectId,
           _this = this;
         projectId = this.get('controllers.project').get('id');
-        type = scope.get('type');
-        return App.pivotal.getIterations(projectId, type).then(function(iterations) {
-          scope = Ember.Object.create({
-            id: type,
-            name: scope.get('label'),
-            order: scopeOrder.indexOf(type),
-            iterations: _.map(iterations, function(iteration) {
-              iteration.expanded = true;
-              iteration.hasStories = iteration.stories.length > 0;
-              return Ember.Object.create(iteration);
-            })
-          });
+        conditions = scope.get('conditions') || {};
+        conditions.scope = scope.get('id');
+        return App.pivotal.getIterations(projectId, conditions).then(function(iterations) {
+          scope = Ember.Object.create(scope);
+          scope.set('iterations', _.map(iterations, function(iteration, index) {
+            iteration.expanded = true;
+            iteration.hasStories = iteration.stories.length > 0;
+            if (scope.get('id') === 'current_backlog' && index === 0 && iteration.hasStories) {
+              _this.checkInProgressStories(iteration.stories);
+              _this.get('controllers.application').on('settingsUpdated', function() {
+                return _this.checkInProgressStories(iteration.stories);
+              });
+            }
+            return Ember.Object.create(iteration);
+          }));
           return _this.get('model').addObject(scope);
         });
       },
@@ -234,7 +251,7 @@
         var scopeToRemove, scopes;
         scopes = this.get('model');
         scopeToRemove = _.find(scopes, function(thisScope) {
-          return thisScope.get('id') === scope.get('type');
+          return thisScope.get('id') === scope.get('id');
         });
         return scopes.removeObject(scopeToRemove);
       },
@@ -420,11 +437,16 @@
 
   scopes = [
     {
-      label: 'Done',
-      type: 'done'
+      id: 'done',
+      order: 0,
+      name: 'Done',
+      conditions: {
+        offset: -10
+      }
     }, {
-      label: 'Backlog',
-      type: 'current_backlog',
+      id: 'current_backlog',
+      order: 1,
+      name: 'Backlog',
       selected: true
     }
   ];
@@ -443,10 +465,7 @@
       }));
       return App.pivotal.getProjects().then(function(projects) {
         controller.set('projects', _.map(projects, function(project) {
-          return Ember.Object.create({
-            id: project.id,
-            label: project.name
-          });
+          return Ember.Object.create(project);
         }));
         return _this.transitionTo('scopes');
       });
@@ -472,63 +491,23 @@
 }).call(this);
 
 (function() {
-  var inProgressStoryTypes;
-
-  inProgressStoryTypes = ['started', 'finished', 'delivered', 'rejected'];
-
   App.ScopesRoute = App.Route.extend({
+    model: function() {
+      return [];
+    },
+    setupController: function(controller, model) {
+      controller.set('model', model);
+      return _.each(this.controllerFor('project').get('scopes'), function(scope) {
+        if (scope.get('selected')) {
+          return controller.send('addScope', scope);
+        }
+      });
+    },
     deactivate: function() {
       var applicationController;
       applicationController = this.controllerFor('application');
       applicationController.send('hideBanner');
       return applicationController.off('settingsUpdated');
-    },
-    model: function() {
-      var projectId;
-      projectId = this.modelFor('project').id;
-      return App.pivotal.getIterations(projectId, 'current_backlog').then(function(iterations) {
-        var scope;
-        scope = Ember.Object.create({
-          id: 'current_backlog',
-          name: 'Backlog',
-          order: 0,
-          iterations: _.map(iterations, function(iteration) {
-            return Ember.Object.create(iteration);
-          })
-        });
-        return [scope];
-      });
-    },
-    setupController: function(controller, model) {
-      var _this = this;
-      controller.set('model', model);
-      return _.each(model, function(scope) {
-        return _.each(scope.get('iterations'), function(iteration, index) {
-          var stories;
-          if (index === 0) {
-            stories = iteration.get('stories');
-            _this.checkInProgressStories(stories);
-            _this.controllerFor('application').on('settingsUpdated', function() {
-              return _this.checkInProgressStories(stories);
-            });
-          }
-          iteration.set('expanded', true);
-          return iteration.set('hasStories', iteration.get('stories.length'));
-        });
-      });
-    },
-    checkInProgressStories: function(stories) {
-      var applicationController, inProgressMax, storiesInProgress;
-      storiesInProgress = _.filter(stories, function(story) {
-        return _.contains(inProgressStoryTypes, story.current_state);
-      });
-      inProgressMax = JSON.parse(localStorage.inProgressMax);
-      applicationController = this.controllerFor('application');
-      if (storiesInProgress.length > inProgressMax) {
-        return applicationController.send('showBanner', "There are over " + inProgressMax + " stories in progress", 'warning');
-      } else {
-        return applicationController.send('hideBanner');
-      }
     }
   });
 
