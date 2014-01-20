@@ -13,7 +13,7 @@ App.ScopesController = Ember.ArrayController.extend
   checkInProgressStories: (stories)->
     storiesInProgress = _.filter stories, (story)->
       _.contains inProgressStoryTypes, story.current_state
-    inProgressMax = JSON.parse localStorage.inProgressMax
+    inProgressMax = App.settings.getValue 'inProgressMax', 5
     applicationController = @get 'controllers.application'
     if storiesInProgress.length > inProgressMax
       applicationController.send 'showBanner', "There are over #{inProgressMax} stories in progress", 'warning'

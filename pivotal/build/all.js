@@ -82,7 +82,7 @@
     updateNumber: function(key, value, defaultValue) {
       value = Number(value);
       if (_.isNaN(value)) {
-        value = 5;
+        value = defaultValue;
       }
       localStorage[key] = JSON.stringify(value);
       return value;
@@ -216,7 +216,7 @@
       storiesInProgress = _.filter(stories, function(story) {
         return _.contains(inProgressStoryTypes, story.current_state);
       });
-      inProgressMax = JSON.parse(localStorage.inProgressMax);
+      inProgressMax = App.settings.getValue('inProgressMax', 5);
       applicationController = this.get('controllers.application');
       if (storiesInProgress.length > inProgressMax) {
         return applicationController.send('showBanner', "There are over " + inProgressMax + " stories in progress", 'warning');

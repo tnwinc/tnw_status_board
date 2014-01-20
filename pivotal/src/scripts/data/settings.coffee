@@ -9,7 +9,7 @@ Settings = Ember.Object.extend
   updateNumber: (key, value, defaultValue)->
     value = Number value
     if _.isNaN value
-      value = 5
+      value = defaultValue
     localStorage[key] = JSON.stringify value
     value
 
