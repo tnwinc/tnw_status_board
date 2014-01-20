@@ -352,7 +352,7 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
     'type': ("number")
   },contexts:[],types:[],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
   data.buffer.push(escapeExpression(((stack1 = helpers.input || (depth0 && depth0.input)),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "input", options))));
-  data.buffer.push("\n  </fieldset>\n\n  <fieldset>\n    <label for=\"base-font-size\">Base font size (px)</label>\n    ");
+  data.buffer.push("\n  </fieldset>\n\n  <fieldset>\n    <label for=\"base-font-size\">Base font size</label>\n    ");
   hashContexts = {'value': depth0,'for': depth0,'type': depth0};
   hashTypes = {'value': "ID",'for': "STRING",'type': "STRING"};
   options = {hash:{
@@ -361,7 +361,7 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
     'type': ("number")
   },contexts:[],types:[],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
   data.buffer.push(escapeExpression(((stack1 = helpers.input || (depth0 && depth0.input)),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "input", options))));
-  data.buffer.push("\n  </fieldset>\n\n  <button type=\"submit\">Save</button>\n</form>\n");
+  data.buffer.push(" px\n  </fieldset>\n\n  <button type=\"submit\">Save</button>\n</form>\n");
   return buffer;
   
 });
