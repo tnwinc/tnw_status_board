@@ -69,13 +69,13 @@ legend {
 }
 
 /* line 3, ../src/stylesheets/_base.scss */
-.clearfix:before, .settings fieldset:before, .login-container form:before, .projects-container ul:before, .project-container > header:before, .scopes:before, .clearfix:after, .settings fieldset:after, .login-container form:after, .projects-container ul:after, .project-container > header:after, .scopes:after {
+.clearfix:before, .settings fieldset:before, .login-container form:before, .projects-container ul:before, .project-container > header:before, .clearfix:after, .settings fieldset:after, .login-container form:after, .projects-container ul:after, .project-container > header:after {
   content: "";
   display: table;
 }
 
 /* line 4, ../src/stylesheets/_base.scss */
-.clearfix:after, .settings fieldset:after, .login-container form:after, .projects-container ul:after, .project-container > header:after, .scopes:after {
+.clearfix:after, .settings fieldset:after, .login-container form:after, .projects-container ul:after, .project-container > header:after {
   clear: both;
 }
 
@@ -269,9 +269,8 @@ a.toggle-fullscreen:hover, a.toggle-fullscreen:focus {
   color: rgba(255, 255, 255, 0.8);
 }
 
-/* line 81, ../src/stylesheets/_application.scss */
+/* line 80, ../src/stylesheets/_application.scss */
 .fullscreen .project-container > header,
-.fullscreen .scope > header,
 .fullscreen a.open-settings {
   display: none;
 }
@@ -385,69 +384,30 @@ a.toggle-fullscreen:hover, a.toggle-fullscreen:focus {
   background: #5283af;
   padding: 10px;
 }
-
-/* line 5, ../src/stylesheets/_scopes.scss */
-.scope {
-  box-sizing: border-box;
+/* line 46, ../src/stylesheets/_projects.scss */
+.project-container > header .expando-all {
   float: left;
-}
-/* line 9, ../src/stylesheets/_scopes.scss */
-.scopes-count-1 .scope {
-  float: none;
-}
-/* line 13, ../src/stylesheets/_scopes.scss */
-.scopes-count-2 .scope {
-  width: 50%;
-}
-/* line 16, ../src/stylesheets/_scopes.scss */
-.scopes-count-2 .scope:first-of-type {
-  padding-right: 5px;
-}
-/* line 20, ../src/stylesheets/_scopes.scss */
-.scopes-count-2 .scope:last-of-type {
-  padding-left: 5px;
-}
-/* line 25, ../src/stylesheets/_scopes.scss */
-.scope > header {
-  background: #314f6a;
-  padding: 8px 10px;
-  position: relative;
-}
-/* line 30, ../src/stylesheets/_scopes.scss */
-.scope > header h3 {
-  color: #FFF;
-  font-size: 1em;
   margin: 0;
-  text-transform: uppercase;
 }
-/* line 37, ../src/stylesheets/_scopes.scss */
-.scope > header a {
-  color: #d3d3d3;
+/* line 50, ../src/stylesheets/_projects.scss */
+.project-container > header .expando-all li {
+  float: left;
+  margin-left: 10px;
+}
+/* line 54, ../src/stylesheets/_projects.scss */
+.project-container > header .expando-all li a {
+  background: #333;
+  border-radius: 3px;
+  color: #FFF;
   display: block;
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
   width: 2em;
-}
-/* line 46, ../src/stylesheets/_scopes.scss */
-.scope > header a.expand-all {
-  right: 2em;
-}
-/* line 51, ../src/stylesheets/_scopes.scss */
-.scope > header a:hover, .scope > header a:focus {
-  background: rgba(255, 255, 255, 0.1);
-}
-/* line 55, ../src/stylesheets/_scopes.scss */
-.scope > header a i {
-  margin-top: -10px;
-  position: absolute;
-  top: 50%;
-  right: 0;
+  height: 2em;
+  line-height: 2em;
   text-align: center;
-  width: 2em;
-  height: 20px;
-  line-height: 20px;
+}
+/* line 65, ../src/stylesheets/_projects.scss */
+.project-container > header .expando-all li a:hover, .project-container > header .expando-all li a:focus {
+  background: #1a1a1a;
 }
 
 /* line 2, ../src/stylesheets/_iterations.scss */
@@ -702,39 +662,6 @@ a.toggle-fullscreen:hover, a.toggle-fullscreen:focus {
 /* line 79, ../src/stylesheets/_single_select.scss */
 .single-select li.current a:hover {
   background: #eb7c19;
-}
-
-/* line 3, ../src/stylesheets/_multi_select.scss */
-.multi-select {
-  margin: 0 0 0 20px;
-  float: left;
-}
-/* line 7, ../src/stylesheets/_multi_select.scss */
-.multi-select li {
-  display: inline-block;
-  margin-right: 10px;
-}
-/* line 11, ../src/stylesheets/_multi_select.scss */
-.multi-select li a {
-  border-radius: 3px;
-  color: #FFF;
-  display: block;
-  height: 2em;
-  line-height: 2em;
-  padding: 0 10px;
-  text-decoration: none;
-}
-/* line 21, ../src/stylesheets/_multi_select.scss */
-.multi-select li a:hover, .multi-select li a:focus {
-  background: rgba(0, 0, 0, 0.2);
-}
-/* line 26, ../src/stylesheets/_multi_select.scss */
-.multi-select li.selected a {
-  background: #eb7c19;
-}
-/* line 30, ../src/stylesheets/_multi_select.scss */
-.multi-select li.selected a:hover, .multi-select li.selected a:focus {
-  background: #c06311;
 }
 
 /*!

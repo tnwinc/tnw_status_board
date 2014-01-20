@@ -2,8 +2,23 @@
   <header>
     {{single-select items=projects currentItemId=id onSelect="didSelectProject"}}
 
-    {{multi-select items=scopes onSelect="didSelectScope" onUnselect="didUnselectScope"}}
+    <ul class="expando-all">
+      <li>
+        <a href="#" {{action 'expandAllIterations'}} class="expand-all" title="Expand All">
+          <i class="fa fa-toggle-down"></i>
+        </a>
+      </li>
+      <li>
+        <a href="#" {{action 'collapseAllIterations'}} class="collapse-all" title="Collapse All">
+          <i class="fa fa-toggle-up"></i>
+        </a>
+      </li>
+    </ul>
   </header>
 
-  {{outlet}}
+  <section class="iterations">
+    {{#each iterations}}
+      {{partial 'iteration'}}
+    {{/each}}
+  </section>
 </section>
