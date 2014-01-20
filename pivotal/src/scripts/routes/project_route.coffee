@@ -1,15 +1,4 @@
-scopes = [
-  id: 'done'
-  order: 0
-  name: 'Done'
-  conditions:
-    offset: -10
-,
-  id: 'current_backlog'
-  order: 1
-  name: 'Backlog'
-  selected: true
-]
+inProgressStoryTypes = ['started', 'finished', 'delivered', 'rejected']
 
 App.ProjectRoute = App.Route.extend
 
@@ -17,14 +6,39 @@ App.ProjectRoute = App.Route.extend
     App.pivotal.getProject params.project_id
 
   setupController: (controller, model)->
-    @_super()
-    localStorage.projectId = JSON.stringify model.id
-
     controller.set 'model', model
-    controller.set 'scopes', _.map scopes, (scope)->
-      Ember.Object.create scope
+
+    projectId = model.id
+    localStorage.projectId = JSON.stringify projectId
 
     App.pivotal.getProjects().then (projects)=>
       controller.set 'projects', _.map projects, (project)->
         Ember.Object.create project
-      @transitionTo 'scopes'
+
+    App.pivotal.getIterations(projectId).then (iterations)=>
+      controller.set 'iterations', _.map iterations, (iteration, index)=>
+        iteration.expanded = true
+        iteration.hasStories = iteration.stories.length > 0
+
+        if index is 0 and iteration.hasStories
+          @checkInProgressStories iteration.stories
+          @controllerFor('application').on 'settingsUpdated', =>
+            @checkInProgressStories iteration.stories
+
+        Ember.Object.create iteration
+
+  checkInProgressStories: (stories)->
+    storiesInProgress = _.filter stories, (story)->
+      _.contains inProgressStoryTypes, story.current_state
+    inProgressMax = App.settings.getValue 'inProgressMax', 5
+
+    appController = @controllerFor 'application'
+    if storiesInProgress.length > inProgressMax
+      appController.send 'showBanner', "There are over #{inProgressMax} stories in progress", 'warning'
+    else
+      appController.send 'hideBanner'
+
+  deactivate: ->
+    appController = @controllerFor 'application'
+    appController.send 'hideBanner'
+    appController.off 'settingsUpdated'

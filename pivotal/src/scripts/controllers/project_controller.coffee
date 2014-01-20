@@ -1,16 +1,18 @@
 App.ProjectController = Ember.ObjectController.extend
 
-  needs: 'scopes'
-
   actions:
 
     didSelectProject: (project)->
       @transitionToRoute 'project', project.get('id')
 
-    didSelectScope: (scope)->
-      scope.set 'selected', true
-      @get('controllers.scopes').send 'addScope', scope
+    expandAllIterations: ->
+      _.each @get('iterations'), (iteration)->
+        iteration.set 'expanded', true
 
-    didUnselectScope: (scope)->
-      scope.set 'selected', false
-      @get('controllers.scopes').send 'removeScope', scope
+    collapseAllIterations: ->
+      _.each @get('iterations'), (iteration)->
+        iteration.set 'expanded', false
+
+    toggleExpansion: (iteration)->
+      iteration.toggleProperty 'expanded'
+      return
