@@ -12,7 +12,7 @@ App.IterationController = Ember.ObjectController.extend
     showAcceptedType = @get 'sttgCtrl.showAcceptedType'
     showAcceptedValue = @get 'sttgCtrl.showAcceptedValue'
 
-    cutoff = if showAcceptedType is 'number'
+    cutoff = if showAcceptedType is 'count'
       numAcceptedStories = (_.filter stories, (story)=> @storyIsAccepted story).length
       cutoff = numAcceptedStories - showAcceptedValue
       if cutoff >= 0 then cutoff else 0
@@ -21,7 +21,7 @@ App.IterationController = Ember.ObjectController.extend
 
     _.filter stories, (story, index)=>
       if @storyIsAccepted(story)
-        value = if showAcceptedType is 'number'
+        value = if showAcceptedType is 'count'
           index
         else
           moment(story.accepted_at).startOf('day').unix()

@@ -8,17 +8,17 @@ Migrator = Ember.Object.extend
 
   runMigrations: ->
     new Ember.RSVP.Promise (resolve)=>
-      lsVersion = localStorage.appVersion
-      version = if lsVersion then JSON.parse lsVersion else '0.0.0'
-      version = '0.0.0' unless _.isString version
+      version = App.settings.getValue 'appVersion', '0.0.0'
       return resolve() if version is App.VERSION
 
       versionAssistant = App.VersionAssistant.create versions: _.keys(@migrations)
       versions = versionAssistant.versionsSince version
       operations = (@migrations[version]() for version in versions)
-      operations.push ->
-        localStorage.appVersion = App.VERSION
-        Ember.RSVP.resolve()
+
+      updateVersion = new Ember.RSVP.Promise (resolve)->
+        App.settings.updateString 'appVersion', App.VERSION, '0.0.0'
+        resolve()
+      operations.push updateVersion
 
       Ember.RSVP.all(operations).then -> resolve()
 

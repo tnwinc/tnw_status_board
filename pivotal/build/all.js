@@ -161,12 +161,8 @@
     runMigrations: function() {
       var _this = this;
       return new Ember.RSVP.Promise(function(resolve) {
-        var lsVersion, operations, version, versionAssistant, versions;
-        lsVersion = localStorage.appVersion;
-        version = lsVersion ? JSON.parse(lsVersion) : '0.0.0';
-        if (!_.isString(version)) {
-          version = '0.0.0';
-        }
+        var operations, updateVersion, version, versionAssistant, versions;
+        version = App.settings.getValue('appVersion', '0.0.0');
         if (version === App.VERSION) {
           return resolve();
         }
@@ -183,10 +179,11 @@
           }
           return _results;
         }).call(_this);
-        operations.push(function() {
-          localStorage.appVersion = App.VERSION;
-          return Ember.RSVP.resolve();
+        updateVersion = new Ember.RSVP.Promise(function(resolve) {
+          App.settings.updateString('appVersion', App.VERSION, '0.0.0');
+          return resolve();
         });
+        operations.push(updateVersion);
         return Ember.RSVP.all(operations).then(function() {
           return resolve();
         });
@@ -195,6 +192,25 @@
   });
 
   App.migrator = Migrator.create();
+
+}).call(this);
+
+(function() {
+  App.migrator.registerMigration('0.1.1', function() {
+    return new Ember.RSVP.Promise(function(resolve) {
+      var conversionMap, showAcceptedType;
+      console.log('running migration for version 0.1.1');
+      conversionMap = {
+        'number': 'count',
+        'date': 'age',
+        'count': 'count',
+        'age': 'age'
+      };
+      showAcceptedType = App.settings.getValue('showAcceptedType', 'number');
+      localStorage.showAcceptedType = JSON.stringify(conversionMap[showAcceptedType]);
+      return resolve();
+    });
+  });
 
 }).call(this);
 
@@ -259,13 +275,13 @@
       stories = this.get('stories');
       showAcceptedType = this.get('sttgCtrl.showAcceptedType');
       showAcceptedValue = this.get('sttgCtrl.showAcceptedValue');
-      cutoff = showAcceptedType === 'number' ? (numAcceptedStories = (_.filter(stories, function(story) {
+      cutoff = showAcceptedType === 'count' ? (numAcceptedStories = (_.filter(stories, function(story) {
         return _this.storyIsAccepted(story);
       })).length, cutoff = numAcceptedStories - showAcceptedValue, cutoff >= 0 ? cutoff : 0) : moment().startOf('day').subtract('days', showAcceptedValue).unix();
       return _.filter(stories, function(story, index) {
         var value;
         if (_this.storyIsAccepted(story)) {
-          value = showAcceptedType === 'number' ? index : moment(story.accepted_at).startOf('day').unix();
+          value = showAcceptedType === 'count' ? index : moment(story.accepted_at).startOf('day').unix();
           return value >= cutoff;
         } else {
           return true;
@@ -347,34 +363,42 @@
       this.set('baseFontSize', baseFontSize);
       inProgressMax = App.settings.getValue('inProgressMax', 5);
       this.set('inProgressMax', inProgressMax);
-      showAcceptedType = App.settings.getValue('showAcceptedType', 'number');
+      showAcceptedType = App.settings.getValue('showAcceptedType', 'count');
       this.set('showAcceptedType', showAcceptedType);
       showAcceptedValue = App.settings.getValue('showAcceptedValue', 2);
       return this.set('showAcceptedValue', showAcceptedValue);
     },
-    showAcceptedTypes: ['number', 'date'],
+    showAcceptedTypes: ['count', 'age'],
     showAcceptedPrefix: (function() {
       switch (this.get('showAcceptedType')) {
-        case 'number':
+        case 'count':
           return 'Show up to';
-        case 'date':
+        case 'age':
           return 'Show accepted stories up to';
       }
     }).property('showAcceptedType'),
     showAcceptedSuffix: (function() {
-      switch (this.get('showAcceptedType')) {
-        case 'number':
-          return 'accepted stories';
-        case 'date':
-          return 'days old';
+      var inflectedDay, inflectedStory;
+      if (this.get('showAcceptedValue') === 1) {
+        inflectedStory = 'story';
+        inflectedDay = 'day';
+      } else {
+        inflectedStory = 'stories';
+        inflectedDay = 'days';
       }
-    }).property('showAcceptedType'),
+      switch (this.get('showAcceptedType')) {
+        case 'count':
+          return "accepted " + inflectedStory;
+        case 'age':
+          return "" + inflectedDay + " old";
+      }
+    }).property('showAcceptedType', 'showAcceptedValue'),
     actions: {
       saveSettings: function() {
         var applicationController;
         App.settings.updateNumber('inProgressMax', this.get('inProgressMax'), 5);
         App.settings.updateNumber('baseFontSize', this.get('baseFontSize'), 16);
-        App.settings.updateString('showAcceptedType', this.get('showAcceptedType'), 'number');
+        App.settings.updateString('showAcceptedType', this.get('showAcceptedType'), 'count');
         App.settings.updateNumber('showAcceptedValue', this.get('showAcceptedValue'), 2);
         applicationController = this.get('controllers.application');
         return applicationController.send('closeSettings');

@@ -386,7 +386,7 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
     'min': ("10")
   },contexts:[],types:[],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
   data.buffer.push(escapeExpression(((stack1 = helpers.input || (depth0 && depth0.input)),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "input", options))));
-  data.buffer.push("\n    <span class=\"suffix\">px</span>\n  </fieldset>\n\n  <fieldset>\n    <label for=\"show-accepted-type\">Show accepted stories by</label>\n    ");
+  data.buffer.push("\n    <span class=\"suffix\">px</span>\n  </fieldset>\n\n  <fieldset>\n    <label for=\"show-accepted-type\">Limit accepted stories by</label>\n    ");
   hashContexts = {'content': depth0,'value': depth0,'for': depth0};
   hashTypes = {'content': "ID",'value': "ID",'for': "STRING"};
   data.buffer.push(escapeExpression(helpers.view.call(depth0, "Ember.Select", {hash:{
