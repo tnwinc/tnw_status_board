@@ -15,6 +15,11 @@ App.ProjectRoute = App.Route.extend
       controller.set 'projects', _.map projects, (project)->
         Ember.Object.create project
 
+    @getIterations controller, projectId
+    @listener = App.pivotal.listenForProjectUpdates(projectId).then => @getIterations controller, projectId
+
+
+  getIterations: (controller, projectId)->
     App.pivotal.getIterations(projectId).then (iterations)=>
       controller.set 'iterations', _.map iterations, (iteration, index)=>
         iteration.expanded = true
@@ -26,6 +31,7 @@ App.ProjectRoute = App.Route.extend
             @checkInProgressStories iteration.stories
 
         Ember.Object.create iteration
+
 
   checkInProgressStories: (stories)->
     storiesInProgress = _.filter stories, (story)->

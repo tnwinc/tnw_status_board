@@ -1,7 +1,11 @@
 (function() {
-  var BASE_URL, Pivotal;
+  var BASE_URL, PROJECT_UPDATES_POLL_INTERVAL, Pivotal, project_data;
 
   BASE_URL = 'https://www.pivotaltracker.com/services/v5/';
+
+  PROJECT_UPDATES_POLL_INTERVAL = 3 * 1000;
+
+  project_data = void 0;
 
   Pivotal = Ember.Object.extend({
     init: function() {
@@ -49,6 +53,38 @@
           };
         });
       });
+    },
+    listenForProjectUpdates: function(projectId) {
+      var _this = this;
+      if ((project_data != null) && project_data.projectId !== projectId) {
+        clearInterval(project_data.interval);
+      }
+      project_data = {
+        projectId: projectId,
+        handlers: []
+      };
+      this.queryPivotal("projects/" + projectId).then(function(project) {
+        project_data.version = project.version;
+        return project_data.interval = setInterval((function() {
+          return _this.queryPivotal("project_stale_commands/" + projectId + "/" + project_data.version).then(function(info) {
+            var handler, _i, _len, _ref, _results;
+            if (project_data.version !== info.project_version) {
+              _ref = (project_data != null ? project_data.handlers : void 0) || [];
+              _results = [];
+              for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+                handler = _ref[_i];
+                _results.push(handler());
+              }
+              return _results;
+            }
+          });
+        }), PROJECT_UPDATES_POLL_INTERVAL);
+      });
+      return {
+        then: function(fn) {
+          return project_data.handlers.push(fn);
+        }
+      };
     },
     queryPivotal: function(url, data) {
       return $.ajax({
@@ -358,6 +394,13 @@
           return Ember.Object.create(project);
         }));
       });
+      this.getIterations(controller, projectId);
+      return this.listener = App.pivotal.listenForProjectUpdates(projectId).then(function() {
+        return _this.getIterations(controller, projectId);
+      });
+    },
+    getIterations: function(controller, projectId) {
+      var _this = this;
       return App.pivotal.getIterations(projectId).then(function(iterations) {
         return controller.set('iterations', _.map(iterations, function(iteration, index) {
           iteration.expanded = true;
