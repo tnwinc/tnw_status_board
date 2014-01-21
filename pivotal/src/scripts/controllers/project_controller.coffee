@@ -1,18 +1,14 @@
 App.ProjectController = Ember.ObjectController.extend
 
+  needs: 'iterations'
+
   actions:
 
     didSelectProject: (project)->
       @transitionToRoute 'project', project.get('id')
 
     expandAllIterations: ->
-      _.each @get('iterations'), (iteration)->
-        iteration.set 'expanded', true
+      @get('controllers.iterations').send 'toggleIterations', true
 
     collapseAllIterations: ->
-      _.each @get('iterations'), (iteration)->
-        iteration.set 'expanded', false
-
-    toggleExpansion: (iteration)->
-      iteration.toggleProperty 'expanded'
-      return
+      @get('controllers.iterations').send 'toggleIterations', false

@@ -1,4 +1,51 @@
 (function() {
+  var Migrator;
+
+  Migrator = Ember.Object.extend({
+    init: function() {
+      return this.migrations = {};
+    },
+    registerMigration: function(version, migration) {
+      return this.migrations[version] = migration;
+    },
+    runMigrations: function() {
+      var _this = this;
+      return new Ember.RSVP.Promise(function(resolve) {
+        var operations, updateVersion, version, versionAssistant, versions;
+        version = App.settings.getValue('appVersion', '0.0.0');
+        if (version === App.VERSION) {
+          return resolve();
+        }
+        versionAssistant = App.VersionAssistant.create({
+          versions: _.keys(_this.migrations)
+        });
+        versions = versionAssistant.versionsSince(version);
+        operations = (function() {
+          var _i, _len, _results;
+          _results = [];
+          for (_i = 0, _len = versions.length; _i < _len; _i++) {
+            version = versions[_i];
+            _results.push(this.migrations[version]());
+          }
+          return _results;
+        }).call(_this);
+        updateVersion = new Ember.RSVP.Promise(function(resolve) {
+          App.settings.updateString('appVersion', App.VERSION, '0.0.0');
+          return resolve();
+        });
+        operations.push(updateVersion);
+        return Ember.RSVP.all(operations).then(function() {
+          return resolve();
+        });
+      });
+    }
+  });
+
+  App.migrator = Migrator.create();
+
+}).call(this);
+
+(function() {
   var BASE_URL, PROJECT_UPDATES_POLL_INTERVAL, Pivotal, project_data;
 
   BASE_URL = 'https://www.pivotaltracker.com/services/v5/';
@@ -39,18 +86,17 @@
         scope: 'current_backlog'
       }).then(function(iterations) {
         return _.map(iterations, function(iteration) {
-          return {
+          return Ember.Object.create({
             start: new Date(iteration.start),
             finish: new Date(iteration.finish),
+            expanded: true,
             stories: _.map(iteration.stories, function(story) {
               var curatedStory;
-              curatedStory = _.pick(story, 'id', 'name', 'current_state', 'story_type', 'estimate');
-              curatedStory.labels = _.map(story.labels, function(label) {
-                return _.pick(label, 'id', 'name');
-              });
+              curatedStory = _.pick(story, 'id', 'name', 'current_state', 'story_type', 'estimate', 'accepted_at');
+              curatedStory.labels = _.pluck(story.labels, 'name');
               return curatedStory;
             })
-          };
+          });
         });
       });
     },
@@ -121,10 +167,67 @@
       }
       localStorage[key] = JSON.stringify(value);
       return value;
+    },
+    updateString: function(key, value, defaultValue) {
+      value = value.toString();
+      if ($.trim(value) === '') {
+        value = defaultValue;
+      }
+      localStorage[key] = JSON.stringify(value);
+      return value;
     }
   });
 
   App.settings = Settings.create();
+
+}).call(this);
+
+(function() {
+  App.VersionAssistant = Ember.Object.extend({
+    init: function() {
+      return this.sortMigrations();
+    },
+    sortMigrations: function() {
+      var _this = this;
+      return this.get('versions').sort(function(a, b) {
+        return _this.versionSorter(a, b);
+      });
+    },
+    versionSorter: function(a, b) {
+      var aMajor, aMinor, aPatch, bMajor, bMinor, bPatch, _ref, _ref1;
+      _ref = this.convertToVersionArray(a), aMajor = _ref[0], aMinor = _ref[1], aPatch = _ref[2];
+      _ref1 = this.convertToVersionArray(b), bMajor = _ref1[0], bMinor = _ref1[1], bPatch = _ref1[2];
+      if (aMajor !== bMajor) {
+        return aMajor - bMajor;
+      }
+      if (aMinor !== bMinor) {
+        return aMinor - bMinor;
+      }
+      if (aPatch !== bPatch) {
+        return aPatch - bPatch;
+      }
+      return 0;
+    },
+    convertToVersionArray: function(version) {
+      return _.map(version.split('.'), function(numString) {
+        return Number(numString);
+      });
+    },
+    versionsSince: function(version) {
+      var index, versions,
+        _this = this;
+      versions = _.clone(this.get('versions'));
+      index = _.indexOf(versions, version);
+      if (index < 0) {
+        versions.push(version);
+        versions.sort(function(a, b) {
+          return _this.versionSorter(a, b);
+        });
+        index = _.indexOf(versions, version);
+      }
+      return versions.slice(index + 1);
+    }
+  });
 
 }).call(this);
 
@@ -134,19 +237,25 @@
   $body = Ember.$('body');
 
   App.ApplicationController = Ember.Controller.extend(Ember.Evented, {
+    needs: 'settings',
     init: function() {
-      var baseFontSize;
+      var _this = this;
       this._super();
-      baseFontSize = App.settings.getValue('baseFontSize', 16);
-      this.send('updateBaseFontSize', baseFontSize);
-      this.set('fullscreen', true);
-      return $body.addClass('fullscreen');
+      this.updateBaseFontSize();
+      return Ember.run.later(function() {
+        return _this.set('fullscreen', true);
+      });
     },
     handleFullscreen: (function() {
       var action;
       action = this.get('fullscreen') ? 'addClass' : 'removeClass';
       return Ember.$('body')[action]('fullscreen');
     }).observes('fullscreen'),
+    updateBaseFontSize: (function() {
+      var baseFontSize;
+      baseFontSize = this.get('controllers.settings.baseFontSize');
+      return $body.css('font-size', "" + baseFontSize + "px");
+    }).observes('controllers.settings.baseFontSize'),
     actions: {
       showBanner: function(message, type) {
         return this.set('banner', {
@@ -166,9 +275,55 @@
       closeSettings: function() {
         this.set('settingsOpen', false);
         return this.trigger('settingsUpdated');
-      },
-      updateBaseFontSize: function(baseFontSize) {
-        return $body.css('font-size', "" + baseFontSize + "px");
+      }
+    }
+  });
+
+}).call(this);
+
+(function() {
+  App.IterationController = Ember.ObjectController.extend({
+    needs: 'settings',
+    hasStories: Ember.computed.gt('filteredStories.length', 0),
+    sttgCtrl: Ember.computed.alias('controllers.settings'),
+    filteredStories: (function() {
+      var cutoff, numAcceptedStories, showAcceptedType, showAcceptedValue, stories,
+        _this = this;
+      stories = this.get('stories');
+      showAcceptedType = this.get('sttgCtrl.showAcceptedType');
+      showAcceptedValue = this.get('sttgCtrl.showAcceptedValue');
+      cutoff = showAcceptedType === 'count' ? (numAcceptedStories = (_.filter(stories, function(story) {
+        return _this.storyIsAccepted(story);
+      })).length, cutoff = numAcceptedStories - showAcceptedValue, cutoff >= 0 ? cutoff : 0) : moment().startOf('day').subtract('days', showAcceptedValue).unix();
+      return _.filter(stories, function(story, index) {
+        var value;
+        if (_this.storyIsAccepted(story)) {
+          value = showAcceptedType === 'count' ? index : moment(story.accepted_at).startOf('day').unix();
+          return value >= cutoff;
+        } else {
+          return true;
+        }
+      });
+    }).property('stories', 'sttgCtrl.showAcceptedType', 'sttgCtrl.showAcceptedValue'),
+    storyIsAccepted: function(story) {
+      return story.current_state === 'accepted';
+    },
+    actions: {
+      toggleExpansion: function() {
+        this.toggleProperty('expanded');
+      }
+    }
+  });
+
+}).call(this);
+
+(function() {
+  App.IterationsController = Ember.ArrayController.extend({
+    actions: {
+      toggleIterations: function(expand) {
+        return _.each(this.get('model'), function(iteration) {
+          return iteration.set('expanded', expand);
+        });
       }
     }
   });
@@ -199,22 +354,16 @@
 
 (function() {
   App.ProjectController = Ember.ObjectController.extend({
+    needs: 'iterations',
     actions: {
       didSelectProject: function(project) {
         return this.transitionToRoute('project', project.get('id'));
       },
       expandAllIterations: function() {
-        return _.each(this.get('iterations'), function(iteration) {
-          return iteration.set('expanded', true);
-        });
+        return this.get('controllers.iterations').send('toggleIterations', true);
       },
       collapseAllIterations: function() {
-        return _.each(this.get('iterations'), function(iteration) {
-          return iteration.set('expanded', false);
-        });
-      },
-      toggleExpansion: function(iteration) {
-        iteration.toggleProperty('expanded');
+        return this.get('controllers.iterations').send('toggleIterations', false);
       }
     }
   });
@@ -225,27 +374,62 @@
   App.SettingsController = Ember.Controller.extend({
     needs: 'application',
     init: function() {
-      var baseFontSize, inProgressMax;
+      var baseFontSize, inProgressMax, showAcceptedType, showAcceptedValue;
       this._super();
       baseFontSize = App.settings.getValue('baseFontSize', 16);
       this.set('baseFontSize', baseFontSize);
-      this.get('controllers.application').send('updateBaseFontSize', baseFontSize);
       inProgressMax = App.settings.getValue('inProgressMax', 5);
-      return this.set('inProgressMax', inProgressMax);
+      this.set('inProgressMax', inProgressMax);
+      showAcceptedType = App.settings.getValue('showAcceptedType', 'count');
+      this.set('showAcceptedType', showAcceptedType);
+      showAcceptedValue = App.settings.getValue('showAcceptedValue', 2);
+      return this.set('showAcceptedValue', showAcceptedValue);
     },
-    updateBaseFontSize: (function() {
-      return this.get('controllers.application').send('updateBaseFontSize', this.get('baseFontSize'));
-    }).observes('baseFontSize'),
+    showAcceptedTypes: ['count', 'age'],
+    showAcceptedPrefix: (function() {
+      switch (this.get('showAcceptedType')) {
+        case 'count':
+          return 'Show up to';
+        case 'age':
+          return 'Show accepted stories up to';
+      }
+    }).property('showAcceptedType'),
+    showAcceptedSuffix: (function() {
+      var inflectedDay, inflectedStory;
+      if (this.get('showAcceptedValue') === 1) {
+        inflectedStory = 'story';
+        inflectedDay = 'day';
+      } else {
+        inflectedStory = 'stories';
+        inflectedDay = 'days';
+      }
+      switch (this.get('showAcceptedType')) {
+        case 'count':
+          return "accepted " + inflectedStory;
+        case 'age':
+          return "" + inflectedDay + " old";
+      }
+    }).property('showAcceptedType', 'showAcceptedValue'),
     actions: {
       saveSettings: function() {
-        var applicationController, baseFontSize;
+        var applicationController;
         App.settings.updateNumber('inProgressMax', this.get('inProgressMax'), 5);
-        baseFontSize = App.settings.updateNumber('baseFontSize', this.get('baseFontSize'), 16);
+        App.settings.updateNumber('baseFontSize', this.get('baseFontSize'), 16);
+        App.settings.updateString('showAcceptedType', this.get('showAcceptedType'), 'count');
+        App.settings.updateNumber('showAcceptedValue', this.get('showAcceptedValue'), 2);
         applicationController = this.get('controllers.application');
-        applicationController.send('updateBaseFontSize', baseFontSize);
         return applicationController.send('closeSettings');
       }
     }
+  });
+
+}).call(this);
+
+(function() {
+  App.IterationView = Ember.View.extend({
+    tagName: 'article',
+    classNames: ['iteration'],
+    classNameBindings: ['controller.expanded']
   });
 
 }).call(this);
@@ -345,6 +529,15 @@
 }).call(this);
 
 (function() {
+  App.ApplicationRoute = Ember.Route.extend({
+    beforeModel: function() {
+      return App.migrator.runMigrations();
+    }
+  });
+
+}).call(this);
+
+(function() {
   App.Route = Ember.Route.extend({
     beforeModel: function(transition) {
       if (!App.pivotal.isAuthenticated()) {
@@ -366,53 +559,28 @@
 }).call(this);
 
 (function() {
-  App.LoginRoute = App.Route.extend({
-    setupController: function(controller) {
-      return controller.reset();
-    }
-  });
-
-}).call(this);
-
-(function() {
   var inProgressStoryTypes;
 
   inProgressStoryTypes = ['started', 'finished', 'delivered', 'rejected'];
 
-  App.ProjectRoute = App.Route.extend({
-    model: function(params) {
-      return App.pivotal.getProject(params.project_id);
+  App.IterationsRoute = App.Route.extend({
+    model: function() {
+      return App.pivotal.getIterations(this.modelFor('project').id);
     },
     setupController: function(controller, model) {
-      var projectId,
+      var projectId, stories,
         _this = this;
       controller.set('model', model);
-      projectId = model.id;
-      localStorage.projectId = JSON.stringify(projectId);
-      App.pivotal.getProjects().then(function(projects) {
-        return controller.set('projects', _.map(projects, function(project) {
-          return Ember.Object.create(project);
-        }));
-      });
-      this.getIterations(controller, projectId);
-      return this.listener = App.pivotal.listenForProjectUpdates(projectId).then(function() {
-        return _this.getIterations(controller, projectId);
-      });
-    },
-    getIterations: function(controller, projectId) {
-      var _this = this;
-      return App.pivotal.getIterations(projectId).then(function(iterations) {
-        return controller.set('iterations', _.map(iterations, function(iteration, index) {
-          iteration.expanded = true;
-          iteration.hasStories = iteration.stories.length > 0;
-          if (index === 0 && iteration.hasStories) {
-            _this.checkInProgressStories(iteration.stories);
-            _this.controllerFor('application').on('settingsUpdated', function() {
-              return _this.checkInProgressStories(iteration.stories);
-            });
-          }
-          return Ember.Object.create(iteration);
-        }));
+      if (model.get('length')) {
+        stories = model.get('firstObject.stories');
+        this.checkInProgressStories(stories);
+        this.controllerFor('application').on('settingsUpdated', function() {
+          return _this.checkInProgressStories(stories);
+        });
+      }
+      projectId = this.modelFor('project').id;
+      return App.pivotal.listenForProjectUpdates(projectId).then(function() {
+        return _this.transitionTo('project', projectId);
       });
     },
     checkInProgressStories: function(stories) {
@@ -433,6 +601,35 @@
       appController = this.controllerFor('application');
       appController.send('hideBanner');
       return appController.off('settingsUpdated');
+    }
+  });
+
+}).call(this);
+
+(function() {
+  App.LoginRoute = App.Route.extend({
+    setupController: function(controller) {
+      return controller.reset();
+    }
+  });
+
+}).call(this);
+
+(function() {
+  App.ProjectRoute = App.Route.extend({
+    model: function(params) {
+      return App.pivotal.getProject(params.project_id);
+    },
+    setupController: function(controller, model) {
+      var _this = this;
+      controller.set('model', model);
+      localStorage.projectId = JSON.stringify(model.id);
+      return App.pivotal.getProjects().then(function(projects) {
+        controller.set('projects', _.map(projects, function(project) {
+          return Ember.Object.create(project);
+        }));
+        return _this.transitionTo('iterations');
+      });
     }
   });
 
@@ -460,6 +657,8 @@
     this.resource('projects');
     return this.resource('project', {
       path: 'projects/:project_id'
+    }, function() {
+      return this.resource('iterations');
     });
   });
 

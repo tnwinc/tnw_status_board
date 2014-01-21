@@ -13,4 +13,11 @@ Settings = Ember.Object.extend
     localStorage[key] = JSON.stringify value
     value
 
+  updateString: (key, value, defaultValue)->
+    value = value.toString()
+    if $.trim(value) is ''
+      value = defaultValue
+    localStorage[key] = JSON.stringify value
+    value
+
 App.settings = Settings.create()

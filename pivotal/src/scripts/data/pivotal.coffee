@@ -28,13 +28,14 @@ Pivotal = Ember.Object.extend
   getIterations: (projectId)->
     @queryPivotal("projects/#{projectId}/iterations", scope: 'current_backlog').then (iterations)->
       _.map iterations, (iteration)->
-        start: new Date(iteration.start)
-        finish: new Date(iteration.finish)
-        stories: _.map iteration.stories, (story)->
-          curatedStory = _.pick story, 'id', 'name', 'current_state', 'story_type', 'estimate'
-          curatedStory.labels = _.map story.labels, (label)->
-            _.pick label, 'id', 'name'
-          curatedStory
+        Ember.Object.create
+          start: new Date(iteration.start)
+          finish: new Date(iteration.finish)
+          expanded: true
+          stories: _.map iteration.stories, (story)->
+            curatedStory = _.pick story, 'id', 'name', 'current_state', 'story_type', 'estimate', 'accepted_at'
+            curatedStory.labels = _.pluck story.labels, 'name'
+            curatedStory
 
   listenForProjectUpdates: (projectId)->
     clearInterval project_data.interval if project_data? and project_data.projectId isnt projectId
