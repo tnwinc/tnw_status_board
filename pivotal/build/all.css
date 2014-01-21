@@ -69,13 +69,13 @@ legend {
 }
 
 /* line 3, ../src/stylesheets/_base.scss */
-.clearfix:before, .settings fieldset:before, .login-container form:before, .projects-container ul:before, .project-container > header:before, .clearfix:after, .settings fieldset:after, .login-container form:after, .projects-container ul:after, .project-container > header:after {
+.clearfix:before, .settings fieldset:before, .login-container form:before, .projects-container ul:before, .project:before, .clearfix:after, .settings fieldset:after, .login-container form:after, .projects-container ul:after, .project:after {
   content: "";
   display: table;
 }
 
 /* line 4, ../src/stylesheets/_base.scss */
-.clearfix:after, .settings fieldset:after, .login-container form:after, .projects-container ul:after, .project-container > header:after {
+.clearfix:after, .settings fieldset:after, .login-container form:after, .projects-container ul:after, .project:after {
   clear: both;
 }
 
@@ -275,7 +275,7 @@ a.toggle-fullscreen:hover, a.toggle-fullscreen:focus {
 }
 
 /* line 80, ../src/stylesheets/_application.scss */
-.fullscreen .project-container > header,
+.fullscreen .project,
 .fullscreen a.open-settings {
   display: none;
 }
@@ -390,22 +390,22 @@ a.toggle-fullscreen:hover, a.toggle-fullscreen:focus {
 }
 
 /* line 41, ../src/stylesheets/_projects.scss */
-.project-container > header {
+.project {
   background: #5283af;
   padding: 10px;
 }
 /* line 46, ../src/stylesheets/_projects.scss */
-.project-container > header .expando-all {
+.project .expando-all {
   float: left;
   margin: 0;
 }
 /* line 50, ../src/stylesheets/_projects.scss */
-.project-container > header .expando-all li {
+.project .expando-all li {
   float: left;
   margin-left: 10px;
 }
 /* line 54, ../src/stylesheets/_projects.scss */
-.project-container > header .expando-all li a {
+.project .expando-all li a {
   background: #333;
   border-radius: 3px;
   color: #FFF;
@@ -416,7 +416,7 @@ a.toggle-fullscreen:hover, a.toggle-fullscreen:focus {
   text-align: center;
 }
 /* line 65, ../src/stylesheets/_projects.scss */
-.project-container > header .expando-all li a:hover, .project-container > header .expando-all li a:focus {
+.project .expando-all li a:hover, .project .expando-all li a:focus {
   background: #1a1a1a;
 }
 

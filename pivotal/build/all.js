@@ -35,16 +35,17 @@
         scope: 'current_backlog'
       }).then(function(iterations) {
         return _.map(iterations, function(iteration) {
-          return {
+          return Ember.Object.create({
             start: new Date(iteration.start),
             finish: new Date(iteration.finish),
+            expanded: true,
             stories: _.map(iteration.stories, function(story) {
               var curatedStory;
               curatedStory = _.pick(story, 'id', 'name', 'current_state', 'story_type', 'estimate');
               curatedStory.labels = _.pluck(story.labels, 'name');
               return curatedStory;
             })
-          };
+          });
         });
       });
     },
@@ -138,6 +139,31 @@
 }).call(this);
 
 (function() {
+  App.IterationController = Ember.ObjectController.extend({
+    hasStories: Ember.computed.gt('stories.length', 0),
+    actions: {
+      toggleExpansion: function() {
+        this.toggleProperty('expanded');
+      }
+    }
+  });
+
+}).call(this);
+
+(function() {
+  App.IterationsController = Ember.ArrayController.extend({
+    actions: {
+      toggleIterations: function(expand) {
+        return _.each(this.get('model'), function(iteration) {
+          return iteration.set('expanded', expand);
+        });
+      }
+    }
+  });
+
+}).call(this);
+
+(function() {
   App.LoginController = Ember.Controller.extend({
     reset: function() {
       return this.set('token', '');
@@ -161,22 +187,16 @@
 
 (function() {
   App.ProjectController = Ember.ObjectController.extend({
+    needs: 'iterations',
     actions: {
       didSelectProject: function(project) {
         return this.transitionToRoute('project', project.get('id'));
       },
       expandAllIterations: function() {
-        return _.each(this.get('iterations'), function(iteration) {
-          return iteration.set('expanded', true);
-        });
+        return this.get('controllers.iterations').send('toggleIterations', true);
       },
       collapseAllIterations: function() {
-        return _.each(this.get('iterations'), function(iteration) {
-          return iteration.set('expanded', false);
-        });
-      },
-      toggleExpansion: function(iteration) {
-        iteration.toggleProperty('expanded');
+        return this.get('controllers.iterations').send('toggleIterations', false);
       }
     }
   });
@@ -208,6 +228,15 @@
         return applicationController.send('closeSettings');
       }
     }
+  });
+
+}).call(this);
+
+(function() {
+  App.IterationView = Ember.View.extend({
+    tagName: 'article',
+    classNames: ['iteration'],
+    classNameBindings: ['controller.expanded']
   });
 
 }).call(this);
@@ -328,47 +357,25 @@
 }).call(this);
 
 (function() {
-  App.LoginRoute = App.Route.extend({
-    setupController: function(controller) {
-      return controller.reset();
-    }
-  });
-
-}).call(this);
-
-(function() {
   var inProgressStoryTypes;
 
   inProgressStoryTypes = ['started', 'finished', 'delivered', 'rejected'];
 
-  App.ProjectRoute = App.Route.extend({
-    model: function(params) {
-      return App.pivotal.getProject(params.project_id);
+  App.IterationsRoute = App.Route.extend({
+    model: function() {
+      return App.pivotal.getIterations(this.modelFor('project').id);
     },
     setupController: function(controller, model) {
-      var projectId,
+      var stories,
         _this = this;
       controller.set('model', model);
-      projectId = model.id;
-      localStorage.projectId = JSON.stringify(projectId);
-      App.pivotal.getProjects().then(function(projects) {
-        return controller.set('projects', _.map(projects, function(project) {
-          return Ember.Object.create(project);
-        }));
-      });
-      return App.pivotal.getIterations(projectId).then(function(iterations) {
-        return controller.set('iterations', _.map(iterations, function(iteration, index) {
-          iteration.expanded = true;
-          iteration.hasStories = iteration.stories.length > 0;
-          if (index === 0 && iteration.hasStories) {
-            _this.checkInProgressStories(iteration.stories);
-            _this.controllerFor('application').on('settingsUpdated', function() {
-              return _this.checkInProgressStories(iteration.stories);
-            });
-          }
-          return Ember.Object.create(iteration);
-        }));
-      });
+      if (model.get('length')) {
+        stories = model.get('firstObject.stories');
+        this.checkInProgressStories(stories);
+        return this.controllerFor('application').on('settingsUpdated', function() {
+          return _this.checkInProgressStories(stories);
+        });
+      }
     },
     checkInProgressStories: function(stories) {
       var appController, inProgressMax, storiesInProgress;
@@ -388,6 +395,35 @@
       appController = this.controllerFor('application');
       appController.send('hideBanner');
       return appController.off('settingsUpdated');
+    }
+  });
+
+}).call(this);
+
+(function() {
+  App.LoginRoute = App.Route.extend({
+    setupController: function(controller) {
+      return controller.reset();
+    }
+  });
+
+}).call(this);
+
+(function() {
+  App.ProjectRoute = App.Route.extend({
+    model: function(params) {
+      return App.pivotal.getProject(params.project_id);
+    },
+    setupController: function(controller, model) {
+      var _this = this;
+      controller.set('model', model);
+      localStorage.projectId = JSON.stringify(model.id);
+      return App.pivotal.getProjects().then(function(projects) {
+        controller.set('projects', _.map(projects, function(project) {
+          return Ember.Object.create(project);
+        }));
+        return _this.transitionTo('iterations');
+      });
     }
   });
 
@@ -415,6 +451,8 @@
     this.resource('projects');
     return this.resource('project', {
       path: 'projects/:project_id'
+    }, function() {
+      return this.resource('iterations');
     });
   });
 

@@ -1,0 +1,14 @@
+<header>
+  <h4>{{date start}} - {{date finish}}</h4>
+  {{#if hasStories}}
+    <a href="#" class="toggle-expansion" {{action 'toggleExpansion'}}>
+      {{expando_icon expanded}}
+    </a>
+  {{/if}}
+</header>
+
+<ul class="stories">
+  {{#each stories}}
+    {{partial 'story'}}
+  {{/each}}
+</ul>
