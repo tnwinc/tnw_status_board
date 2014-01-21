@@ -1,4 +1,38 @@
 (function() {
+  var Settings;
+
+  Settings = Ember.Object.extend({
+    getValue: function(key, defaultValue) {
+      var value;
+      value = localStorage[key];
+      if (!value) {
+        localStorage[key] = value = JSON.stringify(defaultValue);
+      }
+      return JSON.parse(value);
+    },
+    updateNumber: function(key, value, defaultValue) {
+      value = Number(value);
+      if (_.isNaN(value)) {
+        value = defaultValue;
+      }
+      localStorage[key] = JSON.stringify(value);
+      return value;
+    },
+    updateString: function(key, value, defaultValue) {
+      value = value.toString();
+      if ($.trim(value) === '') {
+        value = defaultValue;
+      }
+      localStorage[key] = JSON.stringify(value);
+      return value;
+    }
+  });
+
+  App.settings = Settings.create();
+
+}).call(this);
+
+(function() {
   var BASE_URL, Pivotal;
 
   BASE_URL = 'https://www.pivotaltracker.com/services/v5/';
@@ -66,36 +100,101 @@
 }).call(this);
 
 (function() {
-  var Settings;
-
-  Settings = Ember.Object.extend({
-    getValue: function(key, defaultValue) {
-      var value;
-      value = localStorage[key];
-      if (!value) {
-        localStorage[key] = value = JSON.stringify(defaultValue);
-      }
-      return JSON.parse(value);
+  App.VersionAssistant = Ember.Object.extend({
+    init: function() {
+      return this.sortMigrations();
     },
-    updateNumber: function(key, value, defaultValue) {
-      value = Number(value);
-      if (_.isNaN(value)) {
-        value = defaultValue;
-      }
-      localStorage[key] = JSON.stringify(value);
-      return value;
+    sortMigrations: function() {
+      var _this = this;
+      return this.get('versions').sort(function(a, b) {
+        return _this.versionSorter(a, b);
+      });
     },
-    updateString: function(key, value, defaultValue) {
-      value = value.toString();
-      if ($.trim(value) === '') {
-        value = defaultValue;
+    versionSorter: function(a, b) {
+      var aMajor, aMinor, aPatch, bMajor, bMinor, bPatch, _ref, _ref1;
+      _ref = this.convertToVersionArray(a), aMajor = _ref[0], aMinor = _ref[1], aPatch = _ref[2];
+      _ref1 = this.convertToVersionArray(b), bMajor = _ref1[0], bMinor = _ref1[1], bPatch = _ref1[2];
+      if (aMajor !== bMajor) {
+        return aMajor - bMajor;
       }
-      localStorage[key] = JSON.stringify(value);
-      return value;
+      if (aMinor !== bMinor) {
+        return aMinor - bMinor;
+      }
+      if (aPatch !== bPatch) {
+        return aPatch - bPatch;
+      }
+      return 0;
+    },
+    convertToVersionArray: function(version) {
+      return _.map(version.split('.'), function(numString) {
+        return Number(numString);
+      });
+    },
+    versionsSince: function(version) {
+      var index, versions,
+        _this = this;
+      versions = _.clone(this.get('versions'));
+      index = _.indexOf(versions, version);
+      if (index < 0) {
+        versions.push(version);
+        versions.sort(function(a, b) {
+          return _this.versionSorter(a, b);
+        });
+        index = _.indexOf(versions, version);
+      }
+      return versions.slice(index + 1);
     }
   });
 
-  App.settings = Settings.create();
+}).call(this);
+
+(function() {
+  var Migrator;
+
+  Migrator = Ember.Object.extend({
+    init: function() {
+      return this.migrations = {};
+    },
+    registerMigration: function(version, migration) {
+      return this.migrations[version] = migration;
+    },
+    runMigrations: function() {
+      var _this = this;
+      return new Ember.RSVP.Promise(function(resolve) {
+        var lsVersion, operations, version, versionAssistant, versions;
+        lsVersion = localStorage.appVersion;
+        version = lsVersion ? JSON.parse(lsVersion) : '0.0.0';
+        if (!_.isString(version)) {
+          version = '0.0.0';
+        }
+        if (version === App.VERSION) {
+          return resolve();
+        }
+        versionAssistant = App.VersionAssistant.create({
+          versions: _.keys(_this.migrations)
+        });
+        versions = versionAssistant.versionsSince(version);
+        operations = (function() {
+          var _i, _len, _results;
+          _results = [];
+          for (_i = 0, _len = versions.length; _i < _len; _i++) {
+            version = versions[_i];
+            _results.push(this.migrations[version]());
+          }
+          return _results;
+        }).call(_this);
+        operations.push(function() {
+          localStorage.appVersion = App.VERSION;
+          return Ember.RSVP.resolve();
+        });
+        return Ember.RSVP.all(operations).then(function() {
+          return resolve();
+        });
+      });
+    }
+  });
+
+  App.migrator = Migrator.create();
 
 }).call(this);
 
@@ -383,6 +482,15 @@
     if (state) {
       el = "<span class=\"state-meter\"></span>\n<span class=\"state\">" + state + "</span>";
       return new Ember.Handlebars.SafeString(el);
+    }
+  });
+
+}).call(this);
+
+(function() {
+  App.ApplicationRoute = Ember.Route.extend({
+    beforeModel: function() {
+      return App.migrator.runMigrations();
     }
   });
 
