@@ -30,7 +30,7 @@ Pivotal = Ember.Object.extend
           finish: new Date(iteration.finish)
           expanded: true
           stories: _.map iteration.stories, (story)->
-            curatedStory = _.pick story, 'id', 'name', 'current_state', 'story_type', 'estimate'
+            curatedStory = _.pick story, 'id', 'name', 'current_state', 'story_type', 'estimate', 'accepted_at'
             curatedStory.labels = _.pluck story.labels, 'name'
             curatedStory
 

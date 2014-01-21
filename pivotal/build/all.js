@@ -41,7 +41,7 @@
             expanded: true,
             stories: _.map(iteration.stories, function(story) {
               var curatedStory;
-              curatedStory = _.pick(story, 'id', 'name', 'current_state', 'story_type', 'estimate');
+              curatedStory = _.pick(story, 'id', 'name', 'current_state', 'story_type', 'estimate', 'accepted_at');
               curatedStory.labels = _.pluck(story.labels, 'name');
               return curatedStory;
             })
@@ -84,6 +84,14 @@
       }
       localStorage[key] = JSON.stringify(value);
       return value;
+    },
+    updateString: function(key, value, defaultValue) {
+      value = value.toString();
+      if ($.trim(value) === '') {
+        value = defaultValue;
+      }
+      localStorage[key] = JSON.stringify(value);
+      return value;
     }
   });
 
@@ -97,19 +105,25 @@
   $body = Ember.$('body');
 
   App.ApplicationController = Ember.Controller.extend(Ember.Evented, {
+    needs: 'settings',
     init: function() {
-      var baseFontSize;
+      var _this = this;
       this._super();
-      baseFontSize = App.settings.getValue('baseFontSize', 16);
-      this.send('updateBaseFontSize', baseFontSize);
-      this.set('fullscreen', true);
-      return $body.addClass('fullscreen');
+      this.updateBaseFontSize();
+      return Ember.run.later(function() {
+        return _this.set('fullscreen', true);
+      });
     },
     handleFullscreen: (function() {
       var action;
       action = this.get('fullscreen') ? 'addClass' : 'removeClass';
       return Ember.$('body')[action]('fullscreen');
     }).observes('fullscreen'),
+    updateBaseFontSize: (function() {
+      var baseFontSize;
+      baseFontSize = this.get('controllers.settings.baseFontSize');
+      return $body.css('font-size', "" + baseFontSize + "px");
+    }).observes('controllers.settings.baseFontSize'),
     actions: {
       showBanner: function(message, type) {
         return this.set('banner', {
@@ -129,9 +143,6 @@
       closeSettings: function() {
         this.set('settingsOpen', false);
         return this.trigger('settingsUpdated');
-      },
-      updateBaseFontSize: function(baseFontSize) {
-        return $body.css('font-size', "" + baseFontSize + "px");
       }
     }
   });
@@ -140,7 +151,31 @@
 
 (function() {
   App.IterationController = Ember.ObjectController.extend({
-    hasStories: Ember.computed.gt('stories.length', 0),
+    needs: 'settings',
+    hasStories: Ember.computed.gt('filteredStories.length', 0),
+    sttgCtrl: Ember.computed.alias('controllers.settings'),
+    filteredStories: (function() {
+      var cutoff, numAcceptedStories, showAcceptedType, showAcceptedValue, stories,
+        _this = this;
+      stories = this.get('stories');
+      showAcceptedType = this.get('sttgCtrl.showAcceptedType');
+      showAcceptedValue = this.get('sttgCtrl.showAcceptedValue');
+      cutoff = showAcceptedType === 'number' ? (numAcceptedStories = (_.filter(stories, function(story) {
+        return _this.storyIsAccepted(story);
+      })).length, cutoff = numAcceptedStories - showAcceptedValue, cutoff >= 0 ? cutoff : 0) : moment().startOf('day').subtract('days', showAcceptedValue).unix();
+      return _.filter(stories, function(story, index) {
+        var value;
+        if (_this.storyIsAccepted(story)) {
+          value = showAcceptedType === 'number' ? index : moment(story.accepted_at).startOf('day').unix();
+          return value >= cutoff;
+        } else {
+          return true;
+        }
+      });
+    }).property('stories', 'sttgCtrl.showAcceptedType', 'sttgCtrl.showAcceptedValue'),
+    storyIsAccepted: function(story) {
+      return story.current_state === 'accepted';
+    },
     actions: {
       toggleExpansion: function() {
         this.toggleProperty('expanded');
@@ -207,24 +242,42 @@
   App.SettingsController = Ember.Controller.extend({
     needs: 'application',
     init: function() {
-      var baseFontSize, inProgressMax;
+      var baseFontSize, inProgressMax, showAcceptedType, showAcceptedValue;
       this._super();
       baseFontSize = App.settings.getValue('baseFontSize', 16);
       this.set('baseFontSize', baseFontSize);
-      this.get('controllers.application').send('updateBaseFontSize', baseFontSize);
       inProgressMax = App.settings.getValue('inProgressMax', 5);
-      return this.set('inProgressMax', inProgressMax);
+      this.set('inProgressMax', inProgressMax);
+      showAcceptedType = App.settings.getValue('showAcceptedType', 'number');
+      this.set('showAcceptedType', showAcceptedType);
+      showAcceptedValue = App.settings.getValue('showAcceptedValue', 2);
+      return this.set('showAcceptedValue', showAcceptedValue);
     },
-    updateBaseFontSize: (function() {
-      return this.get('controllers.application').send('updateBaseFontSize', this.get('baseFontSize'));
-    }).observes('baseFontSize'),
+    showAcceptedTypes: ['number', 'date'],
+    showAcceptedPrefix: (function() {
+      switch (this.get('showAcceptedType')) {
+        case 'number':
+          return 'Show up to';
+        case 'date':
+          return 'Show accepted stories up to';
+      }
+    }).property('showAcceptedType'),
+    showAcceptedSuffix: (function() {
+      switch (this.get('showAcceptedType')) {
+        case 'number':
+          return 'accepted stories';
+        case 'date':
+          return 'days old';
+      }
+    }).property('showAcceptedType'),
     actions: {
       saveSettings: function() {
-        var applicationController, baseFontSize;
+        var applicationController;
         App.settings.updateNumber('inProgressMax', this.get('inProgressMax'), 5);
-        baseFontSize = App.settings.updateNumber('baseFontSize', this.get('baseFontSize'), 16);
+        App.settings.updateNumber('baseFontSize', this.get('baseFontSize'), 16);
+        App.settings.updateString('showAcceptedType', this.get('showAcceptedType'), 'number');
+        App.settings.updateNumber('showAcceptedValue', this.get('showAcceptedValue'), 2);
         applicationController = this.get('controllers.application');
-        applicationController.send('updateBaseFontSize', baseFontSize);
         return applicationController.send('closeSettings');
       }
     }

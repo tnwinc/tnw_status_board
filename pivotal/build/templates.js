@@ -229,7 +229,7 @@ function program3(depth0,data) {
   data.buffer.push("\n</header>\n\n<ul class=\"stories\">\n  ");
   hashTypes = {};
   hashContexts = {};
-  stack2 = helpers.each.call(depth0, "stories", {hash:{},inverse:self.noop,fn:self.program(3, program3, data),contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data});
+  stack2 = helpers.each.call(depth0, "filteredStories", {hash:{},inverse:self.noop,fn:self.program(3, program3, data),contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data});
   if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
   data.buffer.push("\n</ul>\n");
   return buffer;
@@ -366,25 +366,53 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "saveSettings", {hash:{
     'on': ("submit")
   },contexts:[depth0],types:["STRING"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
-  data.buffer.push(">\n  <fieldset>\n    <label for=\"in-progress-max\">Max. stories in progress before warning</label>\n    ");
-  hashContexts = {'value': depth0,'for': depth0,'type': depth0};
-  hashTypes = {'value': "ID",'for': "STRING",'type': "STRING"};
+  data.buffer.push(">\n  <fieldset>\n    <label for=\"in-progress-max\">Max. stories in progress before warning:</label>\n    ");
+  hashContexts = {'value': depth0,'for': depth0,'type': depth0,'min': depth0};
+  hashTypes = {'value': "ID",'for': "STRING",'type': "STRING",'min': "STRING"};
   options = {hash:{
     'value': ("inProgressMax"),
     'for': ("in-progress-max"),
-    'type': ("number")
+    'type': ("number"),
+    'min': ("0")
   },contexts:[],types:[],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
   data.buffer.push(escapeExpression(((stack1 = helpers.input || (depth0 && depth0.input)),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "input", options))));
-  data.buffer.push("\n  </fieldset>\n\n  <fieldset>\n    <label for=\"base-font-size\">Base font size</label>\n    ");
-  hashContexts = {'value': depth0,'for': depth0,'type': depth0};
-  hashTypes = {'value': "ID",'for': "STRING",'type': "STRING"};
+  data.buffer.push("\n  </fieldset>\n\n  <fieldset>\n    <label for=\"base-font-size\">Base font size:</label>\n    ");
+  hashContexts = {'value': depth0,'for': depth0,'type': depth0,'min': depth0};
+  hashTypes = {'value': "ID",'for': "STRING",'type': "STRING",'min': "STRING"};
   options = {hash:{
     'value': ("baseFontSize"),
     'for': ("base-font-size"),
-    'type': ("number")
+    'type': ("number"),
+    'min': ("10")
   },contexts:[],types:[],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
   data.buffer.push(escapeExpression(((stack1 = helpers.input || (depth0 && depth0.input)),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "input", options))));
-  data.buffer.push(" px\n  </fieldset>\n\n  <button type=\"submit\">Save</button>\n</form>\n");
+  data.buffer.push("\n    <span class=\"suffix\">px</span>\n  </fieldset>\n\n  <fieldset>\n    <label for=\"show-accepted-type\">Show accepted stories by</label>\n    ");
+  hashContexts = {'content': depth0,'value': depth0,'for': depth0};
+  hashTypes = {'content': "ID",'value': "ID",'for': "STRING"};
+  data.buffer.push(escapeExpression(helpers.view.call(depth0, "Ember.Select", {hash:{
+    'content': ("showAcceptedTypes"),
+    'value': ("showAcceptedType"),
+    'for': ("show-accepted-type")
+  },contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
+  data.buffer.push("\n  </fieldset>\n\n  <fieldset>\n    <label for=\"show-accepted-value\">");
+  hashTypes = {};
+  hashContexts = {};
+  data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "showAcceptedPrefix", {hash:{},contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
+  data.buffer.push("</label>\n    ");
+  hashContexts = {'value': depth0,'for': depth0,'type': depth0,'min': depth0};
+  hashTypes = {'value': "ID",'for': "STRING",'type': "STRING",'min': "STRING"};
+  options = {hash:{
+    'value': ("showAcceptedValue"),
+    'for': ("show-accepted-value"),
+    'type': ("number"),
+    'min': ("0")
+  },contexts:[],types:[],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
+  data.buffer.push(escapeExpression(((stack1 = helpers.input || (depth0 && depth0.input)),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "input", options))));
+  data.buffer.push("\n    <span class=\"suffix\">");
+  hashTypes = {};
+  hashContexts = {};
+  data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "showAcceptedSuffix", {hash:{},contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
+  data.buffer.push("</span>\n  </fieldset>\n\n  <button type=\"submit\">Save</button>\n</form>\n");
   return buffer;
   
 });

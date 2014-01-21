@@ -305,10 +305,14 @@ a.toggle-fullscreen:hover, a.toggle-fullscreen:focus {
   text-align: right;
 }
 /* line 25, ../src/stylesheets/_settings.scss */
+.settings .suffix {
+  color: #757575;
+}
+/* line 29, ../src/stylesheets/_settings.scss */
 .settings input {
   width: 3em;
 }
-/* line 29, ../src/stylesheets/_settings.scss */
+/* line 33, ../src/stylesheets/_settings.scss */
 .settings button {
   float: right;
   margin-top: 10px;
