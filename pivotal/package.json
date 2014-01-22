@@ -13,6 +13,6 @@
     "coffee-script": "*"
   },
   "scripts": {
-    "start": "gulp --require coffee-script"
+    "start": "./bin/run_parallel \"python -m SimpleHTTPServer 4567\" \"gulp --require coffee-script\""
   }
 }
