@@ -1,47 +1,34 @@
 (function() {
-  var Migrator;
+  var Settings;
 
-  Migrator = Ember.Object.extend({
-    init: function() {
-      return this.migrations = {};
+  Settings = Ember.Object.extend({
+    getValue: function(key, defaultValue) {
+      var value;
+      value = localStorage[key];
+      if (!value || value === 'undefined') {
+        localStorage[key] = value = JSON.stringify(defaultValue);
+      }
+      return JSON.parse(value);
     },
-    registerMigration: function(version, migration) {
-      return this.migrations[version] = migration;
+    updateNumber: function(key, value, defaultValue) {
+      value = Number(value);
+      if (_.isNaN(value)) {
+        value = defaultValue;
+      }
+      localStorage[key] = JSON.stringify(value);
+      return value;
     },
-    runMigrations: function() {
-      var _this = this;
-      return new Ember.RSVP.Promise(function(resolve) {
-        var operations, updateVersion, version, versionAssistant, versions;
-        version = App.settings.getValue('appVersion', '0.0.0');
-        if (version === App.VERSION) {
-          return resolve();
-        }
-        versionAssistant = App.VersionAssistant.create({
-          versions: _.keys(_this.migrations)
-        });
-        versions = versionAssistant.versionsSince(version);
-        operations = (function() {
-          var _i, _len, _results;
-          _results = [];
-          for (_i = 0, _len = versions.length; _i < _len; _i++) {
-            version = versions[_i];
-            _results.push(this.migrations[version]());
-          }
-          return _results;
-        }).call(_this);
-        updateVersion = new Ember.RSVP.Promise(function(resolve) {
-          App.settings.updateString('appVersion', App.VERSION, '0.0.0');
-          return resolve();
-        });
-        operations.push(updateVersion);
-        return Ember.RSVP.all(operations).then(function() {
-          return resolve();
-        });
-      });
+    updateString: function(key, value, defaultValue) {
+      value = value.toString();
+      if ($.trim(value) === '') {
+        value = defaultValue;
+      }
+      localStorage[key] = JSON.stringify(value);
+      return value;
     }
   });
 
-  App.migrator = Migrator.create();
+  App.settings = Settings.create();
 
 }).call(this);
 
@@ -148,40 +135,6 @@
 }).call(this);
 
 (function() {
-  var Settings;
-
-  Settings = Ember.Object.extend({
-    getValue: function(key, defaultValue) {
-      var value;
-      value = localStorage[key];
-      if (!value) {
-        localStorage[key] = value = JSON.stringify(defaultValue);
-      }
-      return JSON.parse(value);
-    },
-    updateNumber: function(key, value, defaultValue) {
-      value = Number(value);
-      if (_.isNaN(value)) {
-        value = defaultValue;
-      }
-      localStorage[key] = JSON.stringify(value);
-      return value;
-    },
-    updateString: function(key, value, defaultValue) {
-      value = value.toString();
-      if ($.trim(value) === '') {
-        value = defaultValue;
-      }
-      localStorage[key] = JSON.stringify(value);
-      return value;
-    }
-  });
-
-  App.settings = Settings.create();
-
-}).call(this);
-
-(function() {
   App.VersionAssistant = Ember.Object.extend({
     init: function() {
       return this.sortMigrations();
@@ -226,6 +179,74 @@
       }
       return versions.slice(index + 1);
     }
+  });
+
+}).call(this);
+
+(function() {
+  var Migrator;
+
+  Migrator = Ember.Object.extend({
+    init: function() {
+      return this.migrations = {};
+    },
+    registerMigration: function(version, migration) {
+      return this.migrations[version] = migration;
+    },
+    runMigrations: function() {
+      var _this = this;
+      return new Ember.RSVP.Promise(function(resolve) {
+        var operations, updateVersion, version, versionAssistant, versions;
+        version = App.settings.getValue('appVersion', '0.0.0');
+        if (version === App.VERSION) {
+          return resolve();
+        }
+        versionAssistant = App.VersionAssistant.create({
+          versions: _.keys(_this.migrations)
+        });
+        versions = versionAssistant.versionsSince(version);
+        operations = (function() {
+          var _i, _len, _results;
+          _results = [];
+          for (_i = 0, _len = versions.length; _i < _len; _i++) {
+            version = versions[_i];
+            _results.push(this.migrations[version]());
+          }
+          return _results;
+        }).call(_this);
+        updateVersion = new Ember.RSVP.Promise(function(resolve) {
+          App.settings.updateString('appVersion', App.VERSION, '0.0.0');
+          return resolve();
+        });
+        operations.push(updateVersion);
+        return Ember.RSVP.all(operations).then(function() {
+          return resolve();
+        });
+      });
+    }
+  });
+
+  App.migrator = Migrator.create();
+
+}).call(this);
+
+(function() {
+  App.migrator.registerMigration('0.1.1', function() {
+    return new Ember.RSVP.Promise(function(resolve) {
+      var conversionMap, convertedType, showAcceptedType;
+      console.log('running migration for version 0.1.1');
+      conversionMap = {
+        'number': 'count',
+        'date': 'age'
+      };
+      showAcceptedType = App.settings.getValue('showAcceptedType', 'number');
+      convertedType = conversionMap[showAcceptedType];
+      if (!convertedType) {
+        convertedType = 'count';
+      }
+      localStorage.showAcceptedType = JSON.stringify(convertedType);
+      return resolve();
+    });
   });
 
 }).call(this);

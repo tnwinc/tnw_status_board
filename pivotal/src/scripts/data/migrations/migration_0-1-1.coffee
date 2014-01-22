@@ -6,10 +6,11 @@ App.migrator.registerMigration '0.1.1', ->
     conversionMap =
       'number': 'count'
       'date': 'age'
-      'count': 'count'
-      'age': 'age'
 
     showAcceptedType = App.settings.getValue 'showAcceptedType', 'number'
-    localStorage.showAcceptedType = JSON.stringify conversionMap[showAcceptedType]
+    convertedType = conversionMap[showAcceptedType]
+    unless convertedType
+      convertedType = 'count'
+    localStorage.showAcceptedType = JSON.stringify convertedType
 
     resolve()

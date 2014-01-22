@@ -2,7 +2,7 @@ Settings = Ember.Object.extend
 
   getValue: (key, defaultValue)->
     value = localStorage[key]
-    unless value
+    if not value or value is 'undefined'
       localStorage[key] = value = JSON.stringify defaultValue
     JSON.parse value
 
