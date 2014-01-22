@@ -5,7 +5,7 @@
     getValue: function(key, defaultValue) {
       var value;
       value = localStorage[key];
-      if (!value) {
+      if (!value || value === 'undefined') {
         localStorage[key] = value = JSON.stringify(defaultValue);
       }
       return JSON.parse(value);
@@ -198,16 +198,18 @@
 (function() {
   App.migrator.registerMigration('0.1.1', function() {
     return new Ember.RSVP.Promise(function(resolve) {
-      var conversionMap, showAcceptedType;
+      var conversionMap, convertedType, showAcceptedType;
       console.log('running migration for version 0.1.1');
       conversionMap = {
         'number': 'count',
-        'date': 'age',
-        'count': 'count',
-        'age': 'age'
+        'date': 'age'
       };
       showAcceptedType = App.settings.getValue('showAcceptedType', 'number');
-      localStorage.showAcceptedType = JSON.stringify(conversionMap[showAcceptedType]);
+      convertedType = conversionMap[showAcceptedType];
+      if (!convertedType) {
+        convertedType = 'count';
+      }
+      localStorage.showAcceptedType = JSON.stringify(convertedType);
       return resolve();
     });
   });
