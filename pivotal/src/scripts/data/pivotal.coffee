@@ -48,6 +48,7 @@ Pivotal = Ember.Object.extend
         @queryPivotal("project_stale_commands/#{projectId}/#{project_data.version}").then (info) ->
           if project_data.version isnt info.project_version
             handler() for handler in project_data?.handlers or []
+          project_data.version = info.project_version
       ), PROJECT_UPDATES_POLL_INTERVAL
 
     return then: (fn)-> project_data.handlers.push fn

@@ -15,7 +15,9 @@ App.IterationsRoute = App.Route.extend
         @checkInProgressStories stories
 
     projectId = @modelFor('project').id
-    App.pivotal.listenForProjectUpdates(projectId).then => @transitionTo 'project', projectId
+    App.pivotal.listenForProjectUpdates(projectId).then => 
+      App.pivotal.getIterations(@modelFor('project').id).then (iterations)=>
+        controller.set 'content', iterations
 
   checkInProgressStories: (stories)->
     storiesInProgress = _.filter stories, (story)->

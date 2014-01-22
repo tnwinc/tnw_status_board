@@ -113,16 +113,15 @@
         project_data.version = project.version;
         return project_data.interval = setInterval((function() {
           return _this.queryPivotal("project_stale_commands/" + projectId + "/" + project_data.version).then(function(info) {
-            var handler, _i, _len, _ref, _results;
+            var handler, _i, _len, _ref;
             if (project_data.version !== info.project_version) {
               _ref = (project_data != null ? project_data.handlers : void 0) || [];
-              _results = [];
               for (_i = 0, _len = _ref.length; _i < _len; _i++) {
                 handler = _ref[_i];
-                _results.push(handler());
+                handler();
               }
-              return _results;
             }
+            return project_data.version = info.project_version;
           });
         }), PROJECT_UPDATES_POLL_INTERVAL);
       });
@@ -580,7 +579,9 @@
       }
       projectId = this.modelFor('project').id;
       return App.pivotal.listenForProjectUpdates(projectId).then(function() {
-        return _this.transitionTo('project', projectId);
+        return App.pivotal.getIterations(_this.modelFor('project').id).then(function(iterations) {
+          return controller.set('content', iterations);
+        });
       });
     },
     checkInProgressStories: function(stories) {
