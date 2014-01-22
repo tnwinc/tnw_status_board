@@ -1,4 +1,7 @@
 BASE_URL = 'https://www.pivotaltracker.com/services/v5/'
+PROJECT_UPDATES_POLL_INTERVAL = 3 * 1000
+
+project_data = undefined
 
 Pivotal = Ember.Object.extend
 
@@ -33,6 +36,24 @@ Pivotal = Ember.Object.extend
             curatedStory = _.pick story, 'id', 'name', 'current_state', 'story_type', 'estimate', 'accepted_at'
             curatedStory.labels = _.pluck story.labels, 'name'
             curatedStory
+
+  listenForProjectUpdates: (projectId)->
+    clearInterval project_data.interval if project_data? and project_data.projectId isnt projectId
+
+    project_data = projectId: projectId, handlers: []
+
+    @queryPivotal("projects/#{projectId}").then (project)=> 
+      project_data.version = project.version
+      project_data.interval = setInterval (=> 
+        @queryPivotal("project_stale_commands/#{projectId}/#{project_data.version}").then (info) ->
+          if project_data.version isnt info.project_version
+            handler() for handler in project_data?.handlers or []
+          project_data.version = info.project_version
+      ), PROJECT_UPDATES_POLL_INTERVAL
+
+    return then: (fn)-> project_data.handlers.push fn
+
+
 
   queryPivotal: (url, data)->
     $.ajax

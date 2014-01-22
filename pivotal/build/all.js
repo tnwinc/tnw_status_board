@@ -1,41 +1,58 @@
 (function() {
-  var Settings;
+  var Migrator;
 
-  Settings = Ember.Object.extend({
-    getValue: function(key, defaultValue) {
-      var value;
-      value = localStorage[key];
-      if (!value) {
-        localStorage[key] = value = JSON.stringify(defaultValue);
-      }
-      return JSON.parse(value);
+  Migrator = Ember.Object.extend({
+    init: function() {
+      return this.migrations = {};
     },
-    updateNumber: function(key, value, defaultValue) {
-      value = Number(value);
-      if (_.isNaN(value)) {
-        value = defaultValue;
-      }
-      localStorage[key] = JSON.stringify(value);
-      return value;
+    registerMigration: function(version, migration) {
+      return this.migrations[version] = migration;
     },
-    updateString: function(key, value, defaultValue) {
-      value = value.toString();
-      if ($.trim(value) === '') {
-        value = defaultValue;
-      }
-      localStorage[key] = JSON.stringify(value);
-      return value;
+    runMigrations: function() {
+      var _this = this;
+      return new Ember.RSVP.Promise(function(resolve) {
+        var operations, updateVersion, version, versionAssistant, versions;
+        version = App.settings.getValue('appVersion', '0.0.0');
+        if (version === App.VERSION) {
+          return resolve();
+        }
+        versionAssistant = App.VersionAssistant.create({
+          versions: _.keys(_this.migrations)
+        });
+        versions = versionAssistant.versionsSince(version);
+        operations = (function() {
+          var _i, _len, _results;
+          _results = [];
+          for (_i = 0, _len = versions.length; _i < _len; _i++) {
+            version = versions[_i];
+            _results.push(this.migrations[version]());
+          }
+          return _results;
+        }).call(_this);
+        updateVersion = new Ember.RSVP.Promise(function(resolve) {
+          App.settings.updateString('appVersion', App.VERSION, '0.0.0');
+          return resolve();
+        });
+        operations.push(updateVersion);
+        return Ember.RSVP.all(operations).then(function() {
+          return resolve();
+        });
+      });
     }
   });
 
-  App.settings = Settings.create();
+  App.migrator = Migrator.create();
 
 }).call(this);
 
 (function() {
-  var BASE_URL, Pivotal;
+  var BASE_URL, PROJECT_UPDATES_POLL_INTERVAL, Pivotal, project_data;
 
   BASE_URL = 'https://www.pivotaltracker.com/services/v5/';
+
+  PROJECT_UPDATES_POLL_INTERVAL = 3 * 1000;
+
+  project_data = void 0;
 
   Pivotal = Ember.Object.extend({
     init: function() {
@@ -83,6 +100,37 @@
         });
       });
     },
+    listenForProjectUpdates: function(projectId) {
+      var _this = this;
+      if ((project_data != null) && project_data.projectId !== projectId) {
+        clearInterval(project_data.interval);
+      }
+      project_data = {
+        projectId: projectId,
+        handlers: []
+      };
+      this.queryPivotal("projects/" + projectId).then(function(project) {
+        project_data.version = project.version;
+        return project_data.interval = setInterval((function() {
+          return _this.queryPivotal("project_stale_commands/" + projectId + "/" + project_data.version).then(function(info) {
+            var handler, _i, _len, _ref;
+            if (project_data.version !== info.project_version) {
+              _ref = (project_data != null ? project_data.handlers : void 0) || [];
+              for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+                handler = _ref[_i];
+                handler();
+              }
+            }
+            return project_data.version = info.project_version;
+          });
+        }), PROJECT_UPDATES_POLL_INTERVAL);
+      });
+      return {
+        then: function(fn) {
+          return project_data.handlers.push(fn);
+        }
+      };
+    },
     queryPivotal: function(url, data) {
       return $.ajax({
         type: 'GET',
@@ -96,6 +144,40 @@
   });
 
   App.pivotal = Pivotal.create();
+
+}).call(this);
+
+(function() {
+  var Settings;
+
+  Settings = Ember.Object.extend({
+    getValue: function(key, defaultValue) {
+      var value;
+      value = localStorage[key];
+      if (!value) {
+        localStorage[key] = value = JSON.stringify(defaultValue);
+      }
+      return JSON.parse(value);
+    },
+    updateNumber: function(key, value, defaultValue) {
+      value = Number(value);
+      if (_.isNaN(value)) {
+        value = defaultValue;
+      }
+      localStorage[key] = JSON.stringify(value);
+      return value;
+    },
+    updateString: function(key, value, defaultValue) {
+      value = value.toString();
+      if ($.trim(value) === '') {
+        value = defaultValue;
+      }
+      localStorage[key] = JSON.stringify(value);
+      return value;
+    }
+  });
+
+  App.settings = Settings.create();
 
 }).call(this);
 
@@ -144,72 +226,6 @@
       }
       return versions.slice(index + 1);
     }
-  });
-
-}).call(this);
-
-(function() {
-  var Migrator;
-
-  Migrator = Ember.Object.extend({
-    init: function() {
-      return this.migrations = {};
-    },
-    registerMigration: function(version, migration) {
-      return this.migrations[version] = migration;
-    },
-    runMigrations: function() {
-      var _this = this;
-      return new Ember.RSVP.Promise(function(resolve) {
-        var operations, updateVersion, version, versionAssistant, versions;
-        version = App.settings.getValue('appVersion', '0.0.0');
-        if (version === App.VERSION) {
-          return resolve();
-        }
-        versionAssistant = App.VersionAssistant.create({
-          versions: _.keys(_this.migrations)
-        });
-        versions = versionAssistant.versionsSince(version);
-        operations = (function() {
-          var _i, _len, _results;
-          _results = [];
-          for (_i = 0, _len = versions.length; _i < _len; _i++) {
-            version = versions[_i];
-            _results.push(this.migrations[version]());
-          }
-          return _results;
-        }).call(_this);
-        updateVersion = new Ember.RSVP.Promise(function(resolve) {
-          App.settings.updateString('appVersion', App.VERSION, '0.0.0');
-          return resolve();
-        });
-        operations.push(updateVersion);
-        return Ember.RSVP.all(operations).then(function() {
-          return resolve();
-        });
-      });
-    }
-  });
-
-  App.migrator = Migrator.create();
-
-}).call(this);
-
-(function() {
-  App.migrator.registerMigration('0.1.1', function() {
-    return new Ember.RSVP.Promise(function(resolve) {
-      var conversionMap, showAcceptedType;
-      console.log('running migration for version 0.1.1');
-      conversionMap = {
-        'number': 'count',
-        'date': 'age',
-        'count': 'count',
-        'age': 'age'
-      };
-      showAcceptedType = App.settings.getValue('showAcceptedType', 'number');
-      localStorage.showAcceptedType = JSON.stringify(conversionMap[showAcceptedType]);
-      return resolve();
-    });
   });
 
 }).call(this);
@@ -551,16 +567,22 @@
       return App.pivotal.getIterations(this.modelFor('project').id);
     },
     setupController: function(controller, model) {
-      var stories,
+      var projectId, stories,
         _this = this;
       controller.set('model', model);
       if (model.get('length')) {
         stories = model.get('firstObject.stories');
         this.checkInProgressStories(stories);
-        return this.controllerFor('application').on('settingsUpdated', function() {
+        this.controllerFor('application').on('settingsUpdated', function() {
           return _this.checkInProgressStories(stories);
         });
       }
+      projectId = this.modelFor('project').id;
+      return App.pivotal.listenForProjectUpdates(projectId).then(function() {
+        return App.pivotal.getIterations(_this.modelFor('project').id).then(function(iterations) {
+          return controller.set('content', iterations);
+        });
+      });
     },
     checkInProgressStories: function(stories) {
       var appController, inProgressMax, storiesInProgress;
