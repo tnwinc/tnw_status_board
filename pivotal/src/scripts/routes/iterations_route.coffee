@@ -14,10 +14,11 @@ App.IterationsRoute = App.Route.extend
       @controllerFor('application').on 'settingsUpdated', =>
         @checkInProgressStories stories
 
-    projectId = @modelFor('project').id
-    App.pivotal.listenForProjectUpdates(projectId).then => 
-      App.pivotal.getIterations(@modelFor('project').id).then (iterations)=>
-        controller.set 'content', iterations
+    projectModel = @modelFor 'project'
+    App.pivotal.listenForProjectUpdates projectModel
+    App.pivotal.on 'projectUpdated', ->
+      App.pivotal.getIterations(projectModel.id).then (iterations)->
+        controller.set 'model', iterations
 
   checkInProgressStories: (stories)->
     storiesInProgress = _.filter stories, (story)->
@@ -34,3 +35,5 @@ App.IterationsRoute = App.Route.extend
     appController = @controllerFor 'application'
     appController.send 'hideBanner'
     appController.off 'settingsUpdated'
+
+    App.pivotal.off 'projectUpdated'

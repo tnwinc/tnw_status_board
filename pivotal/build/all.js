@@ -33,15 +33,13 @@
 }).call(this);
 
 (function() {
-  var BASE_URL, PROJECT_UPDATES_POLL_INTERVAL, Pivotal, project_data;
+  var BASE_URL, PROJECT_UPDATES_POLL_INTERVAL, Pivotal;
 
   BASE_URL = 'https://www.pivotaltracker.com/services/v5/';
 
   PROJECT_UPDATES_POLL_INTERVAL = 3 * 1000;
 
-  project_data = void 0;
-
-  Pivotal = Ember.Object.extend({
+  Pivotal = Ember.Object.extend(Ember.Evented, {
     init: function() {
       var token;
       token = localStorage.apiToken;
@@ -59,13 +57,13 @@
     getProjects: function() {
       return this.queryPivotal('projects').then(function(projects) {
         return _.map(projects, function(project) {
-          return _.pick(project, 'id', 'name');
+          return _.pick(project, 'id', 'name', 'version');
         });
       });
     },
     getProject: function(id) {
       return this.queryPivotal("projects/" + id).then(function(project) {
-        return _.pick(project, 'id', 'name');
+        return _.pick(project, 'id', 'name', 'version');
       });
     },
     getIterations: function(projectId) {
@@ -87,36 +85,27 @@
         });
       });
     },
-    listenForProjectUpdates: function(projectId) {
-      var _this = this;
-      if ((project_data != null) && project_data.projectId !== projectId) {
-        clearInterval(project_data.interval);
+    listenForProjectUpdates: function(project) {
+      var queryForUpdates,
+        _this = this;
+      if (this.get('projectData.id') !== project.id) {
+        clearInterval(this.get('projectData.interval'));
       }
-      project_data = {
-        projectId: projectId,
-        handlers: []
+      queryForUpdates = function() {
+        var currentVersion;
+        currentVersion = _this.get('projectData.version');
+        return _this.queryPivotal("project_stale_commands/" + project.id + "/" + currentVersion).then(function(info) {
+          if (currentVersion !== info.project_version) {
+            _this.set('projectData.version', info.project_version);
+            return _this.trigger('projectUpdated');
+          }
+        });
       };
-      this.queryPivotal("projects/" + projectId).then(function(project) {
-        project_data.version = project.version;
-        return project_data.interval = setInterval((function() {
-          return _this.queryPivotal("project_stale_commands/" + projectId + "/" + project_data.version).then(function(info) {
-            var handler, _i, _len, _ref;
-            if (project_data.version !== info.project_version) {
-              _ref = (project_data != null ? project_data.handlers : void 0) || [];
-              for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-                handler = _ref[_i];
-                handler();
-              }
-            }
-            return project_data.version = info.project_version;
-          });
-        }), PROJECT_UPDATES_POLL_INTERVAL);
+      return this.set('projectData', {
+        id: project.id,
+        version: project.version,
+        interval: setInterval(queryForUpdates, PROJECT_UPDATES_POLL_INTERVAL)
       });
-      return {
-        then: function(fn) {
-          return project_data.handlers.push(fn);
-        }
-      };
     },
     queryPivotal: function(url, data) {
       return $.ajax({
@@ -588,7 +577,7 @@
       return App.pivotal.getIterations(this.modelFor('project').id);
     },
     setupController: function(controller, model) {
-      var projectId, stories,
+      var projectModel, stories,
         _this = this;
       controller.set('model', model);
       if (model.get('length')) {
@@ -598,10 +587,11 @@
           return _this.checkInProgressStories(stories);
         });
       }
-      projectId = this.modelFor('project').id;
-      return App.pivotal.listenForProjectUpdates(projectId).then(function() {
-        return App.pivotal.getIterations(_this.modelFor('project').id).then(function(iterations) {
-          return controller.set('content', iterations);
+      projectModel = this.modelFor('project');
+      App.pivotal.listenForProjectUpdates(projectModel);
+      return App.pivotal.on('projectUpdated', function() {
+        return App.pivotal.getIterations(projectModel.id).then(function(iterations) {
+          return controller.set('model', iterations);
         });
       });
     },
@@ -622,7 +612,8 @@
       var appController;
       appController = this.controllerFor('application');
       appController.send('hideBanner');
-      return appController.off('settingsUpdated');
+      appController.off('settingsUpdated');
+      return App.pivotal.off('projectUpdated');
     }
   });
 

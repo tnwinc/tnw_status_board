@@ -1,9 +1,7 @@
 BASE_URL = 'https://www.pivotaltracker.com/services/v5/'
 PROJECT_UPDATES_POLL_INTERVAL = 3 * 1000
 
-project_data = undefined
-
-Pivotal = Ember.Object.extend
+Pivotal = Ember.Object.extend Ember.Evented,
 
   init: ->
     token = localStorage.apiToken
@@ -19,11 +17,11 @@ Pivotal = Ember.Object.extend
   getProjects: ->
     @queryPivotal('projects').then (projects)->
       _.map projects, (project)->
-        _.pick project, 'id', 'name'
+        _.pick project, 'id', 'name', 'version'
 
   getProject: (id)->
     @queryPivotal("projects/#{id}").then (project)->
-      _.pick project, 'id', 'name'
+      _.pick project, 'id', 'name', 'version'
 
   getIterations: (projectId)->
     @queryPivotal("projects/#{projectId}/iterations", scope: 'current_backlog').then (iterations)->
@@ -37,23 +35,21 @@ Pivotal = Ember.Object.extend
             curatedStory.labels = _.pluck story.labels, 'name'
             curatedStory
 
-  listenForProjectUpdates: (projectId)->
-    clearInterval project_data.interval if project_data? and project_data.projectId isnt projectId
+  listenForProjectUpdates: (project)->
+    if @get('projectData.id') isnt project.id
+      clearInterval @get('projectData.interval')
 
-    project_data = projectId: projectId, handlers: []
+    queryForUpdates = =>
+      currentVersion = @get 'projectData.version'
+      @queryPivotal("project_stale_commands/#{project.id}/#{currentVersion}").then (info) =>
+        if currentVersion isnt info.project_version
+          @set 'projectData.version', info.project_version
+          @trigger 'projectUpdated'
 
-    @queryPivotal("projects/#{projectId}").then (project)=> 
-      project_data.version = project.version
-      project_data.interval = setInterval (=> 
-        @queryPivotal("project_stale_commands/#{projectId}/#{project_data.version}").then (info) ->
-          if project_data.version isnt info.project_version
-            handler() for handler in project_data?.handlers or []
-          project_data.version = info.project_version
-      ), PROJECT_UPDATES_POLL_INTERVAL
-
-    return then: (fn)-> project_data.handlers.push fn
-
-
+    @set 'projectData',
+      id: project.id
+      version: project.version
+      interval: setInterval(queryForUpdates,  PROJECT_UPDATES_POLL_INTERVAL)
 
   queryPivotal: (url, data)->
     $.ajax
