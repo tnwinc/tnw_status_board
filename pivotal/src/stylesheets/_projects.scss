@@ -10,7 +10,7 @@
   }
 
   ul {
-    @extend .clearfix;
+    @include clearfix;
     background: #e3e3e3;
     margin: 0;
     padding: .5em;
@@ -39,7 +39,7 @@
 }
 
 .project {
-  @extend .clearfix;
+  @include clearfix;
   background: $primary-color;
   padding: 10px;
 

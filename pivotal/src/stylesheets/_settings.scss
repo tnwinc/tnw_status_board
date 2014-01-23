@@ -12,7 +12,7 @@
   z-index: 10;
 
   fieldset {
-    @extend .clearfix;
+    @include clearfix;
     margin-bottom: 10px;
   }
 

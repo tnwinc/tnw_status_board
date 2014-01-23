@@ -10,7 +10,7 @@
   }
 
   form {
-    @extend .clearfix;
+    @include clearfix;
     background: #e3e3e3;
     margin: 0;
     padding: 2em;

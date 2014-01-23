@@ -42,13 +42,6 @@ sub {
 legend {
   color: #000; }
 
-.clearfix:before, .clearfix:after {
-  content: "";
-  display: table; }
-
-.clearfix:after {
-  clear: both; }
-
 body {
   background: #f8f8f8;
   color: #333;
@@ -199,6 +192,11 @@ a.toggle-fullscreen {
   z-index: 10; }
   .settings fieldset {
     margin-bottom: 10px; }
+    .settings fieldset:before, .settings fieldset:after {
+      content: "";
+      display: table; }
+    .settings fieldset:after {
+      clear: both; }
   .settings label {
     color: #757575;
     margin-right: 5px;
@@ -223,6 +221,11 @@ a.toggle-fullscreen {
     background: #e3e3e3;
     margin: 0;
     padding: 2em; }
+    .login-container form:before, .login-container form:after {
+      content: "";
+      display: table; }
+    .login-container form:after {
+      clear: both; }
     .login-container form input {
       box-sizing: border-box;
       display: block;
@@ -249,6 +252,11 @@ a.toggle-fullscreen {
     background: #e3e3e3;
     margin: 0;
     padding: 0.5em; }
+    .projects-container ul:before, .projects-container ul:after {
+      content: "";
+      display: table; }
+    .projects-container ul:after {
+      clear: both; }
     .projects-container ul li {
       float: left;
       width: 14.5em;
@@ -267,6 +275,11 @@ a.toggle-fullscreen {
 .project {
   background: #5283af;
   padding: 10px; }
+  .project:before, .project:after {
+    content: "";
+    display: table; }
+  .project:after {
+    clear: both; }
   .project .expando-all {
     float: left;
     margin: 0; }
