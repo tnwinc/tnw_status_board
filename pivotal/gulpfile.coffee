@@ -3,7 +3,7 @@ gutil = require 'gulp-util'
 plumber = require 'gulp-plumber'
 concat = require 'gulp-concat'
 coffee = require 'gulp-coffee'
-compass = require 'gulp-compass'
+sass = require 'gulp-sass'
 handlebars = require './gulp/gulp-ember-handlebars'
 
 coffeeFiles = [
@@ -40,10 +40,10 @@ gulp.task 'handlebars', ->
     .pipe(concat('templates.js'))
     .pipe(gulp.dest('./build/'))
 
-gulp.task 'compass', ->
+gulp.task 'sass', ->
   gulp.src(['./src/stylesheets/*.scss', '!**/_*.scss'])
-    .pipe(compass(config_file: './config.rb', css: 'build', sass: 'src/stylesheets'))
-    .pipe(gulp.dest('./tmp/'))
+    .pipe(sass())
+    .pipe(gulp.dest('./build/'))
 
 gulp.task 'default', ->
   gulp.watch ['./src/scripts/*.coffee', './src/scripts/**/*.coffee'], ->
@@ -53,4 +53,4 @@ gulp.task 'default', ->
     gulp.run 'handlebars'
 
   gulp.watch './src/stylesheets/*.scss', ->
-    gulp.run 'compass'
+    gulp.run 'sass'

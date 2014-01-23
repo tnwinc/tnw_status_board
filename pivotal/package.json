@@ -8,7 +8,7 @@
     "gulp-concat": "*",
     "ember-precompile": "*",
     "through2": "*",
-    "gulp-compass": "*",
+    "gulp-sass": "*",
     "gulp-coffee": "*",
     "coffee-script": "*"
   },

@@ -6,14 +6,11 @@ A read-only client for Pivotal Tracker optimized for use on a status board.
 
 Prerequisites:
 
-* Ruby (use rvm)
-* bundler (gem install bundler)
-* npm (homebrew, etc)
+* npm
 
 Run:
 
 ```
-bundle install
 npm install -g gulp
 npm install
 npm start
