@@ -1,4 +1,4 @@
-define ['env/localstorage'], (LS)->
+define ['localstorage'], (LS)->
   NAMESPACE = 'frame_manager'
 
   class FrameManager

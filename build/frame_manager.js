@@ -1,5 +1,5 @@
 (function() {
-  define(['env/localstorage'], function(LS) {
+  define(['localstorage'], function(LS) {
     var FrameManager, NAMESPACE;
 
     NAMESPACE = 'frame_manager';

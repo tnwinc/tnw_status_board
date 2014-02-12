@@ -1,8 +1,9 @@
 (function() {
   var __hasProp = {}.hasOwnProperty;
 
-  define(["env/window"], function(win) {
-    var ContentGenerators, callout, calloutActive, hideCallout, showCallout, timeout;
+  define(function() {
+    var ContentGenerators, callout, calloutActive, gen, hideCallout, showCallout, timeout, type;
+
     calloutActive = false;
     timeout = void 0;
     ContentGenerators = {
@@ -10,9 +11,11 @@
         pattern: /^(.*\.(?:png|jpg|jpeg|bmp|gif))$/i,
         generator: function(imgSrc) {
           var img;
+
           img = $('<img src="' + imgSrc + '" style="max-height:100%; max-width:100%" />');
           img.bind('load', function() {
             var largerDimension;
+
             largerDimension = ($(this)).height() > ($(this)).width() ? "height" : "width";
             return ($(this)).css(largerDimension, "100%");
           });
@@ -23,8 +26,9 @@
       youtube: {
         pattern: [/youtu\.?be.*?[\/=]([\w\-]{11})/, /^([\w\-]{11})$/],
         generator: function(url, videoId) {
-          win.playVideo = function() {
+          window.playVideo = function() {
             var player;
+
             player = new YT.Player('youtube-player', {
               height: '100%',
               width: '100%',
@@ -73,8 +77,14 @@
         }
       }
     };
+    for (type in ContentGenerators) {
+      if (!__hasProp.call(ContentGenerators, type)) continue;
+      gen = ContentGenerators[type];
+      gen.type = type;
+    }
     showCallout = function(data) {
-      var callout, contentHandler, def, match, pattern, timeout_val, type, _i, _j, _len, _len1, _ref, _ref1, _ref2;
+      var callout, contentHandler, def, match, pattern, timeout_val, _i, _j, _len, _len1, _ref, _ref1, _ref2;
+
       clearTimeout(timeout);
       calloutActive = true;
       callout = ($('#callout')).show();
@@ -89,6 +99,7 @@
               contentHandler = {
                 pattern: pattern,
                 generator: def.generator,
+                type: def.type,
                 timeout: def.timeout
               };
               break;
@@ -114,6 +125,7 @@
                 contentHandler = {
                   pattern: pattern,
                   generator: def.generator,
+                  type: def.type,
                   timeout: def.timeout
                 };
                 break;
@@ -137,13 +149,14 @@
         return callout.html(content);
       }, contentHandler.pattern.exec(data.content));
       timeout_val = ((_ref2 = contentHandler.timeout) != null ? _ref2 : data.timeout) || 0;
-      console.log("keeping callout open for " + timeout_val + " seconds");
+      console.log("keeping [" + contentHandler.type + "] callout open for " + timeout_val + " seconds");
       if (timeout_val) {
         return timeout = setTimeout(hideCallout, timeout_val * 1000);
       }
     };
     hideCallout = function(onComplete) {
       var callout;
+
       clearTimeout(timeout);
       callout = $('#callout');
       callout.empty().hide();

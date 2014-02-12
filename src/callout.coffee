@@ -1,4 +1,4 @@
-define ["env/window"], (win) ->
+define ->
 
     calloutActive = false
     timeout = undefined
@@ -17,7 +17,7 @@ define ["env/window"], (win) ->
         youtube:
             pattern: [ /youtu\.?be.*?[\/=]([\w\-]{11})/, /^([\w\-]{11})$/]
             generator: (url, videoId) ->
-                win.playVideo = () ->
+                window.playVideo = () ->
                     player = new YT.Player 'youtube-player',
                         height: '100%'
                         width: '100%'
