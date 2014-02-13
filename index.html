@@ -4,17 +4,21 @@
   <title>TNW Status Board</title>
   <meta http-equiv="refresh" content="3600" />
   <link href="http://fonts.googleapis.com/css?family=Adamina" rel="stylesheet" type="text/css">
-  <link rel="stylesheet" href="index.css" />
+  <link rel="stylesheet" href="build/lib/font-awesome/font-awesome.min.css" />
+  <link rel="stylesheet" href="build/index.css" />
 </head>
 <body>
-  <iframe id="topLeft" src="javascript:void(0)" frameborder="0" marginheight="0" marginwidth="0" scrolling="no"></iframe>
-  <iframe id="topMiddle" src="javascript:void(0)" frameborder="0" marginheight="0" marginwidth="0" scrolling="no"></iframe>
-  <iframe id="topRight" src="javascript:void(0)" frameborder="0" marginheight="0" marginwidth="0" scrolling="no"></iframe>
-  <div id="bottomContainer">
-    <iframe id="bottom" src="javascript:void(0)" frameborder="0" marginheight="0" marginwidth="0" scrolling="no"></iframe>
-  </div>
+  <div id="view-frames"></div>
   <div id="callout"></div>
   <audio id="radio"></audio>
+
+  <script id="view-frames-template" type="text/x-handlebars-template">
+    {{#each frames}}
+      <div class="frame" style="{{iframe_style properties}}">
+        <iframe src="{{url}}" frameborder="0" marginheight="0" marginwidth="0" scrolling="no"></iframe>
+      </div>
+    {{/each}}
+  </script>
 
   <script src="http://js.pusherapp.com/1.9/pusher.min.js"></script>
   <script src="http://www.youtube.com/player_api"></script>

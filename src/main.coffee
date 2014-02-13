@@ -1,11 +1,11 @@
-define ["localstorage", "callout", "frame_manager"], (LS, callout, FrameManager) ->
+require ['localstorage', 'callout', 'frame_manager'], (LS, callout, FrameManager) ->
 
   ls = new LS()
   frameManager = new FrameManager()
 
   unless key = ls.get 'pusher.api-key'
     key = prompt('What is the pusher api key?')
-    ls.set 'pusher.api-key', key
+    ls.set 'pusher.api-key': key
 
   Pusher.log = (message) -> console.log message
 
@@ -40,7 +40,7 @@ define ["localstorage", "callout", "frame_manager"], (LS, callout, FrameManager)
         , millisecondsUntilStandupEnds
 
     set_url: (data) ->
-      ls.set "panes.#{data.pane}", data.url
+      ls.set "panes.#{data.pane}": data.url
       $("##{data.pane}").attr 'src', data.url
 
     set_callout: (data) ->

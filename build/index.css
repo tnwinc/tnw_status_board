@@ -1,0 +1,58 @@
+html, body { width: 100%; height: 100%; margin: 0; padding: 0; }
+.valign { vertical-align: middle; display: inline-block; }
+.vshim { vertical-align: middle; height: 100%; display: inline-block; }
+
+body {
+  background:
+    linear-gradient(135deg,
+                    #708090 22px,
+                    #505F6F 22px,
+                    #505F6F 24px,
+                    transparent 24px,
+                    transparent 67px,
+                    #505F6F 67px,
+                    #505F6F 69px,
+                    transparent 69px),
+    linear-gradient(225deg,
+                    #708090 22px,
+                    #505F6F 22px,
+                    #505F6F 24px,
+                    transparent 24px,
+                    transparent 67px,
+                    #505F6F 67px,
+                    #505F6F 69px,
+                    transparent 69px) 0 64px;
+  background-color: #708090;
+  background-size: 64px 128px;
+
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-style: 16px;
+}
+
+.frame {
+  position: absolute;
+}
+
+iframe {
+  margin: 0;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+#callout {
+  background: #fff;
+  display: none;
+  font-family: Adamina;
+  font-size: 40px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  text-align: center;
+}
+
+#callout iframe {
+  position: static;
+}

@@ -1,4 +1,4 @@
-define ->
+define ['lib/underscore'], (_)->
 
   class LS
 
@@ -6,15 +6,20 @@ define ->
       if @namespace
         @data = JSON.parse(localStorage[@namespace] || '{}')
 
-    set: (key, value)->
+    set: (settings)->
       if @namespace
-        @data[key] = value
+        for own key, value in settings
+          @data[key] = value
         localStorage[@namespace] = JSON.stringify @data
       else
-        localStorage[key] = JSON.stringify value
+        for own key, value in settings
+          localStorage[key] = JSON.stringify value
 
     get: (key)->
       if @namespace
         @data[key]
       else
         JSON.parse(localStorage[key] || 'null')
+
+    hasData: ->
+      not _.isEmpty @data

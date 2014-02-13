@@ -8,7 +8,9 @@
     frameManager = new FrameManager();
     if (!(key = ls.get('pusher.api-key'))) {
       key = prompt('What is the pusher api key?');
-      ls.set('pusher.api-key', key);
+      ls.set({
+        'pusher.api-key': key
+      });
     }
     Pusher.log = function(message) {
       return console.log(message);
