@@ -13,23 +13,25 @@
       }
 
       LS.prototype.set = function(settings) {
-        var key, value, _results;
+        var key, value, _results, _results1;
 
         if (this.namespace) {
-          for (key in settings) {
-            if (!__hasProp.call(settings, key)) continue;
-            value = settings[key];
-            this.data[key] = value;
-          }
-          return localStorage[this.namespace] = JSON.stringify(this.data);
-        } else {
           _results = [];
           for (key in settings) {
             if (!__hasProp.call(settings, key)) continue;
             value = settings[key];
-            _results.push(localStorage[key] = JSON.stringify(value));
+            this.data[key] = value;
+            _results.push(this._save());
           }
           return _results;
+        } else {
+          _results1 = [];
+          for (key in settings) {
+            if (!__hasProp.call(settings, key)) continue;
+            value = settings[key];
+            _results1.push(localStorage[key] = JSON.stringify(value));
+          }
+          return _results1;
         }
       };
 
@@ -41,8 +43,21 @@
         }
       };
 
+      LS.prototype.remove = function(key) {
+        if (this.namespace) {
+          delete this.data[key];
+          return this._save();
+        } else {
+          return localStorage.removeItem(key);
+        }
+      };
+
       LS.prototype.hasData = function() {
         return !_.isEmpty(this.data);
+      };
+
+      LS.prototype._save = function() {
+        return localStorage[this.namespace] = JSON.stringify(this.data);
       };
 
       return LS;

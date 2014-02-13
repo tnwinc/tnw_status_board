@@ -10,7 +10,7 @@ define ['lib/underscore'], (_)->
       if @namespace
         for own key, value of settings
           @data[key] = value
-        localStorage[@namespace] = JSON.stringify @data
+          @_save()
       else
         for own key, value of settings
           localStorage[key] = JSON.stringify value
@@ -21,5 +21,15 @@ define ['lib/underscore'], (_)->
       else
         JSON.parse(localStorage[key] || 'null')
 
+    remove: (key)->
+      if @namespace
+        delete @data[key]
+        @_save()
+      else
+        localStorage.removeItem key
+
     hasData: ->
       not _.isEmpty @data
+
+    _save: ->
+      localStorage[@namespace] = JSON.stringify @data

@@ -1,5 +1,5 @@
 (function() {
-  define(['localstorage', 'lib/handlebars', 'hbs_helpers/pane_style'], function(LS, Handlebars) {
+  define(['localstorage', 'lib/underscore', 'lib/handlebars', 'hbs_helpers/pane_style'], function(LS, _, Handlebars) {
     var NAMESPACE, Pane, PaneManager, Property, randomId;
 
     NAMESPACE = 'pane_manager';
@@ -55,28 +55,35 @@
       }
 
       PaneManager.prototype.firstRun = function() {
-        var bottomUrl, id, oldLs, properties, topLeftUrl, topMiddleUrl, topRightUrl;
+        var key, migratePane, oldLs, panesToMigrate, properties,
+          _this = this;
 
         oldLs = new LS();
-        if (topLeftUrl = oldLs.get('panes.topLeft')) {
-          properties = [new Property('left', 0, 'px'), new Property('top', 0, 'px'), new Property('width', 25, '%'), new Property('height', 450, 'px')];
-          id = randomId();
-          this.panes[id] = new Pane(id, topLeftUrl, properties);
-        }
-        if (topMiddleUrl = oldLs.get('panes.topMiddle')) {
-          properties = [new Property('left', 25, '%'), new Property('top', 0, 'px'), new Property('width', 25, '%'), new Property('height', 450, 'px')];
-          id = randomId();
-          this.panes[id] = new Pane(id, topMiddleUrl, properties);
-        }
-        if (topRightUrl = oldLs.get('panes.topRight')) {
-          properties = [new Property('right', 0, 'px'), new Property('top', 0, 'px'), new Property('width', 50, '%'), new Property('height', 450, 'px')];
-          id = randomId();
-          this.panes[id] = new Pane(id, topRightUrl, properties);
-        }
-        if (bottomUrl = oldLs.get('panes.bottom')) {
-          properties = [new Property('top', 450, 'px'), new Property('right', 0, 'px'), new Property('bottom', 0, 'px'), new Property('left', 0, 'px')];
-          id = randomId();
-          this.panes[id] = new Pane(id, bottomUrl, properties);
+        migratePane = function(key, properties) {
+          var id, url;
+
+          if (url = oldLs.get(key)) {
+            properties = _.map(properties, function(property) {
+              return (function(func, args, ctor) {
+                ctor.prototype = func.prototype;
+                var child = new ctor, result = func.apply(child, args);
+                return Object(result) === result ? result : child;
+              })(Property, property, function(){});
+            });
+            id = randomId();
+            _this.panes[id] = new Pane(id, url, properties);
+            return oldLs.remove(key);
+          }
+        };
+        panesToMigrate = {
+          'panes.topLeft': [['left', 0, 'px'], ['top', 0, 'px'], ['width', 25, '%'], ['height', 450, 'px']],
+          'panes.topMiddle': [['left', 25, '%'], ['top', 0, 'px'], ['width', 25, '%'], ['height', 450, 'px']],
+          'panes.topRight': [['right', 0, 'px'], ['top', 0, 'px'], ['width', 50, '%'], ['height', 450, 'px']],
+          'panes.bottom': [['top', 450, 'px'], ['right', 0, 'px'], ['bottom', 0, 'px'], ['left', 0, 'px']]
+        };
+        for (key in panesToMigrate) {
+          properties = panesToMigrate[key];
+          migratePane(key, properties);
         }
         return this.ls.set({
           panes: this.panes

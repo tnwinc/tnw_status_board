@@ -1,4 +1,4 @@
-define ['localstorage', 'lib/handlebars', 'hbs_helpers/pane_style'], (LS, Handlebars)->
+define ['localstorage', 'lib/underscore', 'lib/handlebars', 'hbs_helpers/pane_style'], (LS, _, Handlebars)->
 
   NAMESPACE = 'pane_manager'
 
@@ -34,45 +34,42 @@ define ['localstorage', 'lib/handlebars', 'hbs_helpers/pane_style'], (LS, Handle
     firstRun: ->
       oldLs = new LS()
 
-      if topLeftUrl = oldLs.get 'panes.topLeft'
-        properties = [
-          new Property 'left', 0, 'px'
-          new Property 'top', 0, 'px'
-          new Property 'width', 25, '%'
-          new Property 'height', 450, 'px'
-        ]
-        id = randomId()
-        @panes[id] = new Pane(id, topLeftUrl, properties)
+      migratePane = (key, properties)=>
+        if url = oldLs.get key
+          properties = _.map properties, (property)->
+            new Property property...
+          id = randomId()
+          @panes[id] = new Pane(id, url, properties)
+          oldLs.remove key
 
-      if topMiddleUrl = oldLs.get 'panes.topMiddle'
-        properties = [
-          new Property 'left', 25, '%'
-          new Property 'top', 0, 'px'
-          new Property 'width', 25, '%'
-          new Property 'height', 450, 'px'
+      panesToMigrate =
+        'panes.topLeft': [
+          ['left', 0, 'px']
+          ['top', 0, 'px']
+          ['width', 25, '%']
+          ['height', 450, 'px']
         ]
-        id = randomId()
-        @panes[id] = new Pane(id, topMiddleUrl, properties)
+        'panes.topMiddle': [
+          ['left', 25, '%']
+          ['top', 0, 'px']
+          ['width', 25, '%']
+          ['height', 450, 'px']
+        ]
+        'panes.topRight': [
+          ['right', 0, 'px']
+          ['top', 0, 'px']
+          ['width', 50, '%']
+          ['height', 450, 'px']
+        ]
+        'panes.bottom': [
+          ['top', 450, 'px']
+          ['right', 0, 'px']
+          ['bottom', 0, 'px']
+          ['left', 0, 'px']
+        ]
 
-      if topRightUrl = oldLs.get 'panes.topRight'
-        properties = [
-          new Property 'right', 0, 'px'
-          new Property 'top', 0, 'px'
-          new Property 'width', 50, '%'
-          new Property 'height', 450, 'px'
-        ]
-        id = randomId()
-        @panes[id] = new Pane(id, topRightUrl, properties)
-
-      if bottomUrl = oldLs.get 'panes.bottom'
-        properties = [
-          new Property 'top', 450, 'px'
-          new Property 'right', 0, 'px'
-          new Property 'bottom', 0, 'px'
-          new Property 'left', 0, 'px'
-        ]
-        id = randomId()
-        @panes[id] = new Pane(id, bottomUrl, properties)
+      for key, properties of panesToMigrate
+        migratePane key, properties
 
       @ls.set panes: @panes
 
