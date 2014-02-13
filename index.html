@@ -14,7 +14,7 @@
 
   <script id="view-panes-template" type="text/x-handlebars-template">
     {{#each panes}}
-      <div class="pane" style="{{pane_style properties}}">
+      <div class="pane" id="p-{{id}}" style="{{pane_style properties}}">
         <iframe src="{{url}}" frameborder="0" marginheight="0" marginwidth="0" scrolling="no"></iframe>
       </div>
     {{/each}}

@@ -8,11 +8,11 @@ define ['lib/underscore'], (_)->
 
     set: (settings)->
       if @namespace
-        for own key, value in settings
+        for own key, value of settings
           @data[key] = value
         localStorage[@namespace] = JSON.stringify @data
       else
-        for own key, value in settings
+        for own key, value of settings
           localStorage[key] = JSON.stringify value
 
     get: (key)->

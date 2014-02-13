@@ -2,6 +2,9 @@ define ['localstorage', 'lib/handlebars', 'hbs_helpers/pane_style'], (LS, Handle
 
   NAMESPACE = 'pane_manager'
 
+  randomId = ->
+    Math.floor(Math.random() * 100000)
+
   class Property
 
     constructor: (@name, @value, @units)->
@@ -11,14 +14,20 @@ define ['localstorage', 'lib/handlebars', 'hbs_helpers/pane_style'], (LS, Handle
 
   class Pane
 
-    constructor: (@url = '', @properties)->
+    constructor: (@id, @url = '', @properties)->
 
   class PaneManager
 
     constructor: ->
       @ls = new LS NAMESPACE
 
-      @panes = @ls.get('panes') || []
+      panes = @ls.get('panes') || {}
+      @panes = {}
+      for id, pane of panes
+        properties = _.map pane.properties, (property)->
+          new Property(property.name, property.value, property.units)
+        @panes[id] = new Pane(id, pane.url, properties)
+
       @firstRun() unless @ls.hasData()
       @renderPanes()
 
@@ -32,7 +41,8 @@ define ['localstorage', 'lib/handlebars', 'hbs_helpers/pane_style'], (LS, Handle
           new Property 'width', 25, '%'
           new Property 'height', 450, 'px'
         ]
-        @panes.push new Pane(topLeftUrl, properties)
+        id = randomId()
+        @panes[id] = new Pane(id, topLeftUrl, properties)
 
       if topMiddleUrl = oldLs.get 'panes.topMiddle'
         properties = [
@@ -41,7 +51,8 @@ define ['localstorage', 'lib/handlebars', 'hbs_helpers/pane_style'], (LS, Handle
           new Property 'width', 25, '%'
           new Property 'height', 450, 'px'
         ]
-        @panes.push new Pane(topMiddleUrl, properties)
+        id = randomId()
+        @panes[id] = new Pane(id, topMiddleUrl, properties)
 
       if topRightUrl = oldLs.get 'panes.topRight'
         properties = [
@@ -50,7 +61,8 @@ define ['localstorage', 'lib/handlebars', 'hbs_helpers/pane_style'], (LS, Handle
           new Property 'width', 50, '%'
           new Property 'height', 450, 'px'
         ]
-        @panes.push new Pane(topRightUrl, properties)
+        id = randomId()
+        @panes[id] = new Pane(id, topRightUrl, properties)
 
       if bottomUrl = oldLs.get 'panes.bottom'
         properties = [
@@ -59,7 +71,10 @@ define ['localstorage', 'lib/handlebars', 'hbs_helpers/pane_style'], (LS, Handle
           new Property 'bottom', 0, 'px'
           new Property 'left', 0, 'px'
         ]
-        @panes.push new Pane(bottomUrl, properties)
+        id = randomId()
+        @panes[id] = new Pane(id, bottomUrl, properties)
+
+      @ls.set panes: @panes
 
     renderPanes: ->
       template = Handlebars.compile $('#view-panes-template').html()
