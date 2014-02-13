@@ -8,13 +8,13 @@
   <link rel="stylesheet" href="build/index.css" />
 </head>
 <body>
-  <div id="view-frames"></div>
+  <div id="view-panes"></div>
   <div id="callout"></div>
   <audio id="radio"></audio>
 
-  <script id="view-frames-template" type="text/x-handlebars-template">
-    {{#each frames}}
-      <div class="frame" style="{{iframe_style properties}}">
+  <script id="view-panes-template" type="text/x-handlebars-template">
+    {{#each panes}}
+      <div class="pane" style="{{pane_style properties}}">
         <iframe src="{{url}}" frameborder="0" marginheight="0" marginwidth="0" scrolling="no"></iframe>
       </div>
     {{/each}}

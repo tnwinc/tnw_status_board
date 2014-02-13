@@ -1,5 +1,6 @@
-define ['localstorage', 'lib/handlebars', 'hbs_helpers/iframe_style'], (LS, Handlebars)->
-  NAMESPACE = 'frame_manager'
+define ['localstorage', 'lib/handlebars', 'hbs_helpers/pane_style'], (LS, Handlebars)->
+
+  NAMESPACE = 'pane_manager'
 
   class Property
 
@@ -8,18 +9,18 @@ define ['localstorage', 'lib/handlebars', 'hbs_helpers/iframe_style'], (LS, Hand
     toString: ->
       if @value is 0 then @value.toString() else "#{@value}#{@units}"
 
-  class Frame
+  class Pane
 
     constructor: (@url = '', @properties)->
 
-  class FrameManager
+  class PaneManager
 
     constructor: ->
       @ls = new LS NAMESPACE
 
-      @frames = @ls.get('frames') || []
+      @panes = @ls.get('panes') || []
       @firstRun() unless @ls.hasData()
-      @renderFrames()
+      @renderPanes()
 
     firstRun: ->
       oldLs = new LS()
@@ -31,7 +32,7 @@ define ['localstorage', 'lib/handlebars', 'hbs_helpers/iframe_style'], (LS, Hand
           new Property 'width', 25, '%'
           new Property 'height', 450, 'px'
         ]
-        @frames.push new Frame(topLeftUrl, properties)
+        @panes.push new Pane(topLeftUrl, properties)
 
       if topMiddleUrl = oldLs.get 'panes.topMiddle'
         properties = [
@@ -40,7 +41,7 @@ define ['localstorage', 'lib/handlebars', 'hbs_helpers/iframe_style'], (LS, Hand
           new Property 'width', 25, '%'
           new Property 'height', 450, 'px'
         ]
-        @frames.push new Frame(topMiddleUrl, properties)
+        @panes.push new Pane(topMiddleUrl, properties)
 
       if topRightUrl = oldLs.get 'panes.topRight'
         properties = [
@@ -49,7 +50,7 @@ define ['localstorage', 'lib/handlebars', 'hbs_helpers/iframe_style'], (LS, Hand
           new Property 'width', 50, '%'
           new Property 'height', 450, 'px'
         ]
-        @frames.push new Frame(topRightUrl, properties)
+        @panes.push new Pane(topRightUrl, properties)
 
       if bottomUrl = oldLs.get 'panes.bottom'
         properties = [
@@ -58,8 +59,8 @@ define ['localstorage', 'lib/handlebars', 'hbs_helpers/iframe_style'], (LS, Hand
           new Property 'bottom', 0, 'px'
           new Property 'left', 0, 'px'
         ]
-        @frames.push new Frame(bottomUrl, properties)
+        @panes.push new Pane(bottomUrl, properties)
 
-    renderFrames: ->
-      template = Handlebars.compile $('#view-frames-template').html()
-      $(template(frames: @frames)).appendTo '#view-frames'
+    renderPanes: ->
+      template = Handlebars.compile $('#view-panes-template').html()
+      $(template(panes: @panes)).appendTo '#view-panes'

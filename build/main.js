@@ -1,11 +1,11 @@
 (function() {
   var __hasProp = {}.hasOwnProperty;
 
-  define(["localstorage", "callout", "frame_manager"], function(LS, callout, FrameManager) {
-    var channel, event, eventHandlers, frameManager, handler, key, ls, pusher, _results;
+  require(['localstorage', 'callout', 'pane_manager'], function(LS, callout, PaneManager) {
+    var channel, event, eventHandlers, handler, key, ls, paneManager, pusher, _results;
 
     ls = new LS();
-    frameManager = new FrameManager();
+    paneManager = new PaneManager();
     if (!(key = ls.get('pusher.api-key'))) {
       key = prompt('What is the pusher api key?');
       ls.set({
@@ -56,7 +56,11 @@
         }
       },
       set_url: function(data) {
-        ls.set("panes." + data.pane, data.url);
+        var paneData;
+
+        paneData = {};
+        paneData["panes." + data.pane] = data.url;
+        ls.set(paneData);
         return $("#" + data.pane).attr('src', data.url);
       },
       set_callout: function(data) {

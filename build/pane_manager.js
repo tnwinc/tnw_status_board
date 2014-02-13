@@ -1,8 +1,8 @@
 (function() {
-  define(['localstorage', 'lib/handlebars', 'hbs_helpers/iframe_style'], function(LS, Handlebars) {
-    var Frame, FrameManager, NAMESPACE, Property;
+  define(['localstorage', 'lib/handlebars', 'hbs_helpers/pane_style'], function(LS, Handlebars) {
+    var NAMESPACE, Pane, PaneManager, Property;
 
-    NAMESPACE = 'frame_manager';
+    NAMESPACE = 'pane_manager';
     Property = (function() {
       function Property(name, value, units) {
         this.name = name;
@@ -21,57 +21,57 @@
       return Property;
 
     })();
-    Frame = (function() {
-      function Frame(url, properties) {
+    Pane = (function() {
+      function Pane(url, properties) {
         this.url = url != null ? url : '';
         this.properties = properties;
       }
 
-      return Frame;
+      return Pane;
 
     })();
-    return FrameManager = (function() {
-      function FrameManager() {
+    return PaneManager = (function() {
+      function PaneManager() {
         this.ls = new LS(NAMESPACE);
-        this.frames = this.ls.get('frames') || [];
+        this.panes = this.ls.get('panes') || [];
         if (!this.ls.hasData()) {
           this.firstRun();
         }
-        this.renderFrames();
+        this.renderPanes();
       }
 
-      FrameManager.prototype.firstRun = function() {
+      PaneManager.prototype.firstRun = function() {
         var bottomUrl, oldLs, properties, topLeftUrl, topMiddleUrl, topRightUrl;
 
         oldLs = new LS();
         if (topLeftUrl = oldLs.get('panes.topLeft')) {
           properties = [new Property('left', 0, 'px'), new Property('top', 0, 'px'), new Property('width', 25, '%'), new Property('height', 450, 'px')];
-          this.frames.push(new Frame(topLeftUrl, properties));
+          this.panes.push(new Pane(topLeftUrl, properties));
         }
         if (topMiddleUrl = oldLs.get('panes.topMiddle')) {
           properties = [new Property('left', 25, '%'), new Property('top', 0, 'px'), new Property('width', 25, '%'), new Property('height', 450, 'px')];
-          this.frames.push(new Frame(topMiddleUrl, properties));
+          this.panes.push(new Pane(topMiddleUrl, properties));
         }
         if (topRightUrl = oldLs.get('panes.topRight')) {
           properties = [new Property('right', 0, 'px'), new Property('top', 0, 'px'), new Property('width', 50, '%'), new Property('height', 450, 'px')];
-          this.frames.push(new Frame(topRightUrl, properties));
+          this.panes.push(new Pane(topRightUrl, properties));
         }
         if (bottomUrl = oldLs.get('panes.bottom')) {
           properties = [new Property('top', 450, 'px'), new Property('right', 0, 'px'), new Property('bottom', 0, 'px'), new Property('left', 0, 'px')];
-          return this.frames.push(new Frame(bottomUrl, properties));
+          return this.panes.push(new Pane(bottomUrl, properties));
         }
       };
 
-      FrameManager.prototype.renderFrames = function() {
+      PaneManager.prototype.renderPanes = function() {
         var template;
 
-        template = Handlebars.compile($('#view-frames-template').html());
+        template = Handlebars.compile($('#view-panes-template').html());
         return $(template({
-          frames: this.frames
-        })).appendTo('#view-frames');
+          panes: this.panes
+        })).appendTo('#view-panes');
       };
 
-      return FrameManager;
+      return PaneManager;
 
     })();
   });

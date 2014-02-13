@@ -1,23 +1,23 @@
-require ['localstorage', 'callout', 'frame_manager'], (LS, callout, FrameManager) ->
+require ['localstorage', 'callout', 'pane_manager'], (LS, callout, PaneManager)->
 
   ls = new LS()
-  frameManager = new FrameManager()
+  paneManager = new PaneManager()
 
   unless key = ls.get 'pusher.api-key'
     key = prompt('What is the pusher api key?')
     ls.set 'pusher.api-key': key
 
-  Pusher.log = (message) -> console.log message
+  Pusher.log = (message)-> console.log message
 
   pusher = new Pusher(key)
   channel = pusher.subscribe 'test_channel'
 
   eventHandlers =
 
-    reload_board: (data) ->
+    reload_board: (data)->
       $('body').fadeOut -> location.reload()
 
-    start_standup: (minutes) ->
+    start_standup: (minutes)->
       console.log "Starting standup for #{minutes} minutes"
       @play_sound 'http://soundfxnow.com/soundfx/MilitaryTrumpetTune1.mp3'
       container = $ '#bottomContainer'
@@ -28,7 +28,7 @@ require ['localstorage', 'callout', 'frame_manager'], (LS, callout, FrameManager
           console.log "Setting reminder interval \
                        for #{reminderInterval * minutes} minutes \
                        (#{reminderInterval * minutes * 60} seconds)"
-          do (reminderInterval) =>
+          do (reminderInterval)=>
             milliseconds = 1000 * 60 * reminderInterval * minutes
             setTimeout =>
               @play_sound 'http://soundfxnow.com/soundfx/GameshowBellDing2.mp3'
@@ -39,11 +39,13 @@ require ['localstorage', 'callout', 'frame_manager'], (LS, callout, FrameManager
           end_standup()
         , millisecondsUntilStandupEnds
 
-    set_url: (data) ->
-      ls.set "panes.#{data.pane}": data.url
+    set_url: (data)->
+      paneData = {}
+      paneData["panes.#{data.pane}"] = data.url
+      ls.set paneData
       $("##{data.pane}").attr 'src', data.url
 
-    set_callout: (data) ->
+    set_callout: (data)->
       callout data
 
     close_callout: ->
@@ -53,7 +55,7 @@ require ['localstorage', 'callout', 'frame_manager'], (LS, callout, FrameManager
       @play_sound 'http://soundfxnow.com/soundfx/FamilyFeud-Buzzer3.mp3'
       $('#bottomContainer').animate top: 270
 
-    play_sound: (data) ->
+    play_sound: (data)->
       $('#radio').attr(src: data)[0].play()
 
     pavlov: ->
