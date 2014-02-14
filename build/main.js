@@ -24,16 +24,12 @@
         });
       },
       start_standup: function(minutes) {
-        var container, millisecondsUntilStandupEnds, oldTop, reminderInterval, _fn, _i, _len, _ref,
+        var millisecondsUntilStandupEnds, reminderInterval, _fn, _i, _len, _ref,
           _this = this;
 
         console.log("Starting standup for " + minutes + " minutes");
         this.play_sound('http://soundfxnow.com/soundfx/MilitaryTrumpetTune1.mp3');
-        container = $('#bottomContainer');
-        oldTop = container.css('top');
-        container.animate({
-          top: 0
-        });
+        paneManager.standupPane().makeFullScreen();
         if (minutes) {
           _ref = [0.75, 0.9, 0.95];
           _fn = function(reminderInterval) {
@@ -55,14 +51,7 @@
           }, millisecondsUntilStandupEnds);
         }
       },
-      set_url: function(data) {
-        var paneData;
-
-        paneData = {};
-        paneData["panes." + data.pane] = data.url;
-        ls.set(paneData);
-        return $("#" + data.pane).attr('src', data.url);
-      },
+      set_url: function(data) {},
       set_callout: function(data) {
         return callout(data);
       },
@@ -71,9 +60,7 @@
       },
       end_standup: function() {
         this.play_sound('http://soundfxnow.com/soundfx/FamilyFeud-Buzzer3.mp3');
-        return $('#bottomContainer').animate({
-          top: 270
-        });
+        return paneManager.standupPane().resetPosition();
       },
       play_sound: function(data) {
         return $('#radio').attr({

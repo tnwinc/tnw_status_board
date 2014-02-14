@@ -32,6 +32,36 @@
         this.properties = properties;
       }
 
+      Pane.prototype.makeFullScreen = function() {
+        var $el;
+
+        $el = $("#p-" + this.id);
+        $el.animate({
+          top: 0,
+          right: 0,
+          bottom: 0,
+          left: 0,
+          width: 'auto',
+          height: 'auto'
+        });
+        return $el.addClass('in-standup');
+      };
+
+      Pane.prototype.resetPosition = function() {
+        var $el, css, property, _i, _len, _ref;
+
+        $el = $("#p-" + this.id);
+        $el.style = '';
+        css = {};
+        _ref = this.properties;
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          property = _ref[_i];
+          css[property.name] = property.toString();
+        }
+        $el.css(css);
+        return $el.removeClass('in-standup');
+      };
+
       return Pane;
 
     })();
@@ -47,7 +77,7 @@
           properties = _.map(pane.properties, function(property) {
             return new Property(property.name, property.value, property.units);
           });
-          this.panes[id] = new Pane(id, pane.url, properties);
+          this.panes[id] = new Pane(pane.id, pane.url, properties);
         }
         if (!this.ls.hasData()) {
           this.firstRun();
@@ -69,16 +99,25 @@
         return this.renderPanes('edit');
       };
 
+      PaneManager.prototype.standupPane = function() {
+        var id;
+
+        id = this.ls.get('standupPaneId');
+        return _.find(this.panes, function(pane) {
+          return pane.id === id;
+        });
+      };
+
       PaneManager.prototype.firstRun = function() {
-        var key, migratePane, oldLs, panesToMigrate, properties,
+        var migratePane, oldLs, pane, panesToMigrate, _i, _len,
           _this = this;
 
         oldLs = new LS();
-        migratePane = function(key, properties) {
-          var id, url;
+        migratePane = function(pane) {
+          var id, properties, url;
 
-          if (url = oldLs.get(key)) {
-            properties = _.map(properties, function(property) {
+          if (url = oldLs.get(pane.oldKey)) {
+            properties = _.map(pane.properties, function(property) {
               return (function(func, args, ctor) {
                 ctor.prototype = func.prototype;
                 var child = new ctor, result = func.apply(child, args);
@@ -87,18 +126,33 @@
             });
             id = randomId();
             _this.panes[id] = new Pane(id, url, properties);
-            return oldLs.remove(key);
+            if (pane.standup) {
+              _this.ls.set({
+                standupPaneId: id
+              });
+            }
+            return oldLs.remove(pane.oldKey);
           }
         };
-        panesToMigrate = {
-          'panes.topLeft': [['left', 0, 'px'], ['top', 0, 'px'], ['width', 25, '%'], ['height', 450, 'px']],
-          'panes.topMiddle': [['left', 25, '%'], ['top', 0, 'px'], ['width', 25, '%'], ['height', 450, 'px']],
-          'panes.topRight': [['right', 0, 'px'], ['top', 0, 'px'], ['width', 50, '%'], ['height', 450, 'px']],
-          'panes.bottom': [['top', 450, 'px'], ['right', 0, 'px'], ['bottom', 0, 'px'], ['left', 0, 'px']]
-        };
-        for (key in panesToMigrate) {
-          properties = panesToMigrate[key];
-          migratePane(key, properties);
+        panesToMigrate = [
+          {
+            oldKey: 'panes.topLeft',
+            properties: [['left', 0, 'px'], ['top', 0, 'px'], ['width', 25, '%'], ['height', 450, 'px']]
+          }, {
+            oldKey: 'panes.topMiddle',
+            properties: [['left', 25, '%'], ['top', 0, 'px'], ['width', 25, '%'], ['height', 450, 'px']]
+          }, {
+            oldKey: 'panes.topRight',
+            properties: [['right', 0, 'px'], ['top', 0, 'px'], ['width', 50, '%'], ['height', 450, 'px']]
+          }, {
+            oldKey: 'panes.bottom',
+            standup: true,
+            properties: [['top', 450, 'px'], ['right', 0, 'px'], ['bottom', 0, 'px'], ['left', 0, 'px']]
+          }
+        ];
+        for (_i = 0, _len = panesToMigrate.length; _i < _len; _i++) {
+          pane = panesToMigrate[_i];
+          migratePane(pane);
         }
         return this.ls.set({
           panes: this.panes

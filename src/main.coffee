@@ -20,9 +20,7 @@ require ['localstorage', 'callout', 'pane_manager'], (LS, callout, PaneManager)-
     start_standup: (minutes)->
       console.log "Starting standup for #{minutes} minutes"
       @play_sound 'http://soundfxnow.com/soundfx/MilitaryTrumpetTune1.mp3'
-      container = $ '#bottomContainer'
-      oldTop = container.css 'top'
-      container.animate top: 0
+      paneManager.standupPane().makeFullScreen()
       if minutes
         for reminderInterval in [ 0.75, 0.9, 0.95 ]
           console.log "Setting reminder interval \
@@ -40,10 +38,11 @@ require ['localstorage', 'callout', 'pane_manager'], (LS, callout, PaneManager)-
         , millisecondsUntilStandupEnds
 
     set_url: (data)->
-      paneData = {}
-      paneData["panes.#{data.pane}"] = data.url
-      ls.set paneData
-      $("##{data.pane}").attr 'src', data.url
+      # TODO: re-implement to work with new system
+      # paneData = {}
+      # paneData["panes.#{data.pane}"] = data.url
+      # ls.set paneData
+      # $("##{data.pane}").attr 'src', data.url
 
     set_callout: (data)->
       callout data
@@ -53,7 +52,7 @@ require ['localstorage', 'callout', 'pane_manager'], (LS, callout, PaneManager)-
 
     end_standup: ->
       @play_sound 'http://soundfxnow.com/soundfx/FamilyFeud-Buzzer3.mp3'
-      $('#bottomContainer').animate top: 270
+      paneManager.standupPane().resetPosition()
 
     play_sound: (data)->
       $('#radio').attr(src: data)[0].play()

@@ -18,6 +18,26 @@ define ['localstorage', 'lib/underscore', 'lib/handlebars', 'hbs_helpers/pane_st
 
     constructor: (@id, @url = '', @properties)->
 
+    makeFullScreen: ->
+      $el = $("#p-#{@id}")
+      $el.animate
+        top: 0
+        right: 0
+        bottom: 0
+        left: 0
+        width: 'auto'
+        height: 'auto'
+      $el.addClass 'in-standup'
+
+    resetPosition: ->
+      $el = $("#p-#{@id}")
+      $el.style = ''
+      css = {}
+      for property in @properties
+        css[property.name] = property.toString()
+      $el.css css
+      $el.removeClass 'in-standup'
+
   class PaneManager
 
     constructor: ->
@@ -28,7 +48,7 @@ define ['localstorage', 'lib/underscore', 'lib/handlebars', 'hbs_helpers/pane_st
       for id, pane of panes
         properties = _.map pane.properties, (property)->
           new Property(property.name, property.value, property.units)
-        @panes[id] = new Pane(id, pane.url, properties)
+        @panes[id] = new Pane(pane.id, pane.url, properties)
 
       @firstRun() unless @ls.hasData()
       @renderPanes 'view'
@@ -43,45 +63,59 @@ define ['localstorage', 'lib/underscore', 'lib/handlebars', 'hbs_helpers/pane_st
     editPanes: ->
       @renderPanes 'edit'
 
+    standupPane: ->
+      id = @ls.get 'standupPaneId'
+      _.find @panes, (pane)-> pane.id is id
+
     firstRun: ->
       oldLs = new LS()
 
-      migratePane = (key, properties)=>
-        if url = oldLs.get key
-          properties = _.map properties, (property)->
+      migratePane = (pane)=>
+        if url = oldLs.get pane.oldKey
+          properties = _.map pane.properties, (property)->
             new Property property...
           id = randomId()
           @panes[id] = new Pane(id, url, properties)
-          oldLs.remove key
+          if pane.standup
+            @ls.set standupPaneId: id
+          oldLs.remove pane.oldKey
 
-      panesToMigrate =
-        'panes.topLeft': [
+      panesToMigrate = [
+        oldKey: 'panes.topLeft'
+        properties: [
           ['left', 0, 'px']
           ['top', 0, 'px']
           ['width', 25, '%']
           ['height', 450, 'px']
         ]
-        'panes.topMiddle': [
+      ,
+        oldKey: 'panes.topMiddle'
+        properties: [
           ['left', 25, '%']
           ['top', 0, 'px']
           ['width', 25, '%']
           ['height', 450, 'px']
         ]
-        'panes.topRight': [
+      ,
+        oldKey: 'panes.topRight'
+        properties: [
           ['right', 0, 'px']
           ['top', 0, 'px']
           ['width', 50, '%']
           ['height', 450, 'px']
         ]
-        'panes.bottom': [
+      ,
+        oldKey: 'panes.bottom'
+        standup: true
+        properties: [
           ['top', 450, 'px']
           ['right', 0, 'px']
           ['bottom', 0, 'px']
           ['left', 0, 'px']
         ]
+      ]
 
-      for key, properties of panesToMigrate
-        migratePane key, properties
+      migratePane pane for pane in panesToMigrate
 
       @ls.set panes: @panes
 

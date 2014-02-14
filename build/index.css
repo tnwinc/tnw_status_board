@@ -38,6 +38,10 @@ body {
   position: absolute;
 }
 
+.in-standup {
+  z-index: 100;
+}
+
 iframe {
   margin: 0;
   position: absolute;
