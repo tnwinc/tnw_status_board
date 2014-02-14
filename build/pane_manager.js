@@ -1,8 +1,9 @@
 (function() {
   define(['localstorage', 'lib/underscore', 'lib/handlebars', 'hbs_helpers/pane_style'], function(LS, _, Handlebars) {
-    var NAMESPACE, Pane, PaneManager, Property, randomId;
+    var $body, NAMESPACE, Pane, PaneManager, Property, randomId;
 
     NAMESPACE = 'pane_manager';
+    $body = $(document.body);
     randomId = function() {
       return Math.floor(Math.random() * 100000);
     };
@@ -51,8 +52,22 @@
         if (!this.ls.hasData()) {
           this.firstRun();
         }
-        this.renderPanes();
+        this.renderPanes('view');
+        this.bindEvents();
       }
+
+      PaneManager.prototype.bindEvents = function() {
+        var _this = this;
+
+        return $body.on('click', '#edit-panes', function(e) {
+          e.preventDefault();
+          return _this.editPanes();
+        });
+      };
+
+      PaneManager.prototype.editPanes = function() {
+        return this.renderPanes('edit');
+      };
 
       PaneManager.prototype.firstRun = function() {
         var key, migratePane, oldLs, panesToMigrate, properties,
@@ -90,13 +105,13 @@
         });
       };
 
-      PaneManager.prototype.renderPanes = function() {
+      PaneManager.prototype.renderPanes = function(type) {
         var template;
 
-        template = Handlebars.compile($('#view-panes-template').html());
+        template = Handlebars.compile($("#" + type + "-panes-template").html());
         return $(template({
           panes: this.panes
-        })).appendTo('#view-panes');
+        })).appendTo("#" + type + "-panes-container");
       };
 
       return PaneManager;

@@ -8,7 +8,8 @@
   <link rel="stylesheet" href="build/index.css" />
 </head>
 <body>
-  <div id="view-panes"></div>
+  <div id="view-panes-container" class="view-panes-container"></div>
+  <div id="edit-panes-container" class="edit-panes-container"></div>
   <div id="callout"></div>
   <audio id="radio"></audio>
 
@@ -16,6 +17,28 @@
     {{#each panes}}
       <div class="pane" id="p-{{id}}" style="{{pane_style properties}}">
         <iframe src="{{url}}" frameborder="0" marginheight="0" marginwidth="0" scrolling="no"></iframe>
+      </div>
+    {{/each}}
+    <a class="edit-panes" id="edit-panes" href="#">
+      <i class="fa fa-cog"></i>
+    </a>
+  </script>
+
+  <script id="edit-panes-template" type="text/x-handlebars-template">
+    {{#each panes}}
+      <div class="pane" id="p-{{id}}" style="{{pane_style properties}}">
+        <form>
+          <fieldset>
+            <input class="url-input" value={{url}} />
+          </fieldset>
+          {{#each properties}}
+            <fieldset class="property clearfix">
+              <input class="name-input" value={{name}} />
+              <input class="value-input" value={{value}} />
+              <input class="units-input" value={{units}} />
+            </fieldset>
+          {{/each}}
+        </form>
       </div>
     {{/each}}
   </script>

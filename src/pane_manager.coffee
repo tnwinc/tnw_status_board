@@ -2,6 +2,8 @@ define ['localstorage', 'lib/underscore', 'lib/handlebars', 'hbs_helpers/pane_st
 
   NAMESPACE = 'pane_manager'
 
+  $body = $ document.body
+
   randomId = ->
     Math.floor(Math.random() * 100000)
 
@@ -29,7 +31,17 @@ define ['localstorage', 'lib/underscore', 'lib/handlebars', 'hbs_helpers/pane_st
         @panes[id] = new Pane(id, pane.url, properties)
 
       @firstRun() unless @ls.hasData()
-      @renderPanes()
+      @renderPanes 'view'
+
+      @bindEvents()
+
+    bindEvents: ->
+      $body.on 'click', '#edit-panes', (e)=>
+        e.preventDefault()
+        @editPanes()
+
+    editPanes: ->
+      @renderPanes 'edit'
 
     firstRun: ->
       oldLs = new LS()
@@ -73,6 +85,6 @@ define ['localstorage', 'lib/underscore', 'lib/handlebars', 'hbs_helpers/pane_st
 
       @ls.set panes: @panes
 
-    renderPanes: ->
-      template = Handlebars.compile $('#view-panes-template').html()
-      $(template(panes: @panes)).appendTo '#view-panes'
+    renderPanes: (type)->
+      template = Handlebars.compile $("##{type}-panes-template").html()
+      $(template(panes: @panes)).appendTo "##{type}-panes-container"

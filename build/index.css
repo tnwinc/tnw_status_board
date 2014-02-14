@@ -1,6 +1,9 @@
-html, body { width: 100%; height: 100%; margin: 0; padding: 0; }
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,button,textarea,p,blockquote,th,td{margin:0;padding:0;}table{border-collapse:collapse;border-spacing:0;}fieldset,img,a img{border:none;}address,caption,cite,code,dfn,em,strong,th,var,optgroup{font-style:inherit;font-weight:inherit;}del,ins{text-decoration:none;}li{list-style:none;}caption,th{text-align:left;}h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal;}q:before,q:after{content:'';}abbr,acronym{border:0;font-variant:normal;}sup{vertical-align:baseline;}sub{vertical-align:baseline;}legend{color:#000;}
+
 .valign { vertical-align: middle; display: inline-block; }
 .vshim { vertical-align: middle; height: 100%; display: inline-block; }
+.clearfix:before,.clearfix:after { content:""; display:table; }
+.clearfix:after { clear:both; }
 
 body {
   background:
@@ -29,6 +32,8 @@ body {
   font-style: 16px;
 }
 
+/* Shared */
+
 .pane {
   position: absolute;
 }
@@ -39,6 +44,87 @@ iframe {
   width: 100%;
   height: 100%;
 }
+
+/* View */
+
+a.edit-panes {
+  color: #333;
+  font-size: 1.2em;
+  position: absolute;
+  top: 0;
+  right: 0;
+  text-align: right;
+  text-decoration: none;
+  width: 30px;
+  height: 30px;
+}
+
+.edit-panes:before {
+  border-top: solid 30px rgba(255,255,255,0.7);
+  border-right: solid 30px rgba(255,255,255,0.7);
+  border-bottom: solid 30px transparent;
+  border-left: solid 30px transparent;
+  content: "";
+  display: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 0;
+  height: 0;
+}
+
+.edit-panes:hover:before {
+  display: block;
+}
+
+.edit-panes i {
+  color: #333;
+  display: none;
+  position: absolute;
+  top: 8px;
+  right: 8px;
+}
+
+.edit-panes:hover i {
+  display: inline;
+}
+
+/* Edit */
+
+.edit-panes-container .pane {
+  background: rgba(255,255,255,0.9);
+  border: solid 1px #767676;
+  box-sizing: border-box;
+}
+
+.pane form {
+  padding: 5px;
+}
+
+.pane fieldset {
+  margin-bottom: 5px;
+}
+
+.pane input {
+  border: solid 1px #767676;
+  border-radius: 3px;
+  box-sizing: border-box;
+  font-size: 1em;
+  padding: 5px 10px;
+  width: 100%;
+}
+
+.property input {
+  float: left;
+  margin-right: 5px;
+  width: 60px;
+}
+
+.property .name-input {
+  width: 100px;
+}
+
+/* Misc */
 
 #callout {
   background: #fff;
