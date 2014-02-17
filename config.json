@@ -1,0 +1,27 @@
+{
+  "scripts": [
+    "lib/jquery",
+    "lib/handlebars-runtime",
+    "lib/ember",
+    "lib/underscore",
+    "app",
+    "templates/*",
+    "controllers/*",
+    "views/*",
+    "components/*",
+    "helpers/*",
+    "routes/*",
+    "router"
+  ],
+  "copy": {
+    "dev": [
+      { "src": "src/fonts/**/*", "dest": "./_dev/fonts/" },
+      { "src": "src/scripts/lib/*", "dest": "./_dev/scripts/lib/" },
+      { "src": "src/static/*", "dest": "./_dev/" }
+    ],
+    "prod": [
+      { "src": "src/fonts/**/*", "dest": "./_build/fonts/" },
+      { "src": "src/static/*", "dest": "./_build/" }
+    ]
+  }
+}

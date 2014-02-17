@@ -1,8 +1,10 @@
 .idea
 do_commands.yml
 settings.yml
-npm-debug.log
 .DS_Store
 .sass-cache
-tmp
 node_modules
+npm-debug.log
+tmp
+_dev
+_build

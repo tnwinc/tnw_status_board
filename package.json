@@ -1,0 +1,32 @@
+{
+  "name": "TNW-Status-Board",
+  "version": "0.2.0",
+  "dependencies": {
+    "gulp": "*",
+    "through2": "*",
+    "event-stream": "*",
+    "glob": "*",
+    "rsvp": "*",
+    "connect": "*",
+    "underscore": "*",
+    "handlebars": "*",
+    "gulp-util": "*",
+    "gulp-clean": "*",
+    "gulp-rename": "*",
+    "gulp-watch": "*",
+    "gulp-plumber": "*",
+    "gulp-concat": "*",
+    "gulp-sass": "*",
+    "gulp-minify-css": "*",
+    "gulp-coffee": "*",
+    "gulp-uglify": "*",
+    "ember-precompile": "*",
+    "coffee-script": "~> 1.7.1"
+  },
+  "scripts": {
+    "dev": "gulp dev --require coffee-script/register",
+    "clean": "gulp clean --require coffee-script/register",
+    "prod": "gulp prod --require coffee-script/register",
+    "deploy": "gulp deploy --require coffee-script/register"
+  }
+}

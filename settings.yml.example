@@ -1,9 +1,0 @@
----
-#General bot settings
-:channels: ["#tnw_dev_test", "#tnw_dev_test1"]
----
-#Pusher settings
-:app_id : 16450
-:key : 5a5d4450371c09ff075c
-:secret : e73aa759652679bd0254
-
