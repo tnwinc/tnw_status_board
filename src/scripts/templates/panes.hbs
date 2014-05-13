@@ -1,3 +1,11 @@
 {{#each}}
   {{render 'pane' this}}
 {{/each}}
+
+<div class="edit-surface">
+  <a class="edit" {{action 'edit'}} href="#">
+    <i class="fa fa-cog"></i>
+  </a>
+</div>
+
+<a class="save" {{action 'save'}} href="#">Save</a>
