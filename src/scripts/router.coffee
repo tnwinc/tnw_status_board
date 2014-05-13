@@ -1,3 +1,2 @@
 App.Router.map ->
-  @resource 'panes', ->
-    @route 'edit'
+  @resource 'panes'
