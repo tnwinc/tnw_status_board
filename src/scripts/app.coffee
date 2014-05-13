@@ -1,3 +1,4 @@
 window.App = Ember.Application.create()
 
-App.NAMESPACE = "pane_manager"
+App.VERSION = "0.1.0"
+App.NAMESPACE = "tnw_status_board"
