@@ -2,6 +2,6 @@ App.PaneController = Ember.ObjectController.extend
 
   style: (->
     properties = _.map @get('properties'), (property)->
-      "#{property.name}: #{property.value}#{property.units};"
+      "#{property.get('name')}: #{property.get('value')}#{property.get('units')};"
     properties.join ' '
-  ).property 'properties'
+  ).property 'properties.@each'

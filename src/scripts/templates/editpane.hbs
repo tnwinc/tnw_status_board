@@ -1,0 +1,12 @@
+<div class="edit-pane">
+  {{input value=url}}
+  <ul class="properties">
+    {{#each properties}}
+      <li>
+        {{input value=name}}
+        {{input value=value}}
+        {{input value=units}}
+      </li>
+    {{/each}}
+  </ul>
+</div>

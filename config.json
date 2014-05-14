@@ -4,6 +4,7 @@
     "lib/handlebars-runtime",
     "lib/ember",
     "lib/underscore",
+    "lib/uuid",
     "app",
     "templates/*",
     "data/settings",

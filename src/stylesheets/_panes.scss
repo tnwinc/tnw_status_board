@@ -47,27 +47,6 @@ a.edit {
   display: block;
 }
 
-.save {
-  background: $action-color;
-  border-radius: 3px;
-  color: #FFF;
-  display: none;
-  padding: 5px 10px;
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  text-decoration: none;
-
-  &:hover,
-  &:focus {
-    background: darken($action-color, 10%);
-  }
-
-  .editing & {
-    display: block;
-  }
-}
-
 .pane {
   position: absolute;
 
@@ -76,18 +55,5 @@ a.edit {
     margin: 0;
     width: 100%;
     height: 100%;
-  }
-}
-
-.edit-pane {
-  background: rgba(255, 255, 255, 0.9);
-  border: solid 1px #FFF;
-  box-sizing: border-box;
-  display: none;
-  padding: 10px;
-  position: absolute;
-
-  .editing & {
-    display: block;
   }
 }

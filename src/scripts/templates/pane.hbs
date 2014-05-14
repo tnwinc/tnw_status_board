@@ -1,13 +1,6 @@
 <div class="pane" {{bind-attr style=style}}>
   <iframe {{bind-attr src=url}} frameborder="0" marginheight="0" marginwidth="0" scrolling="no"></iframe>
-</div>
-
-<div class="edit-pane" {{bind-attr style=style}}>
-  <ul class="properties">
-    {{#each properties}}
-      <li>
-        {{name}}: {{value}}{{units}}
-      </li>
-    {{/each}}
-  </ul>
+  {{#link-to 'editpane' this class="edit-cover"}}
+    <i class="fa fa-edit"></i>
+  {{/link-to}}
 </div>

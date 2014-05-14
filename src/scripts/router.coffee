@@ -1,2 +1,3 @@
 App.Router.map ->
-  @resource 'panes'
+  @resource 'panes', ->
+    @resource 'editpane', path: 'edit/:id'
