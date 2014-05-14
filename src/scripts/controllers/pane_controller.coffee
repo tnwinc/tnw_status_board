@@ -1,5 +1,11 @@
 App.PaneController = Ember.ObjectController.extend
 
+  startEditing: (->
+    if @get('isNew')
+      @set 'isNew', false
+      @send 'edit'
+  ).on 'init'
+
   needs: 'panes'
 
   style: (->
@@ -22,4 +28,9 @@ App.PaneController = Ember.ObjectController.extend
 
     save: ->
       @set 'beingEdited', false
+      @get('controllers.panes').send 'save'
+
+    remove: ->
+      @set 'beingEdited', false
+      @get('controllers.panes').send 'removePane', @get('model')
       @get('controllers.panes').send 'save'

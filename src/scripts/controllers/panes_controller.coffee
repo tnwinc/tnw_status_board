@@ -8,6 +8,12 @@ App.PanesController = Ember.ArrayController.extend
     close: ->
       @set 'editing', false
 
+    addPane: ->
+      @get('model').addObject App.Pane.newOne()
+
+    removePane: (pane)->
+      @get('model').removeObject pane
+
     editPane: ->
       @set 'editingPane', true
 

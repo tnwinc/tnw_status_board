@@ -34,8 +34,12 @@
     padding: 10px 0;
     text-align: right;
 
-    button {
-      display: inline-block;
+    .remove {
+      float: left;
+    }
+
+    .save {
+      float: right;
     }
   }
 }

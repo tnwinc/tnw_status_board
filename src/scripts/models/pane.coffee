@@ -14,3 +14,14 @@ App.Pane.reopenClass
 
   deserialize: (panes)->
     _.map panes, (pane)-> App.Pane.create pane
+
+  newOne: ->
+    App.Pane.create
+      url: ''
+      isNew: true
+      properties: [
+        { name: 'top', value: '20px' }
+        { name: 'right', value: '20px' }
+        { name: 'width', value: '300px' }
+        { name: 'height', value: '200px' }
+      ]

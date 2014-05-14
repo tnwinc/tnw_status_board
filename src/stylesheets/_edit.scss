@@ -1,16 +1,9 @@
-.close {
-  background: none;
-  border-radius: 0 0 0 5px;
+.edit-actions {
   display: none;
-  font-size: 1.5em;
   position: absolute;
   top: 0;
   right: 0;
-
-  &:hover,
-  &:focus {
-    background: rgba(255, 255, 255, 0.6);
-  }
+  text-align: right;
 
   .editing & {
     display: block;
@@ -18,6 +11,17 @@
 
   .editing-pane & {
     display: none;
+  }
+
+  button {
+    color: rgba(255, 255, 255, 0.7);
+    display: inline-block;
+    font-size: 1.5em;
+
+    &:hover,
+    &:focus {
+      color: #FFF;
+    }
   }
 }
 

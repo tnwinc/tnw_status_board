@@ -10,6 +10,11 @@
 
 {{outlet}}
 
-<button class="close" {{action 'close'}}>
-  <i class="fa fa-times"></i>
-</button>
+<div class="edit-actions">
+  <button class="add" {{action 'addPane'}}>
+    <i class="fa fa-plus-square"></i>
+  </button>
+  <button class="close" {{action 'close'}}>
+    <i class="fa fa-times"></i>
+  </button>
+</div>
