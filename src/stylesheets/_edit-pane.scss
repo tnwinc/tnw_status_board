@@ -30,7 +30,7 @@
     margin-bottom: 5px;
   }
 
-  .actions {
+  > .actions {
     padding: 10px 0;
 
     button {
@@ -47,15 +47,34 @@
 }
 
 .properties {
-  li {
-    margin-bottom: 5px;
-  }
-
   input {
     display: inline-block;
   }
 
+  .actions {
+    text-align: center;
+  }
+
   .add-property {
-    float: right;
+    display: inline-block;
+    padding-right: 30px;
+    padding-left: 30px;
   }
 }
+
+.property {
+  margin-bottom: 5px;
+
+  button {
+    color: #565656;
+    display: inline-block;
+    padding-right: 0;
+    padding-left: 5px;
+
+    &:hover,
+    &:focus {
+      color: $danger-color;
+    }
+  }
+}
+

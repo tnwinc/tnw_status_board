@@ -8,12 +8,14 @@
       <label>Properties</label>
       <ul>
         {{#each properties}}
-          {{property-editor property=this isNew=isNew}}
+          {{property-editor property=this isNew=isNew onRemoval="removeProperty"}}
         {{/each}}
       </ul>
-      <button class="add-property primary" {{action 'add'}}>
-        <i class="fa fa-plus"></i>
-      </button>
+      <section class="actions">
+        <button class="add-property primary" {{action 'addProperty'}}>
+          <i class="fa fa-plus"></i>
+        </button>
+      </section>
     </fieldset>
     <section class="actions clearfix">
       <button class="save action" {{action 'save'}}>Save</button>

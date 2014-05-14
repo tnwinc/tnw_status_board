@@ -51,7 +51,7 @@ button {
   &.primary { @include buttonize($primary-color); }
   &.action { @include buttonize($action-color); }
   &.neutral { @include buttonize($neutral-color); color: #333; }
-  &.danger { @include buttonize($error-color); }
+  &.danger { @include buttonize($danger-color); }
   &.success { @include buttonize($success-color); }
 }
 
