@@ -1,14 +1,11 @@
 App.migrator.registerMigration '0.1.0', ->
 
-  lsGet = (key)->
-    JSON.parse(localStorage[key] || "null")
-
   new Ember.RSVP.Promise (resolve)->
     console.log 'running migration for version 0.1.0'
 
     topLeftUrl =
       id: uuid.v4()
-      url: lsGet 'panes.topLeft'
+      url: localStorage['panes.topLeft']
       properties: [
         { name: 'top', value: 0 }
         { name: 'left', value: 0 }
@@ -18,7 +15,7 @@ App.migrator.registerMigration '0.1.0', ->
 
     topMiddleUrl =
       id: uuid.v4()
-      url: lsGet 'panes.topMiddle'
+      url: localStorage['panes.topMiddle']
       properties: [
         { name: 'top', value: 0 }
         { name: 'left', value: '25%' }
@@ -28,7 +25,7 @@ App.migrator.registerMigration '0.1.0', ->
 
     topRightUrl =
       id: uuid.v4()
-      url: lsGet 'panes.topRight'
+      url: localStorage['panes.topRight']
       properties: [
         { name: 'top', value: 0 }
         { name: 'right', value: 0 }
@@ -38,7 +35,7 @@ App.migrator.registerMigration '0.1.0', ->
 
     bottomUrl =
       id: uuid.v4()
-      url: lsGet 'panes.bottom'
+      url: localStorage['panes.bottom']
       properties: [
         { name: 'top', value: '450px' }
         { name: 'left', value: 0 }
