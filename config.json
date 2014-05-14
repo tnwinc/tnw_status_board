@@ -27,7 +27,7 @@
     ],
     "prod": [
       { "src": "src/fonts/**/*", "dest": "./_build/fonts/" },
-      { "src": "src/static/*", "dest": "./_build/" }
+      { "src": "static/*", "dest": "./_build/" }
     ]
   }
 }

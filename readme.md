@@ -1,5 +1,57 @@
-1. Get a pusher account: http://www.pusher.com
-2. Make a copy of https://github.com/tnwinc/tnw_status_board/blob/gh-pages/index.html
-3. Take that page and create a:gh-pages branch (it's in the admin screen) and put this file there and call it board.html
-4. Point your browser for your board at: labs.tnwinc.com/<YourRepoName>/board.html
-5. Set your pusher api key when page asks you
+## TNW Status Board
+
+### Prerequisites
+
+* node
+
+### Installation
+
+Clone this repo. Go into its root directory.
+
+Run:
+
+```
+npm install
+```
+
+### Running locally
+
+Run:
+
+```
+npm run prod
+```
+
+then go to [http://localhost:8081](http://localhost:8081)
+
+### Developing
+
+Run:
+
+```
+npm run dev
+```
+
+which will:
+
+* compile CoffeeScript, SCSS, and Handlebars(.hbs) files on save
+* run a server at [http://localhost:8080](http://localhost:8080)
+
+### Deploying
+
+Run:
+
+```
+npm run deploy
+```
+
+which will:
+
+* compile and optimize scripts and stylesheets
+* put only the relevant files into the `_build` directory
+* checkout the `_build` directory into the `gh-pages` branch
+* **force push** the `gh-pages` branch to the remote
+
+### Static pages
+
+Add static pages (eg. rotate.html, ping_pong.html) to the `static` directory and they will be available on this domain path (eg. http://labs.tnwinc.com/tnw_status_board/rotate.html).
