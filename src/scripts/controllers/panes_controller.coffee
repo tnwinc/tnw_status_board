@@ -5,7 +5,7 @@ App.PanesController = Ember.ArrayController.extend
     edit: ->
       @set 'editing', true
 
-    save: ->
+    close: ->
       @set 'editing', false
 
     editPane: ->

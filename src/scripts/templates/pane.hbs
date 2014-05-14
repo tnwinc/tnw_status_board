@@ -7,17 +7,25 @@
 
 <div class="edit-pane-container">
   <div class="edit-pane">
-    {{input value=url}}
-    <ul class="properties">
-      {{#each properties}}
-        <li>
-          {{input value=name}}
-          {{input value=value}}
-          {{input value=units}}
-        </li>
-      {{/each}}
-    </ul>
-    <button class="save" {{action 'save'}}>Save</button>
-    <button class="cancel" {{action 'cancel'}}>Cancel</button>
+    <fieldset class="url">
+      <label>URL</label>
+      {{input value=url}}
+    </fieldset>
+    <fieldset class="properties">
+      <label>Properties</label>
+      <ul>
+        {{#each properties}}
+          <li>
+            {{input class="property-name" value=name}}
+            {{input class="property-value" value=value}}
+            {{input class="property-units" value=units}}
+          </li>
+        {{/each}}
+      </ul>
+    </fieldset>
+    <section class="actions clearfix">
+      <button class="save action" {{action 'save'}}>Save</button>
+      <button class="cancel neutral" {{action 'cancel'}}>Cancel</button>
+    </section>
   </div>
 </div>

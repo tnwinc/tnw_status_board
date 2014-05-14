@@ -27,3 +27,38 @@ body {
   font-style: 16px;
 }
 
+.clearfix:before,.clearfix:after { content:""; display:table; }
+.clearfix:after { clear:both; }
+
+@mixin buttonize($color) {
+  background: $color;
+
+  &:hover,
+  &:focus {
+    background: darken($color, 10%);
+  }
+}
+
+button {
+  border: none;
+  border-radius: 3px;
+  color: #FFF;
+  cursor: pointer;
+  font-size: 1em;
+  padding: 5px 10px;
+
+  &.primary { @include buttonize($primary-color); }
+  &.action { @include buttonize($action-color); }
+  &.neutral { @include buttonize($neutral-color); color: #333; }
+  &.danger { @include buttonize($error-color); }
+  &.success { @include buttonize($success-color); }
+}
+
+input {
+  border: solid 1px #c7c7c7;
+  border-radius: 3px;
+  box-sizing: border-box;
+  display: block;
+  font-size: 1em;
+  padding: 5px 10px;
+}
