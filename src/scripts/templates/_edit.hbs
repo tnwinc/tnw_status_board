@@ -4,17 +4,16 @@
       <label>URL</label>
       {{input value=url}}
     </fieldset>
-    <fieldset class="properties">
+    <fieldset class="properties clearfix">
       <label>Properties</label>
       <ul>
         {{#each properties}}
-          <li>
-            {{input class="property-name" value=name}}
-            {{input class="property-value" value=value}}
-            {{input class="property-units" value=units}}
-          </li>
+          {{property-editor property=this isNew=isNew}}
         {{/each}}
       </ul>
+      <button class="add-property primary" {{action 'add'}}>
+        <i class="fa fa-plus"></i>
+      </button>
     </fieldset>
     <section class="actions clearfix">
       <button class="save action" {{action 'save'}}>Save</button>
