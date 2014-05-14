@@ -5,27 +5,4 @@
   </a>
 </div>
 
-<div class="edit-pane-container">
-  <div class="edit-pane">
-    <fieldset class="url">
-      <label>URL</label>
-      {{input value=url}}
-    </fieldset>
-    <fieldset class="properties">
-      <label>Properties</label>
-      <ul>
-        {{#each properties}}
-          <li>
-            {{input class="property-name" value=name}}
-            {{input class="property-value" value=value}}
-            {{input class="property-units" value=units}}
-          </li>
-        {{/each}}
-      </ul>
-    </fieldset>
-    <section class="actions clearfix">
-      <button class="save action" {{action 'save'}}>Save</button>
-      <button class="cancel neutral" {{action 'cancel'}}>Cancel</button>
-    </section>
-  </div>
-</div>
+{{partial 'edit'}}

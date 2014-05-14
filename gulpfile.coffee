@@ -42,7 +42,7 @@ gulp.task 'watchCoffee', ->
     .pipe(gulp.dest('./_dev/scripts/'))
 
 gulp.task 'watchHandlebars', ->
-  watch(glob: 'src/scripts/**/*.hbs')
+  watch(glob: 'src/scripts/**/*.hbs', buildDevIndex)
     .pipe(plumber())
     .pipe(emberHandlebars().on('error', gutil.log))
     .pipe(gulp.dest('./_dev/scripts/'))
