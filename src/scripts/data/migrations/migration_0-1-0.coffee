@@ -10,40 +10,40 @@ App.migrator.registerMigration '0.1.0', ->
       id: uuid.v4()
       url: lsGet 'panes.topLeft'
       properties: [
-        { name: 'top', value: 0, units: '' }
-        { name: 'left', value: 0, units: '' }
-        { name: 'width', value: 25, units: '%' }
-        { name: 'height', value: 450, units: 'px' }
+        { name: 'top', value: 0 }
+        { name: 'left', value: 0 }
+        { name: 'width', value: '25%' }
+        { name: 'height', value: '450px' }
       ]
 
     topMiddleUrl =
       id: uuid.v4()
       url: lsGet 'panes.topMiddle'
       properties: [
-        { name: 'top', value: 0, units: '' }
-        { name: 'left', value: 25, units: '%' }
-        { name: 'width', value: 25, units: '%' }
-        { name: 'height', value: 450, units: 'px' }
+        { name: 'top', value: 0 }
+        { name: 'left', value: '25%' }
+        { name: 'width', value: '25%' }
+        { name: 'height', value: '450px' }
       ]
 
     topRightUrl =
       id: uuid.v4()
       url: lsGet 'panes.topRight'
       properties: [
-        { name: 'top', value: 0, units: '' }
-        { name: 'right', value: 0, units: '' }
-        { name: 'width', value: 50, units: '%' }
-        { name: 'height', value: 450, units: 'px' }
+        { name: 'top', value: 0 }
+        { name: 'right', value: 0 }
+        { name: 'width', value: '50%' }
+        { name: 'height', value: '450px' }
       ]
 
     bottomUrl =
       id: uuid.v4()
       url: lsGet 'panes.bottom'
       properties: [
-        { name: 'top', value: 450, units: 'px' }
-        { name: 'left', value: 0, units: '' }
-        { name: 'right', value: 0, units: '' }
-        { name: 'bottom', value: 0, units: '' }
+        { name: 'top', value: '450px' }
+        { name: 'left', value: 0 }
+        { name: 'right', value: 0 }
+        { name: 'bottom', value: 0 }
       ]
 
     App.settings.updateValue 'panes', [topLeftUrl, topMiddleUrl, topRightUrl, bottomUrl]

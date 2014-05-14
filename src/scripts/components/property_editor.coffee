@@ -6,6 +6,7 @@ App.PropertyEditorComponent = Ember.Component.extend
   autoFocus: (->
     if @get 'isNew'
       @$('.property-name').focus()
+      @set 'isNew', false
   ).on 'didInsertElement'
 
   actions:

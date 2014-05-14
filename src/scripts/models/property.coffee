@@ -3,7 +3,6 @@ App.Property = Ember.Object.extend
   serialize: ->
     name: @get 'name'
     value: @get 'value'
-    units: @get 'units'
 
 App.Property.reopenClass
 
@@ -12,3 +11,9 @@ App.Property.reopenClass
 
   deserialize: (properties)->
     _.map properties, (property)-> App.Property.create property
+
+  newOne: ->
+    App.Property.create
+      name: ''
+      value: ''
+      isNew: true

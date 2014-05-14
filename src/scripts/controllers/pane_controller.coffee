@@ -4,9 +4,9 @@ App.PaneController = Ember.ObjectController.extend
 
   style: (->
     properties = _.map @get('properties'), (property)->
-      "#{property.get('name')}: #{property.get('value')}#{property.get('units')};"
+      "#{property.get('name')}: #{property.get('value')};"
     properties.join ' '
-  ).property 'properties.@each.name', 'properties.@each.value', 'properties.@each.units'
+  ).property 'properties.@each.name', 'properties.@each.value'
 
   actions:
 
@@ -15,8 +15,7 @@ App.PaneController = Ember.ObjectController.extend
       @get('controllers.panes').send 'editPane'
 
     addProperty: ->
-      property = App.Property.create name: '', value: '', units: '', isNew: true
-      @get('properties').addObject property
+      @get('properties').addObject App.Property.newOne()
 
     removeProperty: (property)->
       @get('properties').removeObject property
