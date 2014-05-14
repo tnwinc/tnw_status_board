@@ -6,6 +6,7 @@
     "lib/underscore",
     "lib/uuid",
     "app",
+    "models/*",
     "templates/*",
     "data/settings",
     "data/version_assistant",

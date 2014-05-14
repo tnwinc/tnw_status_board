@@ -32,10 +32,10 @@
 
   > .actions {
     padding: 10px 0;
+    text-align: right;
 
     button {
-      float: right;
-      margin-left: 10px;
+      display: inline-block;
     }
   }
 }

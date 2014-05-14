@@ -15,7 +15,7 @@ App.PaneController = Ember.ObjectController.extend
       @get('controllers.panes').send 'editPane'
 
     addProperty: ->
-      property = Ember.Object.create name: '', value: '', units: '', isNew: true
+      property = App.Property.create name: '', value: '', units: '', isNew: true
       @get('properties').addObject property
 
     removeProperty: (property)->
@@ -23,8 +23,4 @@ App.PaneController = Ember.ObjectController.extend
 
     save: ->
       @set 'beingEdited', false
-      @get('controllers.panes').send 'endEditPane'
-
-    cancel: ->
-      @set 'beingEdited', false
-      @get('controllers.panes').send 'endEditPane'
+      @get('controllers.panes').send 'save'

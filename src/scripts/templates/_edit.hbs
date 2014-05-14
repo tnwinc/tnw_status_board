@@ -4,7 +4,7 @@
       <label>URL</label>
       {{input value=url}}
     </fieldset>
-    <fieldset class="properties clearfix">
+    <fieldset class="properties">
       <label>Properties</label>
       <ul>
         {{#each properties}}
@@ -17,9 +17,8 @@
         </button>
       </section>
     </fieldset>
-    <section class="actions clearfix">
+    <section class="actions">
       <button class="save action" {{action 'save'}}>Save</button>
-      <button class="cancel neutral" {{action 'cancel'}}>Cancel</button>
     </section>
   </div>
 </div>
