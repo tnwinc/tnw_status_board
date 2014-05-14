@@ -22,6 +22,11 @@ rename = require 'gulp-rename'
 clean = require 'gulp-clean'
 
 
+buildDevIndex = ->
+  gulp.src('src/index.hbs')
+    .pipe(buildIndex.dev(config.scripts, ['stylesheets/all.css']))
+    .pipe(gulp.dest('./_dev/'))
+
 copyFiles = (files)->
   for file in files
     gulp.src(file.src).pipe(gulp.dest(file.dest))
@@ -29,24 +34,12 @@ copyFiles = (files)->
 
 # Dev
 
-gulp.task 'devIndex', ->
-  gulp.src('src/index.hbs')
-    .pipe(buildIndex.dev(config.scripts, ['stylesheets/all.css']))
-    .pipe(gulp.dest('./_dev/'))
-
-gulp.task 'devCopy', ->
-  copyFiles config.copy.dev
-
 gulp.task 'watchCoffee', ->
-  watchCoffee = watch glob: 'src/scripts/**/*.coffee'
+  watchCoffee = watch glob: 'src/scripts/**/*.coffee', buildDevIndex
   watchCoffee
     .pipe(plumber())
     .pipe(coffee().on('error', gutil.log))
     .pipe(gulp.dest('./_dev/scripts/'))
-
-  watchCoffee.gaze.on 'all', (event)->
-    if event is 'added' or event is 'deleted'
-      gulp.run 'devIndex'
 
 gulp.task 'watchHandlebars', ->
   watch(glob: 'src/scripts/**/*.hbs')
@@ -57,14 +50,22 @@ gulp.task 'watchHandlebars', ->
 gulp.task 'watchSass', ->
   watch glob: 'src/stylesheets/*.scss', ->
     gulp.src('src/stylesheets/!(_)*.scss')
-      .pipe(sass())
+      .pipe(plumber())
+      .pipe(sass().on('error', gutil.log))
       .pipe(gulp.dest('./_dev/stylesheets/'))
 
-gulp.task 'watch', ['watchCoffee', 'watchHandlebars', 'watchSass']
+gulp.task 'watchCopies', ->
+  for copy in config.copy.dev
+    do (copy)->
+      watch(glob: copy.src).pipe(gulp.dest(copy.dest))
+
+gulp.task 'watchIndex', ['watchCoffee', 'watchHandlebars', 'watchSass', 'watchCopies'], ->
+  watch glob: 'src/index.hbs', buildDevIndex
+  watch glob: 'config.json', buildDevIndex
 
 gulp.task 'devServer', -> server '_dev', 8080
 
-gulp.task 'dev', ['devIndex', 'devCopy', 'watch', 'devServer']
+gulp.task 'dev', ['watchIndex', 'devServer']
 
 
 # Prod
