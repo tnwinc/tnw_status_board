@@ -1,6 +1,23 @@
 <div class="pane" {{bind-attr style=style}}>
   <iframe {{bind-attr src=url}} frameborder="0" marginheight="0" marginwidth="0" scrolling="no"></iframe>
-  {{#link-to 'editpane' this class="edit-cover"}}
+  <a class="edit-cover" {{action 'edit'}} href="#">
     <i class="fa fa-edit"></i>
-  {{/link-to}}
+  </a>
+</div>
+
+<div class="edit-pane-container">
+  <div class="edit-pane">
+    {{input value=url}}
+    <ul class="properties">
+      {{#each properties}}
+        <li>
+          {{input value=name}}
+          {{input value=value}}
+          {{input value=units}}
+        </li>
+      {{/each}}
+    </ul>
+    <button class="save" {{action 'save'}}>Save</button>
+    <button class="cancel" {{action 'cancel'}}>Cancel</button>
+  </div>
 </div>

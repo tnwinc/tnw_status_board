@@ -1,3 +1,3 @@
 App.PanesView = Ember.View.extend
 
-  classNameBindings: ['controller.editing']
+  classNameBindings: ['controller.editing', 'controller.editingPane']

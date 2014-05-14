@@ -56,4 +56,8 @@ a.edit {
     width: 100%;
     height: 100%;
   }
+
+  .being-edited & {
+    z-index: 9;
+  }
 }
