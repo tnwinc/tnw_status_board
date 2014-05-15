@@ -1,4 +1,4 @@
-.edit-pane-container {
+.pane-editor-container {
   display: none;
   position: absolute;
   top: 0;
@@ -12,7 +12,7 @@
   }
 }
 
-.edit-pane {
+.pane-editor {
   background: rgba(255, 255, 255, 0.7);
   border: solid 1px rgba(0, 0, 0, 0.4);
   border-radius: 3px;

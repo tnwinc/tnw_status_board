@@ -1,7 +1,14 @@
 <div class="pane" {{bind-attr style=style}}>
   <iframe {{bind-attr src=url}} frameborder="0" marginheight="0" marginwidth="0" scrolling="no"></iframe>
-  <div class="edit-cover" {{action 'edit'}}>
-    <i class="fa fa-edit"></i>
+  <div class="edit-options">
+    <div class="edit-option edit-pane" {{action 'edit'}}>
+      <i class="fa fa-edit"></i>
+    </div>
+    <div class="edit-option swap-url" {{action 'swap'}}>
+      <i class="fa fa-link"></i>
+      <i class="fa fa-arrows-h"></i>
+      <i class="fa fa-link"></i>
+    </div>
   </div>
 </div>
 

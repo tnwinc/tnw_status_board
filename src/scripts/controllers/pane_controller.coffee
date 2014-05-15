@@ -25,6 +25,8 @@ App.PaneController = Ember.ObjectController.extend
       @set 'beingEdited', true
       @get('controllers.panes').send 'editPane'
 
+    swap: ->
+
     addProperty: ->
       @get('properties').addObject App.Property.newOne()
 
