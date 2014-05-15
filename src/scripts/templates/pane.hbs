@@ -1,8 +1,8 @@
 <div class="pane" {{bind-attr style=style}}>
   <iframe {{bind-attr src=url}} frameborder="0" marginheight="0" marginwidth="0" scrolling="no"></iframe>
-  <a class="edit-cover" {{action 'edit'}} href="#">
+  <div class="edit-cover" {{action 'edit'}}>
     <i class="fa fa-edit"></i>
-  </a>
+  </div>
 </div>
 
 {{partial 'edit'}}

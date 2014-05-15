@@ -30,6 +30,19 @@ body {
 .clearfix:before,.clearfix:after { content:""; display:table; }
 .clearfix:after { clear:both; }
 
+a:link,
+a:visited {
+  color: $primary-color;
+  text-decoration: none;
+}
+
+a:hover,
+a:focus,
+a:active {
+  color: darken($primary-color, 10%);
+  text-decoration: underline;
+}
+
 @mixin buttonize($color) {
   background: $color;
 

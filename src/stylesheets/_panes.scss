@@ -47,6 +47,33 @@ a.edit {
   display: block;
 }
 
+.undo {
+  background: $neutral-color;
+  border-radius: 3px;
+  box-sizing: border-box;
+  font-size: .9em;
+  margin-left: -90px;
+  padding: 6px;
+  position: absolute;
+  transition: all .5s ease-out;
+  top: -80px;
+  left: 50%;
+  width: 180px;
+
+  button {
+    float: left;
+  }
+
+  a {
+    float: right;
+    padding: 5px;
+  }
+
+  .undoable & {
+    top: 10px;
+  }
+}
+
 .pane {
   position: absolute;
 
