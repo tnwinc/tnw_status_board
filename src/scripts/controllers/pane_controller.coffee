@@ -14,9 +14,14 @@ App.PaneController = Ember.ObjectController.extend
     properties.join ' '
   ).property 'properties.@each.name', 'properties.@each.value'
 
+  _doneEditing: ->
+    @set 'original', null
+    @set 'beingEdited', false
+
   actions:
 
     edit: ->
+      @set 'original', @get('model').serialize()
       @set 'beingEdited', true
       @get('controllers.panes').send 'editPane'
 
@@ -26,8 +31,13 @@ App.PaneController = Ember.ObjectController.extend
     removeProperty: (property)->
       @get('properties').removeObject property
 
+    cancel: ->
+      @set 'model', App.Pane.create @get('original')
+      @_doneEditing()
+      @get('controllers.panes').send 'cancel'
+
     save: ->
-      @set 'beingEdited', false
+      @_doneEditing()
       @get('controllers.panes').send 'save'
 
     remove: ->

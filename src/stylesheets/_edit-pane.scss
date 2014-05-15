@@ -38,8 +38,10 @@
       float: left;
     }
 
-    .save {
+    .save,
+    .cancel {
       float: right;
+      margin-left: 10px;
     }
   }
 }

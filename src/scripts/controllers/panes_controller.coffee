@@ -17,6 +17,9 @@ App.PanesController = Ember.ArrayController.extend
     editPane: ->
       @set 'editingPane', true
 
+    cancel: ->
+      @set 'editingPane', false
+
     save: ->
       App.settings.updateValue 'panes', App.Pane.serialize @get('model')
       @set 'editingPane', false
