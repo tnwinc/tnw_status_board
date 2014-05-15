@@ -1,5 +1,7 @@
 ## TNW Status Board
 
+Set the URL for the browser on your board to http://labs.tnwinc.com/tnw_status_board
+
 ### Prerequisites
 
 * node
