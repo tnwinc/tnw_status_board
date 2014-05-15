@@ -58,7 +58,8 @@ a.edit {
     display: block;
   }
 
-  .editing-pane & {
+  .editing-pane &,
+  .swapping & {
     display: none;
   }
 
@@ -86,7 +87,9 @@ a.edit {
   top: -80px;
   left: 50%;
   width: 180px;
+}
 
+.delete-undo {
   button {
     float: left;
   }
@@ -97,6 +100,20 @@ a.edit {
   }
 
   .undoable & {
+    top: 10px;
+  }
+}
+
+.swap-undo {
+  margin-left: -60px;
+  text-align: center;
+  width: 120px;
+
+  button {
+    display: inline-block;
+  }
+
+  .swapping & {
     top: 10px;
   }
 }

@@ -26,6 +26,13 @@ App.PaneController = Ember.ObjectController.extend
       @get('controllers.panes').send 'editPane'
 
     swap: ->
+      unless @get 'beingSwapped'
+        @set 'beingSwapped', true
+        @get('controllers.panes').send 'swap', @get('url'), (url)=>
+          @set 'beingSwapped', false
+          if url
+            @set 'url', url
+            @get('controllers.panes').send 'save'
 
     addProperty: ->
       @get('properties').addObject App.Property.newOne()

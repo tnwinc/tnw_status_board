@@ -52,3 +52,19 @@ App.PanesController = Ember.ArrayController.extend
     save: ->
       App.settings.updateValue 'panes', App.Pane.serialize @get('model')
       @_doneEditingPane()
+
+    swap: (url, callback)->
+      if @get 'swapping'
+        swap = @get 'swap'
+        callback swap.url
+        swap.callback url
+        @set 'swapping', false
+        @set 'swap', null
+      else
+        @set 'swapping', true
+        @set 'swap', url: url, callback: callback
+
+    cancelSwap: ->
+      @get('swap').callback()
+      @set 'swapping', false
+      @set 'swap', null

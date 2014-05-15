@@ -1,3 +1,3 @@
 App.PaneView = Ember.View.extend
 
-  classNameBindings: ['controller.beingEdited']
+  classNameBindings: ['controller.beingEdited', 'controller.beingSwapped']

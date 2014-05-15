@@ -41,7 +41,6 @@
 .edit-options {
   border: solid 1px #000;
   box-sizing: border-box;
-  color: rgba(255, 255, 255, 0.6);
   display: none;
   position: absolute;
   top: 0;
@@ -53,18 +52,21 @@
     display: block;
   }
 
-  .being-edited & {
-    background-color: rgba(255, 255, 255, 0.7);
-    border-color: #FFF;
+  .editing-pane &,
+  .being-swapped & {
+    background-color: rgba(0, 0, 0, 0.6);
   }
 
-  .editing-pane & i {
-    display: none;
+  .being-edited &,
+  .swapping & {
+    background-color: rgba(255, 255, 255, 0.7);
+    border-color: #FFF;
   }
 }
 
 .edit-option {
   background-color: rgba(0, 0, 0, 0.6);
+  color: rgba(255, 255, 255, 0.6);
   cursor: pointer;
   position: absolute;
   transition: all 0.5s ease-out;
@@ -72,7 +74,11 @@
   &:hover,
   &:focus {
     background-color: rgba(255, 255, 255, 0.5);
-    border-color: rgba(255, 255, 255, 0.8);
+    color: rgba(0, 0, 0, 0.8);
+  }
+
+  .editing-pane & {
+    display: none;
   }
 }
 
@@ -101,8 +107,11 @@
     i {
       -webkit-animation: jiggle 5s infinite;
       animation: jiggle 5s infinite;
-      color: rgba(0, 0, 0, 0.8);
     }
+  }
+
+  .swapping & {
+    display: none;
   }
 }
 
@@ -115,13 +124,31 @@
   padding: 10px;
   bottom: 15px;
   left: 50%;
+  transition: all 0.25s ease-in-out;
   width: 120px;
 
   i {
     display: inline-block;
+    height: 20px;
+    line-height: 20px;
 
     &.fa-arrows-h {
       margin: 0 5px;
     }
+  }
+
+  .swapping & {
+    margin-bottom: -20px;
+    bottom: 50%;
+
+    &:hover,
+    &:focus {
+      background-color: rgba(0, 0, 0, 0.9);
+      color: rgba(255, 255, 255, 0.6);
+    }
+  }
+
+  .being-swapped & {
+    display: none;
   }
 }

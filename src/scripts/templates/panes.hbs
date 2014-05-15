@@ -19,7 +19,11 @@
   </button>
 </div>
 
-<div class="undo clearfix">
+<div class="undo delete-undo clearfix">
   <button class="action" {{action 'undo'}}>Undo Delete</button>
   <a {{action 'dismissUndo'}} href="#">Dismiss</a>
+</div>
+
+<div class="undo swap-undo">
+  <button class="action" {{action 'cancelSwap'}}>Cancel Swap</button>
 </div>
