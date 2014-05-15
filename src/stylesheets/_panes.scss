@@ -47,6 +47,33 @@ a.edit {
   display: block;
 }
 
+.edit-actions {
+  display: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  text-align: right;
+
+  .editing & {
+    display: block;
+  }
+
+  .editing-pane & {
+    display: none;
+  }
+
+  button {
+    color: rgba(255, 255, 255, 0.7);
+    display: inline-block;
+    font-size: 1.5em;
+
+    &:hover,
+    &:focus {
+      color: #FFF;
+    }
+  }
+}
+
 .undo {
   background: $neutral-color;
   border-radius: 3px;
@@ -71,21 +98,5 @@ a.edit {
 
   .undoable & {
     top: 10px;
-  }
-}
-
-.pane {
-  position: absolute;
-
-  iframe {
-    position: absolute;
-    margin: 0;
-    width: 100%;
-    height: 100%;
-  }
-
-  .being-edited & {
-    opacity: 0.6;
-    z-index: 9;
   }
 }
