@@ -5,6 +5,10 @@ App.PanesController = Ember.ArrayController.extend
     @set 'undoable', false
     @set 'deletedPane', null
 
+  _doneEditingPane: ->
+    @set 'newPane', null
+    @set 'editingPane', false
+
   actions:
 
     edit: ->
@@ -14,9 +18,12 @@ App.PanesController = Ember.ArrayController.extend
       @set 'editing', false
 
     addPane: ->
-      @get('model').addObject App.Pane.newOne()
+      newPane = App.Pane.newOne()
+      @set 'newPane', newPane
+      @get('model').addObject newPane
 
     removePane: (pane)->
+      @set 'newPane', null
       @set 'undoable', true
       @set 'deletedPane', pane
       @get('model').removeObject pane
@@ -38,8 +45,10 @@ App.PanesController = Ember.ArrayController.extend
       @set 'editingPane', true
 
     cancel: ->
-      @set 'editingPane', false
+      if newPane = @get 'newPane'
+        @get('model').removeObject newPane
+      @_doneEditingPane()
 
     save: ->
       App.settings.updateValue 'panes', App.Pane.serialize @get('model')
-      @set 'editingPane', false
+      @_doneEditingPane()

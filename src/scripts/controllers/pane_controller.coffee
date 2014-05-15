@@ -32,7 +32,9 @@ App.PaneController = Ember.ObjectController.extend
       @get('properties').removeObject property
 
     cancel: ->
-      @set 'model', App.Pane.create @get('original')
+      original = @get 'original'
+      @set 'url', original.url
+      @set 'properties', App.Property.deserialize original.properties
       @_doneEditing()
       @get('controllers.panes').send 'cancel'
 
