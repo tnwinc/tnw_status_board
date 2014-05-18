@@ -1,12 +1,14 @@
 {
   "scripts": [
     "lib/jquery",
+    "lib/pusher",
     "lib/handlebars-runtime",
     "lib/ember",
     "lib/underscore",
     "lib/uuid",
     "app",
     "models/*",
+    "services/*",
     "templates/*",
     "data/settings",
     "data/version_assistant",
