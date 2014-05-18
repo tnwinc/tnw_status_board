@@ -19,4 +19,4 @@ App.Pusher = Ember.Object.extend
 App.Pusher.reopenClass
   events:
     standup: ['duration']
-    reload: -> location.reload true
+    reload: []
