@@ -1,6 +1,8 @@
 App.pusherEvents =
   standup: ['duration']
-  reload: []
+  reload: ->
+    @transitionToRoute 'panes'
+    Ember.run.later -> location.reload true
   sound: (data)->
     @get('controllers.application').send 'playSound', data.url
 
