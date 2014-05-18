@@ -1,4 +1,12 @@
-App.Pusher = Ember.Object.extend
+App.pusherEvents =
+  standup: ['duration']
+  reload: []
+  sound: (data)->
+    @get('controllers.application').send 'playSound', data.url
+
+App.PusherController = Ember.Controller.extend
+
+  needs: ['application']
 
   init: ->
     pusher = new Pusher App.settings.getValue('pusherApiKey')
@@ -6,17 +14,12 @@ App.Pusher = Ember.Object.extend
 
   setupEvents: (callback)->
     channel = @get 'channel'
-    for event, args of App.Pusher.events
-      do (event, args)->
+    for event, args of App.pusherEvents
+      do (event, args)=>
         handler = if _.isFunction args
           args
         else
           (data)->
             args = _.map args, (arg)-> data[arg]
             callback event, args...
-        channel.bind event, handler
-
-App.Pusher.reopenClass
-  events:
-    standup: ['duration']
-    reload: []
+        channel.bind event, handler.bind(this)
