@@ -9,7 +9,7 @@ App.PanesStandupRoute = Ember.Route.extend
       @transitionTo 'panes'
     , params.duration * 60 * 1000
 
-    url: 'http://labs.tnwinc.com/storyboard'
+    url: App.settings.getValue 'standupUrl'
 
   deactivate: ->
     clearTimeout @get('timeout')
