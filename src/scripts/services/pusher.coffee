@@ -17,12 +17,11 @@ App.PusherController = Ember.Controller.extend
 
   setupEvents: (callback)->
     channel = @get 'channel'
-    for event, args of App.pusherEvents
-      do (event, args)=>
-        handler = if _.isFunction args
-          args
-        else
-          (data)->
-            args = _.map args, (arg)-> data[arg]
-            callback event, args...
-        channel.bind event, handler.bind(this)
+    _.each App.pusherEvents, (handler, event)=>
+      fn = if _.isFunction handler
+        handler
+      else
+        (data)->
+          args = _.map handler, (arg)-> data[arg]
+          callback event, args...
+      channel.bind event, fn.bind(this)
