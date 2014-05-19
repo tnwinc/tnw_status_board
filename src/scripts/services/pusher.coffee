@@ -1,5 +1,6 @@
 App.pusherEvents =
   standup: ['duration']
+  youtube: ['id']
   reload: ->
     @transitionToRoute 'panes'
     Ember.run.later -> location.reload true

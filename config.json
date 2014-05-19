@@ -6,6 +6,7 @@
     "lib/ember",
     "lib/underscore",
     "lib/uuid",
+    "lib/youtube-iframe-api",
     "app",
     "models/*",
     "services/*",
