@@ -27,3 +27,8 @@ App.SettingsController = Ember.ObjectController.extend
     save: ->
       @_saveAndBroadcastValue(key) for key in @get('keys')
       @get('controllers.panes').send 'closeSettings'
+
+    cancel: ->
+      for key in @get('keys')
+        @set key, @get("original_#{key}")
+      @get('controllers.panes').send 'closeSettings'

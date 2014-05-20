@@ -39,7 +39,8 @@ $settings-width: 550px;
     text-align: right;
 
     button {
-      display: inline-block;
+      float: right;
+      margin-left: 10px;
     }
   }
 }
