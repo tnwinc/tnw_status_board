@@ -68,3 +68,9 @@ App.PanesController = Ember.ArrayController.extend
       @get('swap').callback()
       @set 'swapping', false
       @set 'swap', null
+
+    openSettings: ->
+      @set 'editingSettings', true
+
+    saveSettings: ->
+      @set 'editingSettings', false

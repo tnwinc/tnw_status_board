@@ -1,0 +1,26 @@
+.settings {
+  background: #f8f8f8;
+  border: solid 5px #c7c7c7;
+  border-top: none;
+  border-radius: 0 0 3px 3px;
+  box-sizing: borer-box;
+  display: none;
+  margin-left: -150px;
+  padding: 15px;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 300px;
+
+  .editing-settings & {
+    display: block;
+  }
+
+  .settings-actions {
+    text-align: right;
+
+    button {
+      display: inline-block;
+    }
+  }
+}

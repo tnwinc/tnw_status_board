@@ -53,7 +53,8 @@
   }
 
   .editing-pane &,
-  .being-swapped & {
+  .being-swapped &,
+  .editing-settings & {
     background-color: rgba(0, 0, 0, 0.6);
   }
 
@@ -77,7 +78,8 @@
     color: rgba(0, 0, 0, 0.8);
   }
 
-  .editing-pane & {
+  .editing-pane &,
+  .editing-settings & {
     display: none;
   }
 }
@@ -110,7 +112,8 @@
     }
   }
 
-  .swapping & {
+  .swapping &,
+  .editing-settings & {
     display: none;
   }
 }

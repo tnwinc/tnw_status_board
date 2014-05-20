@@ -1,4 +1,4 @@
-$edit-size: 28px;
+$edit-size: 42px;
 
 .edit-surface {
   position: absolute;
@@ -28,14 +28,14 @@ a.edit {
 
   color: rgba(255,255,255,0.5);
   display: none;
-  font-size: 16px;
+  font-size: 20px;
   position: absolute;
   top: 0;
   right: 0;
   text-align: center;
-  width: $edit-size;
-  height: $edit-size;
-  line-height: $edit-size;
+  width: $edit-size - 14;
+  height: $edit-size - 14;
+  line-height: $edit-size - 14;
 
   &:hover,
   &:focus {
@@ -59,7 +59,8 @@ a.edit {
   }
 
   .editing-pane &,
-  .swapping & {
+  .swapping &,
+  .editing-settings & {
     display: none;
   }
 

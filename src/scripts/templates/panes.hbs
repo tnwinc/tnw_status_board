@@ -4,13 +4,16 @@
 
 <div class="edit-surface">
   <a class="edit" {{action 'edit'}} href="#">
-    <i class="fa fa-cog"></i>
+    <i class="fa fa-th"></i>
   </a>
 </div>
 
 <div class="edit-actions">
   <button class="add" {{action 'addPane'}}>
     <i class="fa fa-plus-square"></i>
+  </button>
+  <button class="open-settings" {{action 'openSettings'}}>
+    <i class="fa fa-cog"></i>
   </button>
   <button class="close" {{action 'close'}}>
     <i class="fa fa-times"></i>
@@ -25,5 +28,7 @@
 <div class="undo swap-undo">
   <button class="action" {{action 'cancelSwap'}}>Cancel Swap</button>
 </div>
+
+{{partial 'settings'}}
 
 {{outlet}}
