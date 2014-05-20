@@ -72,5 +72,5 @@ App.PanesController = Ember.ArrayController.extend
     openSettings: ->
       @set 'editingSettings', true
 
-    saveSettings: ->
+    closeSettings: ->
       @set 'editingSettings', false

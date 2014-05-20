@@ -1,0 +1,23 @@
+<div class="settings">
+
+  <fieldset>
+    <label>Pusher API Key</label>
+    {{input value=pusherApiKey}}
+  </fieldset>
+
+  <fieldset>
+    <label>Slack Channel Name</label>
+    {{input value=slackChannelName}}
+  </fieldset>
+
+  <fieldset>
+    <label>Standup URL</label>
+    {{input value=standupUrl}}
+  </fieldset>
+
+  <div class="settings-actions">
+    <button class="save action" {{action 'save'}}>
+      Save
+    </button>
+  </div>
+</div>
