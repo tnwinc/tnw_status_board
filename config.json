@@ -11,6 +11,7 @@
     "models/*",
     "services/*",
     "templates/*",
+    "data/event_bus",
     "data/settings",
     "data/version_assistant",
     "data/migrator",
