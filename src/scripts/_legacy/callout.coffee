@@ -6,8 +6,8 @@
 #     ContentGenerators =
 #         image:
 #             pattern: /^(.*\.(?:png|jpg|jpeg|bmp|gif))$/i
-#             generator: (imgSrc) ->
-#                 img = ($ '<img src="'+imgSrc+'" style="max-height:100%; max-width:100%" />')
+#             generator: (imgSrc)->
+#                 img = ($ '<img src="'+imgSrc+'" style = "max-height:100%; max-width:100%" />')
 #                 img.bind 'load', ->
 #                     largerDimension = if ($ this).height() > ($ this).width() then "height" else "width"
 #                     ($ this).css largerDimension, "100%"
@@ -15,17 +15,17 @@
 #                 this img
 
 #         youtube:
-#             pattern: [ /youtu\.?be.*?[\/=]([\w\-]{11})/, /^([\w\-]{11})$/]
-#             generator: (url, videoId) ->
-#                 window.playVideo = () ->
+#             pattern: [/youtu\.?be.*?[\/=]([\w\-]{11})/, /^([\w\-]{11})$/]
+#             generator: (url, videoId)->
+#                 window.playVideo = ()->
 #                     player = new YT.Player 'youtube-player',
 #                         height: '100%'
 #                         width: '100%'
 #                         videoId: videoId
 #                         events:
-#                             onReady: (ev) ->
+#                             onReady: (ev)->
 #                                 ev.target.playVideo()
-#                             onStateChange: (ev) ->
+#                             onStateChange: (ev)->
 #                               player.setPlaybackQuality 'medium'
 #                               hideCallout() if ev.data == 0
 
@@ -37,23 +37,23 @@
 #           timeout: 0
 #           generator: (url)->
 #             url = 'https://join.me/'+url if (url.indexOf '://') == -1
-#             this '<iframe src="'+url+'" style="height:100%; width:100%" scrolling="no" frameborder="0" />'
+#             this '<iframe src="'+url+'" style = "height:100%; width:100%" scrolling = "no" frameborder = "0" />'
 
 #         url:
-#             pattern: /^(((http|ftp|https):\/\/)?[\w\-]+(\.[\w\-]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?)$/i
-#             generator: (url) ->
+#             pattern: /^(((http|ftp|https):\/\/)?[\w\-]+(\.[\w\-]+)+([\w\-\., @?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?)$/i
+#             generator: (url)->
 #                 url = 'http://'+url if (url.indexOf '://') == -1
-#                 this '<iframe src="'+url+'" style="height:100%; width:100%" scrolling="no" frameborder="0" />'
+#                 this '<iframe src="'+url+'" style = "height:100%; width:100%" scrolling = "no" frameborder = "0" />'
 
 #         text:
 #             pattern: /^(.*)$/
-#             generator: (content) ->
+#             generator: (content)->
 #                 pavlov()
-#                 this '<div class="valign">'+content+'</div><div class="vshim" />'
+#                 this '<div class="valign">'+content+'</div><div class = "vshim" />'
 
 #     gen.type = type for own type, gen of ContentGenerators
 
-#     showCallout = (data) ->
+#     showCallout = (data)->
 #         clearTimeout timeout
 #         calloutActive = true
 #         callout = ($ '#callout').show()
@@ -90,23 +90,23 @@
 #                         contentHandler = def
 #                         break
 #             throw Error("No content handler was found to match requested content") unless contentHandler
-#         contentHandler.generator.apply (content) ->
+#         contentHandler.generator.apply (content)->
 #             callout.html(content)
-#         , contentHandler.pattern.exec(data.content)
+#, contentHandler.pattern.exec(data.content)
 
 #         timeout_val = (contentHandler.timeout ? data.timeout) or 0
 #         console.log "keeping [#{contentHandler.type}] callout open for #{timeout_val} seconds"
 #         if timeout_val
 #           timeout = setTimeout hideCallout, timeout_val * 1000
 
-#     hideCallout = (onComplete) ->
+#     hideCallout = (onComplete)->
 #         clearTimeout timeout
 #         callout = ($ '#callout')
 #         callout.empty().hide()
 #         calloutActive = false
 #         onComplete() if onComplete
 
-#     callout = (data) ->
+#     callout = (data)->
 #         return (hideCallout -> showCallout data) if calloutActive
 #         showCallout data
 

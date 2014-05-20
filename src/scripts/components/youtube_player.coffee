@@ -3,7 +3,7 @@ youtubeReady = new Ember.RSVP.Promise (resolve)->
 
 App.YoutubePlayerComponent = Ember.Component.extend
 
-  classNames: ['youtube']
+  classNames: ['fullscreen']
 
   didInsertElement: ->
     youtubeReady.then =>

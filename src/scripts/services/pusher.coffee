@@ -1,12 +1,3 @@
-App.pusherEvents =
-  standup: ['duration']
-  youtube: ['id']
-  reload: ->
-    @transitionToRoute 'panes'
-    Ember.run.later -> location.reload true
-  sound: (data)->
-    @get('controllers.application').send 'playSound', data.url
-
 App.PusherController = Ember.Controller.extend
 
   needs: ['application']
@@ -27,7 +18,7 @@ App.PusherController = Ember.Controller.extend
         handler
       else
         (data)->
-          args = _.map handler, (arg)-> data[arg]
+          args = _.map handler, (arg)-> encodeURIComponent data[arg]
           Ember.run => @transitionToRoute "panes.#{event}", args...
       channel.bind event, fn.bind(this)
 
