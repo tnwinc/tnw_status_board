@@ -1,4 +1,4 @@
-<div class="settings">
+<form class="settings" {{action 'save' on="submit"}}>
 
   <fieldset>
     <label>Pusher API Key</label>
@@ -16,8 +16,8 @@
   </fieldset>
 
   <div class="settings-actions">
-    <button class="save action" {{action 'save'}}>
+    <button class="save action" type="submit">
       Save
     </button>
   </div>
-</div>
+</form>

@@ -4,5 +4,4 @@ App.ApplicationRoute = Ember.Route.extend
     App.migrator.runMigrations()
 
   afterModel: ->
-    @controllerFor('pusher').setupEvents (route, args...)=>
-      Ember.run => @transitionTo "panes.#{route}", args...
+    @controllerFor('pusher').setupEvents()
