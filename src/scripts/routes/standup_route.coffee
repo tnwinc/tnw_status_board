@@ -1,15 +1,8 @@
-App.PanesStandupRoute = Ember.Route.extend
+App.PanesStandupRoute = App.CalloutRoute.extend
 
-  model: (params)->
-    appController = @controllerFor 'application'
-    appController.send 'playSound', App.sounds.trumpet
-
-    @set 'timeout', setTimeout =>
-      appController.send 'playSound', App.sounds.buzzer
-      @transitionTo 'panes'
-    , params.duration * 60 * 1000
-
-    url: App.settings.getValue 'standupUrl'
-
-  deactivate: ->
-    clearTimeout @get('timeout')
+  init: ->
+    @_super()
+    @set 'startSound', App.sounds.trumpet
+    @set 'endSound', App.sounds.buzzer
+    @set 'presetModel', url: App.settings.getValue 'standupUrl'
+    @set 'durationTransform', (duration)-> duration * 60 * 1000

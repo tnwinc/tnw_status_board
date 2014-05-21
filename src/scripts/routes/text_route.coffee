@@ -1,13 +1,6 @@
-App.PanesTextRoute = Ember.Route.extend
+App.PanesTextRoute = App.CalloutRoute.extend
 
-  model: (params)->
-    @controllerFor('application').send 'playSound', App.sounds.ping
-
-    @set 'timeout', setTimeout =>
-      @transitionTo 'panes'
-    , params.duration * 1000
-
-    text: decodeURIComponent params.text
-
-  deactivate: ->
-    clearTimeout @get('timeout')
+  init: ->
+    @_super()
+    @set 'startSound', App.sounds.ping
+    @set 'modelProperties', ['text']

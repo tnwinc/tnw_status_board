@@ -1,13 +1,6 @@
-App.PanesImageRoute = Ember.Route.extend
+App.PanesImageRoute = App.CalloutRoute.extend
 
-  model: (params)->
-    @controllerFor('application').send 'playSound', App.sounds.ping
-
-    @set 'timeout', setTimeout =>
-      @transitionTo 'panes'
-    , params.duration * 1000
-
-    url: decodeURIComponent params.url
-
-  deactivate: ->
-    clearTimeout @get('timeout')
+  init: ->
+    @_super()
+    @set 'startSound', App.sounds.ping
+    @set 'modelProperties', ['url']
