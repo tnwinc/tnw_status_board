@@ -1,6 +1,8 @@
 App.CalloutRoute = Ember.Route.extend
 
   model: (params)->
+    clearTimeout @get('timeout')
+
     appController = @controllerFor 'application'
 
     if @get('startSound')
