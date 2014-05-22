@@ -4,6 +4,7 @@ App.Pane = Ember.Object.extend
     @set 'properties', App.Property.deserialize @get('properties')
 
   serialize: ->
+    id: @get 'id'
     url: @get 'url'
     properties: App.Property.serialize @get('properties')
 
@@ -16,7 +17,9 @@ App.Pane.reopenClass
     _.map panes, (pane)-> App.Pane.create pane
 
   newOne: ->
+    highestId = _.max _.pluck(App.settings.getValue('panes'), 'id')
     App.Pane.create
+      id: highestId + 1
       url: ''
       isNew: true
       properties: [
