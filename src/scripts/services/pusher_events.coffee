@@ -1,7 +1,7 @@
 App.pusherEvents =
   image: ['url', 'duration']
   standup: ['duration']
-  text: ['text', 'duration']
+  text: ['text', 'sender', 'duration']
   url: ['url', 'duration']
   youtube: ['id']
 

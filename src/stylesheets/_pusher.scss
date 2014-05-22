@@ -19,9 +19,16 @@
 .fullscreen-text {
   background: rgba(255, 255, 255, 0.9);
   @include center-align;
+  text-align: center;
 
-  p {
+  .text {
     font-size: 3em;
-    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .sender {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    font-size: 2.2em;
+    font-style: italic;
   }
 }
