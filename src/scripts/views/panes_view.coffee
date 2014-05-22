@@ -6,4 +6,5 @@ App.PanesView = Ember.View.extend
     'controller.undoable'
     'controller.swapping'
     'controller.editingSettings'
+    'controller.showingPaneIds'
   ]

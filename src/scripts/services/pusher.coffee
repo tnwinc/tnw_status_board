@@ -1,6 +1,6 @@
 App.PusherController = Ember.Controller.extend
 
-  needs: ['application']
+  needs: ['application', 'panes']
 
   setup: (->
     pusherApiKey = App.settings.getValue('pusherApiKey')

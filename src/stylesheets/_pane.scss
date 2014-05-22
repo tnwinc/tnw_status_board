@@ -155,3 +155,19 @@
     display: none;
   }
 }
+
+.pane-id {
+  @include callout;
+  @include center-align;
+  background: rgba(0, 0, 0, 0.7);
+  border: solid 1px #555;
+  box-sizing: border-box;
+  color: #FFF;
+  display: none;
+  font-size: 3em;
+  text-align: center;
+
+  .showing-pane-ids & {
+    display: flex;
+  }
+}

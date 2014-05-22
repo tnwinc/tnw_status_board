@@ -5,6 +5,9 @@ App.PanesController = Ember.ArrayController.extend
     @set 'undoable', false
     @set 'deletedPane', null
 
+  _savePanes: ->
+    App.settings.updateValue 'panes', App.Pane.serialize @get('model')
+
   _doneEditingPane: ->
     @set 'newPane', null
     @set 'editingPane', false
@@ -50,7 +53,7 @@ App.PanesController = Ember.ArrayController.extend
       @_doneEditingPane()
 
     save: ->
-      App.settings.updateValue 'panes', App.Pane.serialize @get('model')
+      @_savePanes()
       @_doneEditingPane()
 
     swap: (url, callback)->
@@ -74,3 +77,14 @@ App.PanesController = Ember.ArrayController.extend
 
     closeSettings: ->
       @set 'editingSettings', false
+
+    showPaneIds: ->
+      @set 'showingPaneIds', true
+
+    setPaneUrl: (paneId, url)->
+      paneId = parseInt paneId, 10
+      pane = _.find @get('model'), (pane)-> pane.get('id') is paneId
+      if pane
+        pane.set 'url', url
+        @_savePanes()
+      @set 'showingPaneIds', false
