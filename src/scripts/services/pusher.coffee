@@ -7,7 +7,7 @@ App.PusherController = Ember.Controller.extend
     if pusherApiKey
       pusher = new Pusher pusherApiKey
       @set 'pusher', pusher
-      @_subscribeToChannel App.settings.getValue('slackChannelName')
+      @_subscribeToChannel @_channelNameFromSettings()
 
     App.eventBus.on 'pusherApiKeyUpdated', @_apiKeyUpdated.bind(this)
     App.eventBus.on 'slackChannelNameUpdated', @_channelNameUpdated.bind(this)
@@ -28,10 +28,13 @@ App.PusherController = Ember.Controller.extend
   _apiKeyUpdated: (apiKey)->
     if apiKey
       @set 'pusher', new Pusher apiKey
-      @_resubscribeToChannel App.settings.getValue('slackChannelName')
+      @_resubscribeToChannel @_channelNameFromSettings()
 
   _channelNameUpdated: (channelName)->
-    @_resubscribeToChannel channelName
+    @_resubscribeToChannel channelName.toLowerCase()
+
+  _channelNameFromSettings: ->
+    App.settings.getValue('slackChannelName').toLowerCase()
 
   _subscribeToChannel: (channelName)->
     if channelName
