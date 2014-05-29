@@ -6,6 +6,7 @@ App.Pane = Ember.Object.extend
   serialize: ->
     id: @get 'id'
     url: @get 'url'
+    sandboxed: @get 'sandboxed'
     properties: App.Property.serialize @get('properties')
 
 App.Pane.reopenClass
@@ -21,6 +22,7 @@ App.Pane.reopenClass
     App.Pane.create
       id: highestId + 1
       url: ''
+      sandboxed: true
       isNew: true
       properties: [
         { name: 'top', value: '20px' }

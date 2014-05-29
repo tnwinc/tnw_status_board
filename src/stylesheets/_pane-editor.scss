@@ -52,6 +52,17 @@
   }
 }
 
+.sandboxed {
+  .check-box {
+    float: left;
+    margin-right: 5px;
+  }
+
+  label {
+    margin-bottom: 0;
+  }
+}
+
 .properties {
   input {
     display: inline-block;
