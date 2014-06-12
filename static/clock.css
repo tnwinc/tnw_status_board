@@ -21,42 +21,67 @@ body {
   left: 0;
 }
 
-.day-short,
-.date-short {
+#day-short,
+#date-short {
   display: none;
 }
 
-.time {
-  color: #f8f8f8;
+#time {
   font-size: 36px;
 }
 
+#hours,
+#minutes {
+  color: #f8f8f8;
+}
+
+@keyframes blink {
+  0% { opacity: 0; }
+  15% { opacity: 1; }
+  80% { opacity: 1; }
+  95% { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+@-webkit-keyframes blink {
+  0% { opacity: 0; }
+  15% { opacity: 1; }
+  80% { opacity: 1; }
+  95% { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+.blink {
+  -webkit-animation: blink 6s infinite;
+  animation: blink 6s infinite;
+}
+
 @media only screen and (max-width: 610px) {
-  .day-short {
+  #day-short {
     display: inline;
   }
-  .day-full {
+  #day-full {
     display: none;
   }
 }
 
 @media only screen and (max-width: 500px) {
-  .date-short {
+  #date-short {
     display: inline;
   }
-  .date-full {
+  #date-full {
     display: none;
   }
 }
 
 @media only screen and (max-width: 360px) {
-  .day-short {
+  #day-short {
     display: none;
   }
 }
 
 @media only screen and (max-width: 270px) {
-  .date-short {
+  #date-short {
     display: none;
   }
 }
