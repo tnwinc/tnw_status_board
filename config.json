@@ -28,11 +28,11 @@
     "dev": [
       { "src": "src/fonts/**/*", "dest": "./_dev/fonts/" },
       { "src": "src/scripts/lib/*", "dest": "./_dev/scripts/lib/" },
-      { "src": "static/*", "dest": "./_dev/" }
+      { "src": "static/**/*", "dest": "./_dev/" }
     ],
     "prod": [
       { "src": "src/fonts/**/*", "dest": "./_build/fonts/" },
-      { "src": "static/*", "dest": "./_build/" }
+      { "src": "static/**/*", "dest": "./_build/" }
     ]
   }
 }
