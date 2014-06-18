@@ -1,5 +1,12 @@
 (function () {
 
+  ['color', 'background'].forEach(function (style) {
+    var match = location.href.match(new RegExp(style + '=([^&]+)'));
+    if (match && match[1]) {
+      document.body.style[style] = match[1];
+    }
+  });
+
   var $ = document.getElementById.bind(document),
       dayShort = $('day-short'),
       dayFull = $('day-full'),
