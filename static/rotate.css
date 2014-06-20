@@ -1,0 +1,62 @@
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,button,textarea,p,blockquote,th,td{margin:0;padding:0;}table{border-collapse:collapse;border-spacing:0;}fieldset,img,a img{border:none;}address,caption,cite,code,dfn,em,strong,th,var,optgroup{font-style:inherit;font-weight:inherit;}del,ins{text-decoration:none;}li{list-style:none;}caption,th{text-align:left;}h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal;}q:before,q:after{content:'';}abbr,acronym{border:0;font-variant:normal;}sup{vertical-align:baseline;}sub{vertical-align:baseline;}legend{color:#000;}
+
+body {
+  background-color: #333;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 24px;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+}
+
+iframe {
+  border: none;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+}
+
+.edit-surface {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 42px;
+  height: 42px;
+}
+
+.edit {
+  color: rgba(255,255,255,0.5);
+  display: none;
+  font-size: 20px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  text-align: center;
+  width: 28px;
+  height: 28px;
+  line-height: 28px;
+}
+
+.edit:hover,
+.edit:focus {
+  color: rgba(255,255,255,0.8);
+}
+
+.edit:before {
+  border-top: solid 25px rgba(255,255,255,0.3);
+  border-right: solid 25px rgba(255,255,255,0.3);
+  border-bottom: solid 25px transparent;
+  border-left: solid 25px transparent;
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 0;
+  height: 0;
+}
+
+.countdown {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+}
