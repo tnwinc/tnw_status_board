@@ -3,10 +3,14 @@ body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input
 body {
   background-color: #333;
   font-family: 'Helvetica Neue', Arial, sans-serif;
-  font-size: 24px;
   overflow: hidden;
   width: 100%;
   height: 100%;
+}
+
+body,
+input {
+  font-size: 18px;
 }
 
 iframe {
@@ -24,36 +28,147 @@ iframe {
   height: 42px;
 }
 
-.edit {
-  color: rgba(255,255,255,0.5);
+  .edit {
+    color: rgba(255,255,255,0.5);
+    cursor: pointer;
+    display: none;
+    font-size: 20px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    text-align: center;
+    width: 28px;
+    height: 28px;
+    line-height: 28px;
+  }
+
+  .edit:hover,
+  .edit:focus {
+    color: rgba(255,255,255,0.8);
+  }
+
+    .edit:before {
+      border-top: solid 25px rgba(255,255,255,0.3);
+      border-right: solid 25px rgba(255,255,255,0.3);
+      border-bottom: solid 25px transparent;
+      border-left: solid 25px transparent;
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 0;
+      height: 0;
+    }
+
+  .edit-surface:hover .edit {
+    display: block;
+  }
+
+.editor {
+  background: #333;
   display: none;
-  font-size: 20px;
+  overflow: auto;
   position: absolute;
   top: 0;
   right: 0;
-  text-align: center;
-  width: 28px;
-  height: 28px;
-  line-height: 28px;
+  bottom: 0;
+  left: 0;
 }
 
-.edit:hover,
-.edit:focus {
-  color: rgba(255,255,255,0.8);
-}
+  .save {
+    background: #eb7c19;
+    border-radius: 3px;
+    color: #FFF;
+    cursor: pointer;
+    font-size: 1em;
+    margin: 10px;
+    padding: 5px 10px;
+    float: right;
+  }
 
-.edit:before {
-  border-top: solid 25px rgba(255,255,255,0.3);
-  border-right: solid 25px rgba(255,255,255,0.3);
-  border-bottom: solid 25px transparent;
-  border-left: solid 25px transparent;
-  content: "";
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 0;
-  height: 0;
-}
+  .save:hover,
+  .save:focus {
+    background: #c06311;
+  }
+
+  fieldset {
+    margin: 10px;
+  }
+
+  label {
+    color: #f8f8f8;
+    display: inline-block;
+  }
+
+  .interval input {
+    background: #e3e3e3;
+    border: solid 1px #787878;
+    border-radius: 3px;
+    display: inline-block;
+    margin-left: 10px;
+    padding: 5px;
+    width: 50px;
+  }
+
+  .hide-countdown input {
+    margin-right: 5px;
+  }
+
+  .sites {
+    clear: both;
+    padding-top: 10px;
+  }
+
+    .sites li {
+      display: block;
+      margin-bottom: 10px;
+      padding-right: 30px;
+      padding-left: 10px;
+      position: relative;
+    }
+
+      .sites input {
+        background: #e3e3e3;
+        border: solid 1px #787878;
+        border-radius: 3px;
+        box-sizing: border-box;
+        display: block;
+        padding: 5px 10px;
+        width: 100%;
+      }
+
+      .remove {
+        color: #d3d3d3;
+        cursor: pointer;
+        margin-top: -10px;
+        position: absolute;
+        right: 5px;
+        top: 50%;
+        text-align: center;
+        width: 20px;
+        height: 20px;
+        line-height: 20px;
+      }
+
+      .remove:hover {
+        color: #FFF;
+      }
+
+  .add-site {
+    background: #5283af;
+    border-radius: 3px;
+    color: #FFF;
+    cursor: pointer;
+    margin: 0 auto;
+    padding: 5px 0;
+    text-align: center;
+    width: 80px;
+  }
+
+  .add-site:hover,
+  .add-site:focus {
+    background: #416a8d;
+  }
 
 .countdown {
   position: absolute;

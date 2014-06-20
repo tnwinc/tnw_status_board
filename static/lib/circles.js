@@ -265,6 +265,10 @@
       return this._maxValue;
   },
 
+  stop: function () {
+    clearTimeout(this._timeout);
+  },
+
     update: function(value, duration) {
       if (value === true) {//Force update with current value
         this._setPercentage(this.getPercent());
@@ -315,7 +319,7 @@
         if (deltaTime >= stepDuration) {
           animate(now);
         } else {
-          setTimeout(function() {
+          self._timeout = setTimeout(function() {
             animate(Date.now());
           }, stepDuration - deltaTime);
         }

@@ -9,9 +9,34 @@
 <body>
 
   <iframe scrolling="no"></iframe>
+
   <div id="countdown" class="countdown"></div>
-  <div class="edit"></div>
-  <div class="editor"></div>
+
+  <div class="edit-surface">
+    <div class="edit">
+      <i class="fa fa-cog"></i>
+    </div>
+  </div>
+
+  <div class="editor">
+    <div class="save">Save</div>
+
+    <fieldset class="interval">
+      <label>Interval</label>
+      <input type="number">
+      <label>sec</label>
+    </fieldset>
+
+    <fieldset class="hide-countdown">
+      <input type="checkbox">
+      <label>Hide countdown</label>
+    </fieldset>
+
+    <ul class="sites"></ul>
+    <div class="add-site">
+      <i class="fa fa-plus"></i>
+    </div>
+  </div>
 
   <script src="lib/jquery.js"></script>
   <script src="lib/circles.js"></script>
