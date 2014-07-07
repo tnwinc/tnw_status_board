@@ -1,10 +1,6 @@
-.idea
-do_commands.yml
-settings.yml
 .DS_Store
-.sass-cache
 node_modules
-npm-debug.log
+*.log
 tmp
 _dev
-_build
+_prod
