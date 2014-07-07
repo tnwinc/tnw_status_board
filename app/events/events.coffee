@@ -2,14 +2,14 @@ require './image/route'
 require './standup/route'
 require './text/route'
 require './url/route'
-# require './youtube/route'
+require './youtube/route'
 
 module.exports =
   image: ['url', 'duration']
   standup: ['duration']
   text: ['text', 'sender', 'duration']
   url: ['url', 'duration']
-  # youtube: ['id']
+  youtube: ['id']
 
   reload: ->
     @transitionToRoute 'panes'

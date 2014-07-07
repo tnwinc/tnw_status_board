@@ -1,6 +1,5 @@
 Ember = require 'ember'
 App = require '../app'
-YT = require 'youtube-iframe-api'
 
 require './components.youtube-player'
 
