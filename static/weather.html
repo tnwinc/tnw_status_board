@@ -3,14 +3,20 @@
 <head>
   <meta charset="utf-8" />
   <title>Weather</title>
-  <style type="text/css">
-    body {
-      background: #ffffff;
-    }
-  </style>
+  <script src="lib/jquery.js"></script>
+  <script src="lib/skycons.js"></script>
+  <script src="weather.js"></script>
+  <link rel="stylesheet" href="weather.css">
 </head>
 <body>
-<!-- Temporary version. API soon -->
-<iframe id="forecast_embed" type="text/html" frameborder="0" height="245" width="100%" src="http://forecast.io/embed/#lat=33.964908&lon=-84.214739&name=The Network Inc&color=#8BB454&font=Helvetica&units=us"> </iframe>
+  <container class="weatherBlock">
+    <div class="top group">
+      <canvas id="currentWeatherIcon" width="128" height="128"></canvas>
+      <div id="currentTemp"><span></span>&deg;</div>
+      <div id="currentDescription"></div>
+    </div>
+    <div id="weekDescription"></div>
+    <div id="warningsDescription"></div>
+  </container>
 </body>
 </html>
