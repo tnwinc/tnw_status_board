@@ -32,7 +32,7 @@ $.ajax(weatherUrl, {
       skycons.play();
       $("#currentTemp span").text(Math.round(response.currently.temperature));
       $("#currentDescription").text(response.currently.summary);
-      $("#weekDescription").text(response.daily.summary);
+      $("#weekDescription").text(response.minutely.summary);
       hourly = response.hourly.summary;
       if (warningWords.some(function(word) {
         return ~hourly.toLowerCase().indexOf(word);
