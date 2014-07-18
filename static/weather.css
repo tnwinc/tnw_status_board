@@ -10,16 +10,16 @@ body {
 }
 #currentWeatherIcon {
     float:left;
-    margin: 2em 2em 1em 2em;
+    margin: 1em 2em 0em 2em;
 }
 #currentTemp {
-    font-size: 6em;
+    font-size: 5em;
 }
 #currentDescription {
-    font-size: 3em;
+    font-size: 2em;
 }
-#weekDescription {
-    margin: 1em 2em .5em 2em;
+#longDescription {
+    margin: 0em 1em .5em 1em;
     font-size: 1.2em;
     text-align: center;
 }
