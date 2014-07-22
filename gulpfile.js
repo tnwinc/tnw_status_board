@@ -1,1 +1,1 @@
-require('zunder')()
+require('zunder')({ srcDir: 'app', flavor: 'ember' })
