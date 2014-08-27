@@ -1,6 +1,7 @@
 Ember = require 'ember'
 App = require '../app'
 Pane = require '../pane/pane_model'
+_ = require 'lodash'
 
 require './controller'
 require './panes'
@@ -18,3 +19,12 @@ App.PanesRoute = Ember.Route.extend
 
   model: ->
     Pane.deserialize @store.fetch('panes')
+
+  setupController: (controller, model)->
+    @_super controller, model
+
+    populatedPanes = _.filter model, (pane)->
+      not _.isEmpty pane.get('url')
+
+    unless populatedPanes.length
+      controller.send 'edit'
