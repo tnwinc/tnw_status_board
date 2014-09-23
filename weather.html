@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Weather</title>
+  <script src="lib/jquery.js"></script>
+  <script src="lib/skycons.js"></script>
+  <script src="weather.js"></script>
+  <link rel="stylesheet" href="weather.css">
+</head>
+<body>
+<container class="weatherBlock">
+    <div class="topSection group">
+        <canvas id="currentWeatherIcon" width="128" height="128"></canvas>
+        <div id="currentTemp"><span></span>&deg;</div>
+        <div id="currentDescription"></div>
+    </div>
+    <div id="longDescription">Please enter a location</div>
+    <div id="warningsDescription"></div>
+</container>
+</body>
+</html>

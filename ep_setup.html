@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Ethics Portal Tenant Setup</title>
+  <style>
+    body {
+      padding: 20px;
+    }
+
+    body, input, button {
+      font-size: 20px;
+    }
+
+    input {
+      border: solid 1px #c7c7c7;
+      border-radius: 3px;
+      box-sizing: border-box;
+      float: left;
+      padding: 10px 15px;
+      width: 75%;
+    }
+
+    a {
+      background: #4E7012;
+      border-radius: 3px;
+      box-sizing: border-box;
+      color: #f8f8f8;
+      float: right;
+      padding: 12px 15px;
+      text-align: center;
+      text-decoration: none;
+      width: 23%;
+    }
+  </style>
+</head>
+<body>
+  <input id="tenant" type="text" placeholder="Tenant name...">
+  <a href="#">Setup</a>
+
+  <script src="lib/jquery.js"></script>
+  <script>
+    (function () {
+      var setup = $('a');
+      $('#tenant').on('keyup', function () {
+        setup.attr('href', 'tnw-consumer://configure/?tenant-name=' + $(this).val());
+      });
+    }());
+  </script>
+</body>
+</html>

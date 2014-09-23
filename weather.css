@@ -1,0 +1,35 @@
+body {
+  background: #333;
+  border: 0px;
+  margin: 0px;
+  padding: 0px;
+}
+.weatherBlock {
+    color: white;
+    font-family: "Arial Rounded MT Bold", "Helvetica Rounded", Arial, sans-serif;
+}
+#currentWeatherIcon {
+    float:left;
+    margin: 1em 2em 0em 2em;
+}
+#currentTemp {
+    font-size: 5em;
+}
+#currentDescription {
+    font-size: 2em;
+}
+#longDescription {
+    margin: 0em 1em .5em 1em;
+    font-size: 1.2em;
+    text-align: center;
+}
+#warningsDescription  {
+    font-size: 1.2em;
+    background: #CC3300;
+    text-align: center;
+}
+.group:after {
+  content: "";
+  display: table;
+  clear: both;
+}
