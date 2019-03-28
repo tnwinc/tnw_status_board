@@ -2,9 +2,9 @@
   "name": "tnw_status_board",
   "version": "0.2.0",
   "dependencies": {
-    "handlebars": "~1.1.2",
-    "jquery": "~2.1.1",
-    "lodash": "~2.4.1",
+    "handlebars": "~4.0.0",
+    "jquery": "~3.0.0",
+    "lodash": "~4.17.11",
     "uuid": "~1.4.1"
   },
   "devDependencies": {
