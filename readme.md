@@ -1,3 +1,6 @@
+# Archival Note
+This repo is no longer used or maintained. It is being archived.
+
 ## TNW Status Board
 
 Set the URL for the browser on your board to http://labs.tnwinc.com/tnw_status_board
